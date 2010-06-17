@@ -1,0 +1,1770 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./rigid%20body%20demo_files/filelist.xml">
+<link rel=Edit-Time-Data href="./rigid%20body%20demo_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Particles</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>oliii</o:Author>
+  <o:LastAuthor>oliii</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2004-01-20T23:14:00Z</o:Created>
+  <o:LastSaved>2004-01-20T23:14:00Z</o:LastSaved>
+  <o:Pages>9</o:Pages>
+  <o:Words>1159</o:Words>
+  <o:Characters>6611</o:Characters>
+  <o:Company>depraved</o:Company>
+  <o:Lines>55</o:Lines>
+  <o:Paragraphs>13</o:Paragraphs>
+  <o:CharactersWithSpaces>8118</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:12.0pt;
+	font-family:Tahoma;
+	mso-font-kerning:0pt;
+	font-style:italic;}
+h2
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	color:blue;}
+h3
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	tab-stops:104.65pt;
+	border:none;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	padding:0cm;
+	mso-padding-alt:0cm 0cm 1.0pt 0cm;
+	font-size:12.0pt;
+	font-family:Tahoma;
+	font-style:italic;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:2015649715;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1775307236 -208791188 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l0:level1
+	{mso-level-start-at:0;
+	mso-level-number-format:bullet;
+	mso-level-text:\F0F0;
+	mso-level-tab-stop:39.75pt;
+	mso-level-number-position:left;
+	margin-left:39.75pt;
+	text-indent:-21.75pt;
+	font-family:Wingdings;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:Tahoma;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="2050"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+  <o:regrouptable v:ext="edit">
+   <o:entry new="1" old="0"/>
+  </o:regrouptable>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-GB link=blue vlink=purple style='tab-interval:36.0pt'>
+
+<div class=Section1>
+
+<h1 align=center style='text-align:center'><span style='font-size:20.0pt;
+mso-bidi-font-size:12.0pt'>VERLET PHYSICS DEMO<o:p></o:p></span></h1>
+
+<h1 align=center style='text-align:center'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></h1>
+
+<h1 align=center style='text-align:center'><span style='font-style:normal'>Olivier
+Renault<o:p></o:p></span></h1>
+
+<h1 align=center style='text-align:center'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></h1>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<h1 align=center style='text-align:center;border:none;mso-border-bottom-alt:
+solid windowtext .5pt;padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'>Particles</h1>
+
+</div>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>the general particle is
+based on Jakobsen’s idea (<a
+href="http://www.gamasutra.com/resource_guide/20030121/jacobson_01.shtml">http://www.gamasutra.com/resource_guide/20030121/jacobson_01.shtml</a>).
+The only difference, I have an extra ‘radius’ parameter, used for collision
+detection.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><u><span style='font-family:Tahoma'>standard verlet
+integration</span></u><span style='font-family:Tahoma'> <u><o:p></o:p></u></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>x’ = x<sub>t1</sub><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>x<sub>t1</sub> += (x<sub>t1</sub>
+– x<sub>t0</sub>) + a . dt<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>x<sub>t0</sub> = x’<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<h1 align=center style='text-align:center;border:none;mso-border-bottom-alt:
+solid windowtext .5pt;padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'>Linear
+Constraints</h1>
+
+</div>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>Here again, refer to
+Jakobsen’s paper(you can also see it at <a
+href="http://www.ioi.dk/Homepages/thomasj/publications/gdc2001.htm"><span
+style="mso-spacerun:
+yes"> </span>http://www.ioi.dk/Homepages/thomasj/publications/gdc2001.htm</a>),
+for further implementation details. The principle is very simple. A linear
+constraint enforces two particles to be at a fixed distance from each other.
+This works really well with the verlet integrator run on the individual
+particles as you don’t get any build up of momentum, like you would do with a
+spring system. Usually, the whole particle system is iterated several times, so
+that all constraints converge to a stable state. Typically, you only need a few
+iterations. Also, reducing the iterations provides a softer movement, but you
+run the risk of braking the shape partially or totally if you are not careful. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>the general way to enforce
+a fixed size is as follow. I used his optimised version, which approximate the
+square root with a simple Taylor series.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><u><sup><span style='font-family:Tahoma'>*</span></sup></u><u><span
+style='font-family:Tahoma'>r</span></u><span style='font-family:Tahoma'> : the
+rest length, or the enforce distance between the particles<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>Vector D = P<sub>b </sub>-
+P<sub>a</sub><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>float<span
+style="mso-spacerun: yes">   </span>d<sup>2</sup> = D . D<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>float diff = r<sup>2 </sup>/
+(d<sup>2</sup> + r<sup>2</sup>) – 0.5f;<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>D *= diff * 2.0f;<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>P<sub>a</sub><span
+style="mso-spacerun: yes">  </span>-= D * m<sub>a</sub><sup>-1 </sup>/ (m<sub>a</sub><sup>-1</sup>
++ m<sub>b</sub><sup>-1</sup>)<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>P<sub>b</sub> += D *
+m<sub>b</sub><sup>-1 </sup>/ (m<sub>a</sub><sup>-1</sup> + m<sub>b</sub><sup>-1</sup>)</span></i></b><span
+style='font-family:Tahoma'><o:p></o:p></span></p>
+
+<span style='font-size:12.0pt;font-family:Tahoma;mso-fareast-font-family:"Times New Roman";
+mso-ansi-language:EN-GB;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br
+clear=all style='mso-special-character:line-break;page-break-before:always'>
+</span>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<p class=MsoNormal style='border:none;mso-border-bottom-alt:solid windowtext .5pt;
+padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><![if !supportEmptyParas]>&nbsp;<![endif]><span
+style='font-family:Tahoma'><o:p></o:p></span></p>
+
+<h1 align=center style='text-align:center;border:none;mso-border-bottom-alt:
+solid windowtext .5pt;padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'>Particle –
+Particle collision detection</h1>
+
+</div>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:oval id="_x0000_s1027" style='position:absolute;
+ margin-left:-9pt;margin-top:-67.7pt;width:243pt;height:225pt;z-index:1'
+ filled="f"/><v:oval id="_x0000_s1028" style='position:absolute;margin-left:135pt;
+ margin-top:-148.75pt;width:279pt;height:261pt;z-index:2' filled="f"/><v:line
+ id="_x0000_s1029" style='position:absolute;flip:y;z-index:3' from="99pt,-31.7pt"
+ to="4in,49.3pt">
+ <v:stroke dashstyle="dash"/>
+</v:line><v:shapetype id="_x0000_t202" coordsize="21600,21600" o:spt="202"
+ path="m0,0l0,21600,21600,21600,21600,0xe">
+ <v:stroke joinstyle="miter"/>
+ <v:path gradientshapeok="t" o:connecttype="rect"/>
+</v:shapetype><v:shape id="_x0000_s1030" type="#_x0000_t202" style='position:absolute;
+ margin-left:81pt;margin-top:13.3pt;width:45pt;height:25.8pt;z-index:4'
+ filled="f" stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal>P<sub>a</sub></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1031" type="#_x0000_t202" style='position:absolute;
+ margin-left:4in;margin-top:-67.7pt;width:36pt;height:27pt;z-index:5' filled="f"
+ stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal>P<sub>b</sub></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:line id="_x0000_s1032" style='position:absolute;flip:x;z-index:6'
+ from="2in,-4.6pt" to="225pt,31.4pt" strokecolor="red" strokeweight="2pt">
+ <v:stroke endarrow="block"/>
+</v:line><v:shape id="_x0000_s1035" type="#_x0000_t202" style='position:absolute;
+ margin-left:153pt;margin-top:-13.75pt;width:45pt;height:27pt;z-index:7'
+ filled="f" stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal><b><span style='color:red'>N<sub>coll</sub><o:p></o:p></span></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+relative;z-index:0'><span style='position:absolute;left:-12px;top:-198px;
+width:565px;height:409px'><img width=565 height=409
+src="./rigid%20body%20demo_files/image001.gif" v:shapes="_x0000_s1027 _x0000_s1028 _x0000_s1029 _x0000_s1030 _x0000_s1031 _x0000_s1032 _x0000_s1035"></span></span><![endif]><span
+style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>float l = |P<sub>a</sub>
+– P<sub>b</sub>|<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>float r = r<sub>a</sub>
++ r<sub>b<o:p></o:p></sub></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>if (l &gt; r)<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'><span
+style='mso-tab-count:1'>          </span>return no_collision<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>float d<sub>coll</sub>
+= r – l<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>N<sub>coll</sub> = (P<sub>a</sub>
+– P<sub>b</sub>) / |P<sub>a</sub> – P<sub>b</sub>|<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>need to push sphere 0 and
+sphere 1 apart, so that they touch. the obvious choice would be “move them half
+the collision depth each, one along the normal of collision, the other along
+the opposite. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>P<sub>a</sub> += N<sub>coll</sub>
+* d<sub>coll</sub> * 0.5f<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>P<sub>b</sub><span
+style="mso-spacerun: yes">  </span>-= N<sub>coll</sub> * d<sub>coll</sub> *
+0.5f<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<span style='font-size:12.0pt;font-family:Tahoma;mso-fareast-font-family:"Times New Roman";
+mso-ansi-language:EN-GB;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br
+clear=all style='mso-special-character:line-break;page-break-before:always'>
+</span>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+style='font-family:Tahoma'><o:p></o:p></span></p>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<h1 align=center style='text-align:center;border:none;mso-border-bottom-alt:
+solid windowtext .5pt;padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'>Separating
+particles</h1>
+
+</div>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:line id="_x0000_s1041" style='position:absolute;
+ flip:x;z-index:11' from="198pt,71.6pt" to="243pt,89.75pt" strokecolor="blue"
+ strokeweight="2pt">
+ <v:stroke endarrow="block"/>
+</v:line><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+absolute;z-index:10;margin-left:262px;margin-top:93px;width:65px;height:31px'><img
+width=65 height=31 src="./rigid%20body%20demo_files/image002.gif" v:shapes="_x0000_s1041"></span><![endif]><!--[if gte vml 1]><v:line
+ id="_x0000_s1043" style='position:absolute;rotation:180;flip:x;z-index:12'
+ from="153pt,62.6pt" to="198pt,80.75pt" strokecolor="red" strokeweight="2pt">
+ <v:stroke endarrow="block"/>
+</v:line><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+absolute;z-index:11;margin-left:202px;margin-top:81px;width:65px;height:30px'><img
+width=65 height=30 src="./rigid%20body%20demo_files/image003.gif" v:shapes="_x0000_s1043"></span><![endif]><!--[if gte vml 1]><v:line
+ id="_x0000_s1038" style='position:absolute;flip:y;z-index:10' from="117pt,35.6pt"
+ to="306pt,116.6pt">
+ <v:stroke dashstyle="dash"/>
+</v:line><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+absolute;z-index:9;margin-left:155px;margin-top:46px;width:255px;height:111px'><img
+width=255 height=111 src="./rigid%20body%20demo_files/image004.gif" v:shapes="_x0000_s1038"></span><![endif]><!--[if gte vml 1]><v:oval
+ id="_x0000_s1037" style='position:absolute;margin-left:153pt;margin-top:-81.4pt;
+ width:279pt;height:261pt;z-index:9' filled="f" strokecolor="red"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:relative;z-index:8'><span style='position:
+absolute;left:204px;top:-109px;width:373px;height:349px'><img width=373
+height=349 src="./rigid%20body%20demo_files/image005.gif" v:shapes="_x0000_s1037"></span></span><![endif]><!--[if gte vml 1]><v:oval
+ id="_x0000_s1036" style='position:absolute;margin-left:9pt;margin-top:-.4pt;
+ width:243pt;height:225pt;z-index:8' filled="f" strokecolor="#36f"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:relative;z-index:7'><span style='position:
+absolute;left:12px;top:-1px;width:325px;height:301px'><img width=325
+height=301 src="./rigid%20body%20demo_files/image006.gif" v:shapes="_x0000_s1036"></span></span><![endif]><span
+style='font-family:Tahoma'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>however, there is a better
+solution. we can use the disproportion in masses between the two particles, and
+shift the lighter more than the heavier. As a particle of infinite mass will
+have a inverse mass of 0.0f, we can use that fact, to compute the displacement
+of the two particles. The advantage is, for particles of infinite mass, m<sup>-1</sup>
+= 0, and the displacement on theat particle is 0, so the particle remains
+static.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>P<sub>a</sub> += N<sub>coll</sub>
+* d<sub>coll</sub> * m<sub>a</sub><sup>-1</sup> / (m<sub>a</sub><sup>-1</sup> +
+m<sub>b</sub><sup>-1</sup>)<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>P<sub>b</sub><span
+style="mso-spacerun: yes">  </span>-= N<sub>coll</sub> * d<sub>coll</sub> * m<sub>b</sub><sup>-1</sup>
+/ (m<sub>a</sub><sup>-1</sup> + m<sub>b</sub><sup>-1</sup>)<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<span style='font-size:12.0pt;font-family:Tahoma;mso-fareast-font-family:"Times New Roman";
+mso-ansi-language:EN-GB;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br
+clear=all style='mso-special-character:line-break;page-break-before:always'>
+</span>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+style='font-family:Tahoma'><o:p></o:p></span></p>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<p class=MsoNormal align=center style='text-align:center;border:none;
+mso-border-bottom-alt:solid windowtext .5pt;padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><b><i><span
+style='font-family:Tahoma'>friction<o:p></o:p></span></i></b></p>
+
+</div>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>for friction, I use a
+‘cheat’. I calculate the relative velocity of the two particles, calculate the
+components on the collision plane (perpendicular to the collision normal),
+multiply it by a friction factor, and split it among the two particles. a
+stationary particle will therefore gain speed, while the moving particle will
+loose velocity due to friction. Again the mass ratio is used to split the
+amount of friction force unevenly between the objects. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>V<sub>a</sub> = Pa<sub>1</sub>
+– Pa<sub>0<o:p></o:p></sub></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>V<sub>b</sub> = Pb<sub>1</sub>
+– Pb<sub>0<o:p></o:p></sub></span></i></b></p>
+
+<p class=MsoNormal><b><i><sub><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></sub></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>V = (V<sub>a</sub> -
+V<sub>b</sub>)<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>V<sub>n</sub> = (V *
+N<sub>coll</sub>)<span style="mso-spacerun: yes">  </span>* N<sub>coll</sub><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>V<sub>t</sub> = V - V<sub>n</sub><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>friction = [0.0f,
+1.0f]<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>V<sub>friction</sub>
+= V<sub>t</sub> * friction<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>Pa<sub>1</sub><span
+style="mso-spacerun: yes">  </span>-= V<sub>friction</sub> *<span
+style="mso-spacerun: yes">  </span>m<sub>a</sub><sup>-1</sup> / (m<sub>a</sub><sup>-1</sup>
++ m<sub>b</sub><sup>-1</sup>)<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>Pb<sub>1</sub> += V<sub>friction</sub>
+* <span style="mso-spacerun: yes"> </span>m<sub>b</sub><sup>-1</sup> / (m<sub>a</sub><sup>-1</sup>
++ m<sub>b</sub><sup>-1</sup>)<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:oval id="_x0000_s1044" style='position:absolute;
+ margin-left:45pt;margin-top:8.85pt;width:261pt;height:243pt;z-index:13'
+ filled="f"/><v:line id="_x0000_s1046" style='position:absolute;z-index:14'
+ from="45pt,233.4pt" to="6in,233.4pt">
+ <v:stroke dashstyle="dash"/>
+</v:line><v:line id="_x0000_s1047" style='position:absolute;z-index:15' from="171pt,116.4pt"
+ to="243pt,233.4pt" strokecolor="blue" strokeweight="2pt">
+ <v:stroke endarrow="block"/>
+</v:line><v:shape id="_x0000_s1049" type="#_x0000_t202" style='position:absolute;
+ margin-left:189pt;margin-top:125.4pt;width:36pt;height:27pt;z-index:16'
+ filled="f" stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <h2>V</h2>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:line id="_x0000_s1050" style='position:absolute;flip:y;z-index:17'
+ from="333pt,62.4pt" to="333pt,233.4pt">
+ <v:stroke endarrow="block"/>
+</v:line><v:shape id="_x0000_s1051" type="#_x0000_t202" style='position:absolute;
+ margin-left:333pt;margin-top:152.4pt;width:36pt;height:27pt;z-index:18'
+ filled="f" stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <h2><span style='color:black'>N<sub>coll<o:p></o:p></sub></span></h2>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:line id="_x0000_s1052" style='position:absolute;rotation:180;
+ flip:y;z-index:19' from="171pt,116.4pt" to="171pt,233.4pt" strokecolor="green"
+ strokeweight="2pt">
+ <v:stroke endarrow="block"/>
+</v:line><v:shape id="_x0000_s1053" type="#_x0000_t202" style='position:absolute;
+ margin-left:2in;margin-top:152.4pt;width:36pt;height:27pt;z-index:20'
+ filled="f" stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <h2><span style='color:green'>V<sub>n<o:p></o:p></sub></span></h2>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:line id="_x0000_s1054" style='position:absolute;rotation:180;
+ flip:x y;z-index:21' from="171pt,233.4pt" to="243pt,233.4pt" strokecolor="red"
+ strokeweight="2pt">
+ <v:stroke endarrow="block"/>
+</v:line><v:shape id="_x0000_s1055" type="#_x0000_t202" style='position:absolute;
+ margin-left:180pt;margin-top:233.4pt;width:36pt;height:27pt;z-index:22'
+ filled="f" stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <h2><span style='color:red'>V<sub>t<o:p></o:p></sub></span></h2>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:line id="_x0000_s1056" style='position:absolute;z-index:23'
+ from="171pt,278.25pt" to="3in,278.4pt" strokecolor="#f60" strokeweight="2pt">
+ <v:stroke endarrow="block"/>
+</v:line><v:line id="_x0000_s1057" style='position:absolute;z-index:24' from="171pt,278.25pt"
+ to="243pt,278.25pt" strokecolor="red">
+ <v:stroke dashstyle="dash"/>
+</v:line><v:shape id="_x0000_s1058" type="#_x0000_t202" style='position:absolute;
+ margin-left:171pt;margin-top:251.4pt;width:54pt;height:27pt;z-index:25'
+ filled="f" stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <h2><span style='color:#FF6600'>V<sub>friction</sub><o:p></o:p></span></h2>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1059" type="#_x0000_t202" style='position:absolute;
+ margin-left:162pt;margin-top:98.4pt;width:36pt;height:27pt;z-index:26'
+ filled="f" stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal><b>P<sub>0<o:p></o:p></sub></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1060" type="#_x0000_t202" style='position:absolute;
+ margin-left:243pt;margin-top:224.4pt;width:36pt;height:27pt;z-index:27'
+ filled="f" stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal><b>P<sub>1<o:p></o:p></sub></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=59 height=12></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=519 height=370 src="./rigid%20body%20demo_files/image007.gif"
+  v:shapes="_x0000_s1044 _x0000_s1046 _x0000_s1047 _x0000_s1049 _x0000_s1050 _x0000_s1051 _x0000_s1052 _x0000_s1053 _x0000_s1054 _x0000_s1055 _x0000_s1056 _x0000_s1057 _x0000_s1058 _x0000_s1059 _x0000_s1060"></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>the same algorithm is used
+for computing friction to a particle hiting static geometry. <o:p></o:p></span></p>
+
+<span style='font-size:12.0pt;font-family:Tahoma;mso-fareast-font-family:"Times New Roman";
+mso-ansi-language:EN-GB;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br
+clear=all style='page-break-before:always'>
+</span>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<p class=MsoNormal align=center style='text-align:center;border:none;
+mso-border-bottom-alt:solid windowtext .5pt;padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><b><i><span
+style='font-family:Tahoma'>Vertex – particle collision Detection<o:p></o:p></span></i></b></p>
+
+</div>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>the first part is detecting
+if the vertex is inside the particle’s sphere. It’s a simple radius check. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:oval id="_x0000_s1062" style='position:absolute;
+ margin-left:147pt;margin-top:-78.8pt;width:279pt;height:261pt;z-index:28'
+ filled="f"/><v:shape id="_x0000_s1064" type="#_x0000_t202" style='position:absolute;
+ margin-left:189pt;margin-top:45.45pt;width:27pt;height:27pt;z-index:29'
+ filled="f" stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal><b>V<o:p></o:p></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1065" type="#_x0000_t202" style='position:absolute;
+ margin-left:4in;margin-top:10.15pt;width:36pt;height:27pt;z-index:30'
+ filled="f" stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal><b>P<o:p></o:p></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:oval id="_x0000_s1068" style='position:absolute;margin-left:207pt;
+ margin-top:63.25pt;width:18pt;height:18pt;z-index:31' fillcolor="black"
+ stroked="f"/><v:line id="_x0000_s1083" style='position:absolute;flip:x;
+ z-index:44' from="153pt,36.7pt" to="297pt,99.7pt" strokecolor="red">
+ <v:stroke dashstyle="dash"/>
+</v:line><v:line id="_x0000_s1084" style='position:absolute;rotation:-180;
+ flip:x;z-index:45' from="3in,36.7pt" to="297pt,72.7pt" strokecolor="red"
+ strokeweight="2pt">
+ <v:stroke endarrow="block"/>
+</v:line><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+relative;z-index:27'><span style='position:absolute;left:196px;top:-105px;
+width:373px;height:349px'><img width=373 height=349
+src="./rigid%20body%20demo_files/image008.gif" v:shapes="_x0000_s1062 _x0000_s1064 _x0000_s1065 _x0000_s1068 _x0000_s1083 _x0000_s1084"></span></span><![endif]><span
+style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>float l = |P – V|<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><b><i><span style='font-family:Tahoma'>if (l &gt; r) return
+no_collision<o:p></o:p></span></i></b></p>
+
+<span style='font-size:12.0pt;font-family:Tahoma;mso-fareast-font-family:"Times New Roman";
+mso-ansi-language:EN-GB;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br
+clear=all style='page-break-before:always'>
+</span>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<p class=MsoNormal align=center style='text-align:center;border:none;
+mso-border-bottom-alt:solid windowtext .5pt;padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><b><i><span
+style='font-family:Tahoma'>Vertex – Particle Separation<o:p></o:p></span></i></b></p>
+
+</div>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:oval id="_x0000_s1069" style='position:absolute;
+ margin-left:153pt;margin-top:6.95pt;width:279pt;height:261pt;z-index:32'
+ filled="f"/><v:shape id="_x0000_s1071" type="#_x0000_t202" style='position:absolute;
+ margin-left:195pt;margin-top:131.9pt;width:27pt;height:27pt;z-index:33'
+ filled="f" stroked="f">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal><b>V<sub>i</sub><o:p></o:p></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:oval id="_x0000_s1073" style='position:absolute;margin-left:213pt;
+ margin-top:149.9pt;width:18pt;height:18pt;z-index:34' fillcolor="black"
+ stroked="f"/><v:shape id="_x0000_s1081" type="#_x0000_t202" style='position:absolute;
+ margin-left:36pt;margin-top:26.8pt;width:36pt;height:27pt;z-index:42'
+ filled="f" stroked="f"/><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=48 height=9></td>
+  <td width=50></td>
+  <td width=106></td>
+  <td width=373></td>
+ </tr>
+ <tr>
+  <td height=27></td>
+  <td colspan=2></td>
+  <td rowspan=3 align=left valign=top><img width=373 height=349
+  src="./rigid%20body%20demo_files/image009.gif" v:shapes="_x0000_s1069 _x0000_s1071 _x0000_s1073"></td>
+ </tr>
+ <tr>
+  <td height=38></td>
+  <td width=50 height=38 align=left valign=top style='vertical-align:top'><![endif]><![if !mso]><span
+  style='position:absolute;z-index:42'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div v:shape="_x0000_s1081" style='padding:3.6pt 7.2pt 3.6pt 7.2pt'
+    class=shape>
+    <p class=MsoNormal><b>V<sub>i-1</sub><o:p></o:p></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  </span><![endif]><![if !mso & !vml]>&nbsp;<![endif]><![if !vml]></td>
+ </tr>
+ <tr>
+  <td height=284></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><!--[if gte vml 1]><v:oval id="_x0000_s1079"
+ style='position:absolute;margin-left:45pt;margin-top:10.6pt;width:18pt;
+ height:18pt;z-index:40' fillcolor="black" stroked="f"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:absolute;z-index:41;margin-left:60px;
+margin-top:14px;width:24px;height:24px'><img width=24 height=24
+src="./rigid%20body%20demo_files/image010.gif" v:shapes="_x0000_s1079"></span><![endif]><!--[if gte vml 1]><v:oval
+ id="_x0000_s1077" style='position:absolute;margin-left:180pt;margin-top:170.5pt;
+ width:18pt;height:18pt;z-index:38' fillcolor="red" stroked="f"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:absolute;z-index:39;margin-left:240px;
+margin-top:227px;width:24px;height:24px'><img width=24 height=24
+src="./rigid%20body%20demo_files/image011.gif" v:shapes="_x0000_s1077"></span><![endif]><!--[if gte vml 1]><v:shape
+ id="_x0000_s1075" type="#_x0000_t202" style='position:absolute;margin-left:3in;
+ margin-top:62.5pt;width:45pt;height:27pt;z-index:36' filled="f" stroked="f"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:absolute;z-index:37;margin-left:288px;
+margin-top:83px;width:62px;height:38px'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=62 height=38 align=left valign=top style='vertical-align:top'><![endif]><![if !mso]><span
+  style='position:absolute;z-index:36'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div v:shape="_x0000_s1075" style='padding:3.6pt 7.2pt 3.6pt 7.2pt'
+    class=shape>
+    <p class=MsoNormal><b><span style='color:red'>N<sub>v</sub><o:p></o:p></span></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  </span><![endif]><![if !mso & !vml]>&nbsp;<![endif]><![if !vml]></td>
+ </tr>
+</table>
+
+</span><![endif]><!--[if gte vml 1]><v:line id="_x0000_s1074" style='position:absolute;
+ rotation:-180;flip:x;z-index:35' from="222pt,53.5pt" to="252pt,115.45pt"
+ strokecolor="red" strokeweight="2pt">
+ <v:stroke endarrow="block"/>
+</v:line><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+absolute;z-index:36;margin-left:294px;margin-top:69px;width:45px;height:88px'><img
+width=45 height=88 src="./rigid%20body%20demo_files/image012.gif" v:shapes="_x0000_s1074"></span><![endif]><span
+style='font-family:Tahoma'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><!--[if gte vml 1]><v:line id="_x0000_s1078"
+ style='position:absolute;flip:x y;z-index:39' from="54pt,5.1pt" to="423.15pt,212.1pt"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:absolute;z-index:40;margin-left:71px;
+margin-top:6px;width:495px;height:279px'><img width=495 height=279
+src="./rigid%20body%20demo_files/image013.gif" v:shapes="_x0000_s1078"></span><![endif]><span
+style='font-family:Tahoma'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><!--[if gte vml 1]><v:line id="_x0000_s1076"
+ style='position:absolute;flip:x;z-index:37' from="189pt,8.6pt" to="261pt,152.6pt"
+ strokecolor="red">
+ <v:stroke dashstyle="dash"/>
+</v:line><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+absolute;z-index:38;margin-left:251px;margin-top:10px;width:99px;height:195px'><img
+width=99 height=195 src="./rigid%20body%20demo_files/image014.gif" v:shapes="_x0000_s1076"></span><![endif]><span
+style='font-family:Tahoma'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><!--[if gte vml 1]><v:shape id="_x0000_s1085"
+ type="#_x0000_t202" style='position:absolute;margin-left:135pt;margin-top:4.25pt;
+ width:45pt;height:27pt;z-index:46' filled="f" stroked="f"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:absolute;z-index:45;margin-left:180px;
+margin-top:6px;width:62px;height:38px'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=62 height=38 align=left valign=top style='vertical-align:top'><![endif]><![if !mso]><span
+  style='position:absolute;z-index:46'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div v:shape="_x0000_s1085" style='padding:3.6pt 7.2pt 3.6pt 7.2pt'
+    class=shape>
+    <p class=MsoNormal><b><span style='color:red'>P<sub>coll<o:p></o:p></sub></span></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  </span><![endif]><![if !mso & !vml]>&nbsp;<![endif]><![if !vml]></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><!--[if gte vml 1]><v:shape id="_x0000_s1082"
+ type="#_x0000_t202" style='position:absolute;margin-left:423pt;margin-top:2.3pt;
+ width:36pt;height:27pt;z-index:43' filled="f" stroked="f"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:absolute;z-index:44;margin-left:564px;
+margin-top:3px;width:50px;height:38px'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=50 height=38 align=left valign=top style='vertical-align:top'><![endif]><![if !mso]><span
+  style='position:absolute;z-index:43'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div v:shape="_x0000_s1082" style='padding:3.6pt 7.2pt 3.6pt 7.2pt'
+    class=shape>
+    <p class=MsoNormal><b>V<sub>i+1</sub><o:p></o:p></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  </span><![endif]><![if !mso & !vml]>&nbsp;<![endif]><![if !vml]></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><!--[if gte vml 1]><v:oval id="_x0000_s1080"
+ style='position:absolute;margin-left:414pt;margin-top:.35pt;width:18pt;
+ height:18pt;z-index:41' fillcolor="black" stroked="f"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:absolute;z-index:42;margin-left:552px;
+margin-top:0px;width:24px;height:24px'><img width=24 height=24
+src="./rigid%20body%20demo_files/image015.gif" v:shapes="_x0000_s1080"></span><![endif]><span
+style='font-family:Tahoma'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span>to smooth out response when a particle
+collides with a vertex, I use the vertex normal to push the particle away. if
+we use the separation vector shown reviously, the particle would ‘bump’ on the
+vertex, instead of smoothly sliding on the plane. It also depends on the order
+you process collisions. Using this method, the order does not matter. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>to
+compute the point of intersection, I cast a array from the vertex, along the
+opposite of the normal, and compute the intersection with the particle sphere.
+Then, all you need is move the particle away. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>the
+calculations involve processing a second order equation in the form <o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>ax<sup>2</sup> + bx + c = 0<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>first
+of all, I’ll clarify what we’ve got, and what we need.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>we’ve
+got a ray, starting at position V<sub>i</sub>, and with direction -N<sub>i</sub><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>we’ve
+got a sphere, centered at P (centre of particle), and of radius r.<o:p></o:p></span></p>
+
+<span style='font-size:12.0pt;font-family:Tahoma;mso-fareast-font-family:"Times New Roman";
+mso-ansi-language:EN-GB;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br
+clear=all style='mso-special-character:line-break;page-break-before:always'>
+</span>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><![if !supportEmptyParas]>&nbsp;<![endif]><span
+style='font-family:Tahoma'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>and
+a point P<sub>coll</sub> is on the line if this equation is verified<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>V<sub>i</sub> – N<sub>i</sub>.t = P<sub>coll</sub><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>and
+Pcoll is on the surface of the sphere if it verifies. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>(P<sub>coll</sub> – P)<sup>2</sup> = r<sup>2</sup><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>so,
+Pcoll is on both the ray and the sphere if it verifies the two equations
+simultaneously. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>V<sub>i</sub> – N<sub>i</sub>.t = P<sub>coll</sub></span></i></b><span
+style='font-family:Tahoma'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>(P<sub>coll</sub> – P)<sup>2</sup> = r<sup>2</sup><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>the
+unkown parameter in the system of equations if <b><i>t</i></b>. <b><i>t</i></b>
+will tell us where P<sub>coll</sub> is<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>so,
+to solve for <b><i>t</i></b>, we replace P<sub>coll</sub> in the second
+equation by the first equation, which gives<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>((V<sub>i</sub> – N<sub>i</sub> . t) – P)<sup>2</sup> = r<sup>2</sup><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:39.75pt;text-indent:-21.75pt;mso-list:
+l0 level1 lfo1;tab-stops:list 39.75pt left 104.65pt'><![if !supportLists]><span
+style='font-family:Wingdings;mso-bidi-font-family:Tahoma;mso-bidi-font-weight:
+bold;mso-bidi-font-style:italic'>ð<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><b><i><span style='font-family:Tahoma'>((V<sub>i</sub>
+– P) - (N<sub>i</sub> . t))<sup>2</sup> – r<sup>2</sup> = 0;<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='margin-left:39.75pt;text-indent:-21.75pt;mso-list:
+l0 level1 lfo1;tab-stops:list 39.75pt left 104.65pt'><![if !supportLists]><span
+style='font-family:Wingdings;mso-bidi-font-family:Tahoma;mso-bidi-font-weight:
+bold;mso-bidi-font-style:italic'>ð<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><b><i><span style='font-family:Tahoma'>equation in the
+form (a - b)<sup>2 </sup>– c<sup>2</sup> = 0<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='margin-left:39.75pt;text-indent:-21.75pt;mso-list:
+l0 level1 lfo1;tab-stops:list 39.75pt left 104.65pt'><![if !supportLists]><span
+style='font-family:Wingdings;mso-bidi-font-family:Tahoma;mso-bidi-font-weight:
+bold;mso-bidi-font-style:italic'>ð<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><b><i><span style='font-family:Tahoma'>a<sup>2</sup> +
+b<sup>2</sup> – 2.a.b – c<sup>2 </sup>= 0<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='margin-left:39.75pt;text-indent:-21.75pt;mso-list:
+l0 level1 lfo1;tab-stops:list 39.75pt left 104.65pt'><![if !supportLists]><span
+style='font-family:Wingdings;mso-bidi-font-family:Tahoma'>ð<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>[<b><i>N<sub>i</sub><sup>2</sup></i></b>] . <b><i>t<sup>2</sup></i></b><span
+style='font-family:Tahoma'> +[<b><i>-</i></b></span><b><i>2 (V<sub>i</sub> – P)
+. N<sub>i</sub> </i></b>]. <b><i>t</i></b> + [<b><i><span style='font-family:
+Tahoma'>(V<sub>i</sub> – P)<sup>2</sup> – r<sup>2</sup></span></i></b><span
+style='font-family:Tahoma'>] <b><i>= 0</i></b><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>equation
+in the form <o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>a.t<sup>2</sup>
++ b.t + c = 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>where<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>a
+= <b><i>N<sub>i</sub><sup>2</sup></i></b><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>b
+= <b><i>-2 . N<sub>i</sub> . (V<sub>i</sub> – P)</i></b><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>c
+= <b><i>(V<sub>i</sub> – P)<sup>2</sup> – r<sup>2</sup></i></b><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>solving
+this equation gives<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>d = b<sup>2</sup> – 4.a.c<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>if (d &lt; 0.0f)<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'><span style="mso-spacerun: yes">    </span>return<span
+style="mso-spacerun: yes">  </span>no_collision<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>t0 = (-b – sqrt(d)) / 2.a<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>t1 = (-b + sqrt(d)) / 2.a<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>to
+find P<sub>coll</sub>, we take the first positive root between (t0, t1). If
+none is found (which is very unlikely), the standard separation algorithm is
+used. <o:p></o:p></span></p>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<p class=MsoNormal align=center style='text-align:center;border:none;
+mso-border-bottom-alt:solid windowtext .5pt;padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><b><i><span
+style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal align=center style='text-align:center;border:none;
+mso-border-bottom-alt:solid windowtext .5pt;padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><b><i><span
+style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal align=center style='text-align:center;border:none;
+mso-border-bottom-alt:solid windowtext .5pt;padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><b><i><span
+style='font-family:Tahoma'>Edge – Particle Separation<o:p></o:p></span></i></b></p>
+
+</div>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>the
+first part of the test, is to decide which part of the edge is closest to the
+particle. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>for
+that, we find the projection of the particle on the edge, and see if that projection
+is before, after, or on the edge..<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><!--[if gte vml 1]><v:shape id="_x0000_s1100"
+ type="#_x0000_t202" style='position:absolute;margin-left:126pt;margin-top:9.35pt;
+ width:36pt;height:27pt;z-index:56' o:regroupid="1" filled="f" stroked="f"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:absolute;z-index:55;margin-left:168px;
+margin-top:12px;width:50px;height:38px'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=50 height=38 align=left valign=top style='vertical-align:top'><![endif]><![if !mso]><span
+  style='position:absolute;z-index:56'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div v:shape="_x0000_s1100" style='padding:3.6pt 7.2pt 3.6pt 7.2pt'
+    class=shape>
+    <h1><span style='font-family:"Times New Roman";color:#FF6600'>D<o:p></o:p></span></h1>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  </span><![endif]><![if !mso & !vml]>&nbsp;<![endif]><![if !vml]></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><!--[if gte vml 1]><v:line id="_x0000_s1097"
+ style='position:absolute;z-index:53' from="27pt,12.9pt" to="252pt,12.9pt"
+ o:regroupid="1" strokecolor="red" strokeweight="2pt">
+ <v:stroke endarrow="block"/>
+</v:line><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+absolute;z-index:52;margin-left:34px;margin-top:8px;width:305px;height:20px'><img
+width=305 height=20 src="./rigid%20body%20demo_files/image016.gif" v:shapes="_x0000_s1097"></span><![endif]><span
+style='font-family:Tahoma'><span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><!--[if gte vml 1]><v:oval id="_x0000_s1098"
+ style='position:absolute;margin-left:18pt;margin-top:10.45pt;width:18pt;
+ height:18pt;z-index:54' o:regroupid="1" fillcolor="black" stroked="f"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:absolute;z-index:53;margin-left:24px;
+margin-top:14px;width:24px;height:24px'><img width=24 height=24
+src="./rigid%20body%20demo_files/image017.gif" v:shapes="_x0000_s1098"></span><![endif]><span
+style='font-family:Tahoma'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><!--[if gte vml 1]><v:line id="_x0000_s1086"
+ style='position:absolute;z-index:47' from="27pt,4.95pt" to="3in,4.95pt"
+ o:regroupid="1"/><![endif]--><![if !vml]><span style='mso-ignore:vglayout;
+position:absolute;z-index:46;margin-left:35px;margin-top:6px;width:255px;
+height:3px'><img width=255 height=3
+src="./rigid%20body%20demo_files/image018.gif" v:shapes="_x0000_s1086"></span><![endif]><span
+style='font-family:Tahoma'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><!--[if gte vml 1]><v:oval id="_x0000_s1089"
+ style='position:absolute;margin-left:171pt;margin-top:-129.6pt;width:171pt;
+ height:151pt;z-index:48' o:regroupid="1" filled="f"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:relative;z-index:47'><span
+style='position:absolute;left:228px;top:-173px;width:229px;height:203px'><img
+width=229 height=203 src="./rigid%20body%20demo_files/image019.gif" v:shapes="_x0000_s1089"></span></span><![endif]><!--[if gte vml 1]><v:shape
+ id="_x0000_s1104" type="#_x0000_t202" style='position:absolute;margin-left:234pt;
+ margin-top:-84.6pt;width:36pt;height:27pt;z-index:59' filled="f" stroked="f"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:relative;z-index:58'><span
+style='position:absolute;left:312px;top:-113px;width:50px;height:38px'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=50 height=38 align=left valign=top style='vertical-align:top'><![endif]><![if !mso]><span
+  style='position:absolute;z-index:59'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div v:shape="_x0000_s1104" style='padding:3.6pt 7.2pt 3.6pt 7.2pt'
+    class=shape>
+    <p class=MsoNormal><b>P<o:p></o:p></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  </span><![endif]><![if !mso & !vml]>&nbsp;<![endif]><![if !vml]></td>
+ </tr>
+</table>
+
+</span></span><![endif]><!--[if gte vml 1]><v:line id="_x0000_s1092" style='position:absolute;
+ z-index:49' from="252pt,-57.55pt" to="252pt,-9.5pt" o:regroupid="1">
+ <v:stroke dashstyle="1 1"/>
+</v:line><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+relative;z-index:48'><span style='position:absolute;left:335px;top:-78px;
+width:3px;height:67px'><img width=3 height=67
+src="./rigid%20body%20demo_files/image020.gif" v:shapes="_x0000_s1092"></span></span><![endif]><!--[if gte vml 1]><v:oval
+ id="_x0000_s1094" style='position:absolute;margin-left:207pt;margin-top:-18.5pt;
+ width:18pt;height:18pt;z-index:51' o:regroupid="1" fillcolor="black"
+ stroked="f"/><![endif]--><![if !vml]><span style='mso-ignore:vglayout;
+position:relative;z-index:50'><span style='position:absolute;left:276px;
+top:-25px;width:24px;height:24px'><img width=24 height=24
+src="./rigid%20body%20demo_files/image021.gif" v:shapes="_x0000_s1094"></span></span><![endif]><!--[if gte vml 1]><v:line
+ id="_x0000_s1093" style='position:absolute;z-index:50' from="225pt,-9.5pt"
+ to="378pt,-9.5pt" o:regroupid="1">
+ <v:stroke dashstyle="1 1"/>
+</v:line><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+relative;z-index:49'><span style='position:absolute;left:299px;top:-14px;
+width:207px;height:3px'><img width=207 height=3
+src="./rigid%20body%20demo_files/image022.gif" v:shapes="_x0000_s1093"></span></span><![endif]><!--[if gte vml 1]><v:shape
+ id="_x0000_s1099" type="#_x0000_t202" style='position:absolute;margin-left:9pt;
+ margin-top:-3.5pt;width:36pt;height:27pt;z-index:55' o:regroupid="1" filled="f"
+ stroked="f"/><![endif]--><![if !vml]><span style='mso-ignore:vglayout;
+position:relative;z-index:54'><span style='position:absolute;left:12px;
+top:-5px;width:50px;height:38px'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=50 height=38 align=left valign=top style='vertical-align:top'><![endif]><![if !mso]><span
+  style='position:absolute;z-index:55'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div v:shape="_x0000_s1099" style='padding:3.6pt 7.2pt 3.6pt 7.2pt'
+    class=shape>
+    <p class=MsoNormal><b>V<sub>0</sub><o:p></o:p></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  </span><![endif]><![if !mso & !vml]>&nbsp;<![endif]><![if !vml]></td>
+ </tr>
+</table>
+
+</span></span><![endif]><!--[if gte vml 1]><v:line id="_x0000_s1101" style='position:absolute;
+ rotation:180;flip:x y;z-index:57' from="27pt,5.45pt" to="3in,5.45pt"
+ o:regroupid="1" strokecolor="green" strokeweight="2pt">
+ <v:stroke endarrow="block"/>
+</v:line><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+relative;z-index:56'><span style='position:absolute;left:34px;top:-2px;
+width:257px;height:20px'><img width=257 height=20
+src="./rigid%20body%20demo_files/image023.gif" v:shapes="_x0000_s1101"></span></span><![endif]><!--[if gte vml 1]><v:shape
+ id="_x0000_s1095" type="#_x0000_t202" style='position:absolute;margin-left:225pt;
+ margin-top:5.45pt;width:36pt;height:27pt;z-index:52' o:regroupid="1" filled="f"
+ stroked="f"/><![endif]--><![if !vml]><span style='mso-ignore:vglayout;
+position:absolute;z-index:51;margin-left:300px;margin-top:7px;width:50px;
+height:38px'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=50 height=38 align=left valign=top style='vertical-align:top'><![endif]><![if !mso]><span
+  style='position:absolute;z-index:52'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div v:shape="_x0000_s1095" style='padding:3.6pt 7.2pt 3.6pt 7.2pt'
+    class=shape>
+    <p class=MsoNormal><b>V<sub>1</sub><o:p></o:p></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  </span><![endif]><![if !mso & !vml]>&nbsp;<![endif]><![if !vml]></td>
+ </tr>
+</table>
+
+</span><![endif]><!--[if gte vml 1]><v:shape id="_x0000_s1102" type="#_x0000_t202"
+ style='position:absolute;margin-left:90pt;margin-top:5.45pt;width:36pt;
+ height:27pt;z-index:58' o:regroupid="1" filled="f" stroked="f"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:absolute;z-index:57;margin-left:120px;
+margin-top:7px;width:50px;height:38px'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=50 height=38 align=left valign=top style='vertical-align:top'><![endif]><![if !mso]><span
+  style='position:absolute;z-index:58'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div v:shape="_x0000_s1102" style='padding:3.6pt 7.2pt 3.6pt 7.2pt'
+    class=shape>
+    <h2><i><span style='color:green'>E<sub><o:p></o:p></sub></span></i></h2>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  </span><![endif]><![if !mso & !vml]>&nbsp;<![endif]><![if !vml]></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;tab-stops:104.65pt'><span
+style='font-family:Tahoma'>D is the projection distance of the sphere centre
+onto the edge. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;tab-stops:104.65pt'><span
+style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;tab-stops:104.65pt'><span
+style='font-family:Tahoma'>if (|D| &lt; 0), it means that V<sub>0</sub> is the
+closest point.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>if
+(|D| &gt; |E|), V<sub>1</sub> is the cloest point<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'>if
+(|D| &gt; 0 &amp;&amp; |D| &lt; |E|), then the point is on the edge, and is <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;tab-stops:104.65pt'><span
+style='font-family:Tahoma'>P<sub>coll</sub> = V<sub>0</sub> + D<o:p></o:p></span></p>
+
+<span style='font-size:12.0pt;font-family:Tahoma;mso-fareast-font-family:"Times New Roman";
+mso-ansi-language:EN-GB;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br
+clear=all style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal style='margin-top:12.0pt;tab-stops:104.65pt'><span
+style='font-family:Tahoma'>in code<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>L = (P – V<sub>0</sub>)<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>E = V<sub>1</sub> – V<sub>0<o:p></o:p></sub></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><sub><span
+style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></sub></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>le<span style="mso-spacerun: yes">  </span>= L . E<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>e<sup>2</sup> = E . E<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>if (le &lt; 0.0f)<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'><span style="mso-spacerun: yes">    </span>return V<sub>0</sub>
+collision;<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>if (le &gt; e<sup>2</sup>)<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'><span style="mso-spacerun: yes">    </span>return V<sub>1</sub>
+collision;<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>t = (le / e<sup>2</sup>);<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>P<sub>coll</sub> = V<sub>0</sub> + E . t<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><b><i><span style='font-family:
+Tahoma'>N<sub>coll</sub> = N<sub>0</sub> + (N<sub>1</sub> – N<sub>0</sub>) . t<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal style='tab-stops:104.65pt'><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;tab-stops:104.65pt'><span
+style='font-family:Tahoma'>to take advantage of the vertex-particle code, and
+the normal smoothing, once we know the particle hits the edge, we can
+interpolate along the edge, to also found the normal at P<sub>coll</sub>. now
+we have a complete vertex (Pcoll, Ncoll) and we can do a simple vertex-particle
+collision test at that point. <o:p></o:p></span></p>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<h3 style='margin-left:0cm'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></h3>
+
+<h3 style='margin-left:0cm'>Notes</h3>
+
+</div>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>I think that pretty much covers the demo. Note that,
+transfering the algorithm to 3D is basically straight forward. All you need is
+a 3D vector class, and base collisions on 3D spheres and triangles. For
+triangles, the vertex normal interpolation would work really well. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>One extension to this demo would be to bind render objects
+to the shapes. It is not as easy as it looks, as there is no explicit
+orientation of the bodies. You have to come up with a way to use the particle’s
+position to change the orientation of the rendered objects, and apply local
+deformations, especially for soft bodies. But that is outside the scope of the
+demo, and it will find its way to another COTD. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>A big thanks to Thomas Jakobsen, for making his work
+available to anyone, Thumbs up to Bouncer, make sure you check out his amazing
+demo (<a
+href="http://www.gamedev.net/community/forums/topic.asp?topic_id=201766">http://www.gamedev.net/community/forums/topic.asp?topic_id=201766</a>),
+the main inspiration behind this COTD, and all the dudes at <a
+href="http://www.gamedev.net/community/forums/">Gamedev.net</a> and <a
+href="http://www.flipcode.com/forums/">Flipcode.com</a>. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Have Fun!</p>
+
+<p class=MsoNormal><a href="mailto:olivierrenault@hotmail.com">mailto:olivierrenault@hotmail.com</a></p>
+
+</div>
+
+</body>
+
+</html>
