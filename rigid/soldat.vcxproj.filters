@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="physics">
+      <UniqueIdentifier>{462b5229-393b-44bb-af74-311497e1eff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\bodies">
+      <UniqueIdentifier>{eb3f0f7d-0b83-48ba-95f1-b0a488b18271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\mesh">
+      <UniqueIdentifier>{13248ba7-68b1-4662-930e-14a8242bca75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maths">
+      <UniqueIdentifier>{1604e939-aa96-47e1-8f31-40bcd978ae06}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\LinConstraint.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Particle.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Body.cpp">
+      <Filter>physics\bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BodyList.cpp">
+      <Filter>physics\bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Box.cpp">
+      <Filter>physics\bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Chain.cpp">
+      <Filter>physics\bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\RigidBody.cpp">
+      <Filter>physics\bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SoftBody.cpp">
+      <Filter>physics\bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Mesh.cpp">
+      <Filter>physics\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Vector.cpp">
+      <Filter>maths</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameCode.cpp" />
+    <ClCompile Include="source\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\LinConstraint.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Particle.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Body.h">
+      <Filter>physics\bodies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BodyList.h">
+      <Filter>physics\bodies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Box.h">
+      <Filter>physics\bodies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Chain.h">
+      <Filter>physics\bodies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\RigidBody.h">
+      <Filter>physics\bodies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SoftBody.h">
+      <Filter>physics\bodies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Mesh.h">
+      <Filter>physics\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Vector.h">
+      <Filter>maths</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="soldat.rc" />
+  </ItemGroup>
+</Project>

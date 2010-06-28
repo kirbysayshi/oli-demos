@@ -30,7 +30,7 @@ $History: $
 #include <windows.h>
 #include <math.h>
 #include <stdio.h>
-#include "C:\dev\oli\GLut\glut.h"
+#include "..\..\GLut\glut.h"
 #include "Vector.h"
 #include "Particle.h"
 #include "Body.h"

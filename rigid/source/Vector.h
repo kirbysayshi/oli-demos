@@ -24,7 +24,7 @@ $History: $
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "C:\dev\oli\GLut\glut.h"
+#include "..\..\GLut\glut.h"
 
 #define for if(0); else for
 
