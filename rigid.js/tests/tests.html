@@ -1,0 +1,444 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+ 	<link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
+	<script type="text/javascript" src="qunit.js"></script>
+
+	<script type="text/javascript" charset="utf-8" src='../mjs/mjs.js'></script>
+	<script type="text/javascript" src="../Inheritance.js"></script>
+	<script type="text/javascript" src="../VectorUtil.js"></script>
+	<script type="text/javascript" src="../CParticle.js"></script>
+	<script type="text/javascript" src="../CBody.js"></script>
+	<script type="text/javascript" src="../CLinConstraint.js"></script>
+	<script type="text/javascript" src="../CRigidBody.js"></script>
+	<script type="text/javascript" src="../CBox.js"></script>
+	<script type="text/javascript" src="../CSoftBody.js"></script>
+	<script type="text/javascript" src="../CChain.js"></script>
+	<script type="text/javascript" src="../CVertex.js"></script>
+	<script type="text/javascript" src="../CMesh.js"></script>
+	<script type="text/javascript" src="../CMeshBlob.js"></script>
+
+  <script>
+  $(document).ready(function(){
+
+module("CParticle.js");
+
+test("Collide", function(){
+	expect(3);
+	var p1 = new CParticle( V3.$(1, 0, 0), 10, 100 );
+	var p2 = new CParticle( V3.$(2, 0, 0), 10, 100 );
+	equal(p1.Collide(p2), true, "Expect collision response to return true");
+	equal(p2.m_xP1[0], 2.190000057220459, "X value of particle 2 should be 2.190000057220459");
+	equal(p1.m_xP1[0], 0.8100000023841858, "X value of particle 1 should be 0.8100000023841858");	
+});
+
+test("StaticCollisionResponse", function(){
+	expect(2);
+	var p1 = new CParticle( V3.$(0, 0, 0), 2, 1 );
+	equal(p1.StaticCollisionResponse(V3.$(1, 0, 0), 1), true, "Expect collision response to return true");
+	same(p1.m_xP1, V3.$(1, 0, 0), "Previous position should be 1, 0, 0");
+});
+
+test("GetBoundingBox", function(){
+	expect(2);
+	var p1 = new CParticle( V3.$(0, 0, 0), 2, 100 );
+	var Max = {}, Min = {};
+	p1.GetBoundingBox(Min, Max);
+	equal(Min[0], -2, "Expect Min x (0) == -2");
+	equal(Max[0], 2, "Expect Max x (0) == 2");
+});
+
+test("Update", function(){
+	expect(2);
+	var p1 = new CParticle( V3.$(0, 0, 0), 2, 100 );
+	p1.Update(1);	
+	same(p1.m_xP1, V3.$(0, 0, 0), "Expect previous position to still be zero");
+	same(p1.m_xP0, V3.$(0, 0, 0), "Expect current position to still be zero");
+});
+
+test("Update with Acceleration", function(){
+	expect(2);
+	var p1 = new CParticle( V3.$(0, 0, 0), 2, 1 );
+	p1.AddForce( V3.$(1, 0, 0) );
+	p1.Update(1);
+	same(p1.m_xP1, V3.$(1, 0, 0), "Expect previous x position to increase by 1");
+	same(p1.m_xP0, V3.$(0, 0, 0), "Expect current position to still be zero");
+});
+
+test("SetMass", function(){
+	expect(2);
+	var mass = 1;
+	var p1 = new CParticle( V3.$(0, 0, 0), 2, mass );	
+	same(p1.m_fMass, mass, "Expect mass to be " + mass);
+	same(p1.m_fInvMass, 1/mass, "Expect inverse mass to be " + mass);
+});
+
+test("SetMass Close to Zero", function(){
+	expect(2);
+	var p1 = new CParticle( V3.$(0, 0, 0), 2, 0.000001 );	
+	same(p1.m_fMass, 0, "Expect mass to be 0");
+	same(p1.m_fInvMass, 0, "Expect inverse mass to zero");
+});
+
+test("IsUnmovable", function(){
+	expect(1);
+	var p1 = new CParticle( V3.$(0, 0, 0), 2, 0 );
+	same(p1.IsUnmovable(), true, "Expect mass 0 == unmovable == true");
+});
+
+
+module("VectorUtil.js");
+
+test("FindRoots", function(){
+	expect(6);
+	
+	var t0 = 4, t1 = 5;
+	same(VectorUtil.FindRoots( 1, 10, 3, t0, t1 ), true, "FindRoots return true");
+	notEqual(t0, 4, "t0 value should be modified");
+	notEqual(t1, 5, "t1 value should be modified");
+	
+	t0 = Object(4); t1 = Object(5);
+	same(VectorUtil.FindRoots( 1, 10, 3, t0, t1 ), true, "FindRoots return true");
+	notEqual(t0, 4, "t0 value should be modified");
+	notEqual(t1, 5, "t1 value should be modified");
+});
+
+test("RaySphereIntersection", function(){
+
+	expect(1);
+
+	var xParticle = new CParticle(V3.$(568.324, 586.42, 0), 18.234, 1.927);
+	var v = new CVertex(V3.$(580.23, 578.99, 0), V3.$(-0.836, -0.5493, 0));
+
+	equal(Math.round(1000 * VectorUtil.RaySphereIntersection(
+		xParticle.m_xP1, 
+		xParticle.m_fRadius, 
+		v.m_xPosition, 
+		V3.neg(v.m_xNormal), 0.0, 1000.0)) / 1000, 7.165, "Expect RaySphereIntersection to be approximately 7.165");
+	
+});
+
+module("CBody.js");
+
+test("Copy", function(){
+	expect(1);
+	
+	var b1 = new CBody(1);
+	b1.AddParticle( new CParticle( V3.$(0,0,0), 5, 1) );
+	b1.AddParticle( new CParticle( V3.$(10,0,0), 5, 1) );
+	var b2 = new CBody().Copy(b1);
+	b1.m_xParticles[0].m_xP0 = V3.$(1,0,0);
+	
+	notDeepEqual(b2.m_xParticles[0], b1.m_xParticles[0], "Particle 0 of each body should be different"); 
+});
+
+test("ComputeBoundingSphere", function(){
+	var b1 = new CBody(1);
+	b1.AddParticle( new CParticle( V3.$(0,0,0), 5, 1) );
+	b1.ComputeBoundingSphere();
+	
+	equal(b1.GetBoundingRad(), 8.660254037844387, "Bounding radius should be 8.660254037844387");
+	deepEqual(b1.GetBoundingPos(), V3.$(0,0,0), "Expect bounding position to be zero");
+});
+
+test("BoundingVolumesIntersect", function(){
+	expect(3);
+	
+	var b1 = new CBody(1);
+	b1.AddParticle( new CParticle( V3.$(0,0,0), 5, 1) );
+	b1.UpdateBoundingVolume();
+	
+	var b2 = new CBody(1);
+	b2.AddParticle( new CParticle( V3.$(9,0,0), 5, 1) );
+	b2.UpdateBoundingVolume();
+	
+	var b3 = new CBody(1);
+	b3.AddParticle( new CParticle( V3.$(18,0,0), 5, 1) );
+	b3.UpdateBoundingVolume();
+	
+	equal(b1.BoundingVolumesIntersect(b3), false, "Expect b1 to not intersect b3");
+	equal(b1.BoundingVolumesIntersect(b2), true, "Expect b1 to intersect b2");
+	equal(b2.BoundingVolumesIntersect(b3), true, "Expect b2 to intersect b3");
+});
+
+test("Collide", function(){
+	expect(3);
+
+	var b1 = new CBody(1);
+	b1.AddParticle( new CParticle( V3.$(0,0,0), 5, 1) );
+	b1.UpdateBoundingVolume();
+	
+	var b2 = new CBody(1);
+	b2.AddParticle( new CParticle( V3.$(9,0,0), 5, 1) );
+	b2.UpdateBoundingVolume();
+	
+	equal(b1.Collide(b2), true, "Expect collision response to return true");
+	b1.UpdateBoundingVolume();
+	b2.UpdateBoundingVolume();
+	deepEqual(b1.GetBoundingPos(), V3.$(-1,0,0), "Expect b1 to have moved");
+	deepEqual(b2.GetBoundingPos(), V3.$(10,0,0), "Expect b2 to have moved");
+});
+
+module("CLinConstraint.js");
+
+test("Update", function(){
+	expect(5);
+	
+	var b1 = new CBody(1);
+	var p1 = new CParticle( V3.$(0,0,0), 5, 0);
+	var p2 = new CParticle( V3.$(10,0,0), 5, 1)
+	var c  = new CLinConstraint(p1, p2); 
+	b1.AddParticle( p1 );
+	b1.AddParticle( p2 );
+	b1.AddConstraint( c );
+	
+	p1.AddForce( V3.$(1, 0, 0) );
+	b1.UpdateParticles(3);
+	b1.UpdateConstraints();
+	
+	equal(b1.FindConstraint(c), true, "Expect constraint to be found");
+	equal(c.m_fRestLength, 10, "Expect rest length of constraint to be 10");
+	notDeepEqual(p2.m_xP1, V3.$(10,0,0), "Expect p2 position to have changed to keep constraint valid");
+	deepEqual(p1.m_xP1, V3.$(0,0,0), "Expect particle 1 to be fixed prev position");
+	deepEqual(p1.m_xP0, V3.$(0,0,0), "Expect particle 1 to be fixed curr position");
+});
+
+module("CRigidBody.js");
+
+test("Inheritance", function(){
+	expect(2);
+	var r = new CRigidBody();
+	equal(r.GetRigidity(), 1, "Default rigidity should be 1");
+	equal(typeof(r.ComputeBoundingSphere), "function", "CRigidBody should inherit parent function ComputeBoundingSphere");
+});
+
+module("CBox.js");
+
+test("Creation", function(){
+	expect(3);
+	var b = new CBox(V3.$(0, 0, 0), 10, 1, 20);
+	equal(b.GetNumParticles(), 4, "Expect 4 particles");
+	equal(b.GetNumConstraints(), 6, "Expect 6 constraints");
+	equal(b.GetRigidity(), 20, "Expect rigidity to be 20");
+});
+
+module("CSoftBody.js");
+
+test("Creation", function(){
+	expect(3);
+	var s = new CSoftBody(V3.$(0,0,0), 5, 10, 2, 1);
+	s.ComputeBoundingSphere();
+	equal(s.GetNumParticles(), 10, "Expect 10 particles");
+	equal(s.GetNumConstraints(), 15, "Expect 15 constraints");
+	equal(s.GetRigidity(), 1, "Expect rigidity to be 1");
+});
+
+module("CChain.js");
+
+test("Creation", function(){
+	expect(2);
+	var P0 = V3.$(0,0,0);
+	var P1 = V3.$(0,50,0);
+	var c = new CChain(P0, P1, 10, 1, 2, 1);
+	
+	equal(c.GetNumParticles(), 10, "Expect 10 particles");
+	equal(c.GetNumConstraints(), 9, "Expect 9 constraints");
+});
+
+test("Collide", function(){
+	expect(1);
+	var P0 = V3.$(0,0,0);
+	var P1 = V3.$(0,50,0);
+	var c = new CChain(P0, P1, 10, 1, 2, 1);
+	
+	equal(c.SelfCollide(), true, "Expect SelfCollide to return true");
+});
+
+module("CVertex.js");
+
+test("Collide", function(){
+	expect(2);
+	var v = new CVertex(V3.$(0,0,0));
+	var p = new CParticle(V3.$(1,0,0), 5, 1);
+	equal(v.Collide(p), true, "Expect a collision between particle and vertex");
+	notDeepEqual(p.m_xP1, V3.$(0,0,0), "Expect particle to be moved as result of collision");
+});
+
+module("CMesh.js");
+
+test("ComputeBoundingSphere", function(){
+	
+	var m = new CMesh();
+	m.SetVertices([ 
+		V3.$(0,0,0), V3.$(100,0,0), 
+		V3.$(100,100,0), V3.$(0,100,0) ], 4, true);
+		
+	deepEqual(m.m_xBoundingPos, V3.$(50, 50, 0), "Expect bounding position to be center of 100px box");
+	equal(m.m_fBoundingRad, V3.length( V3.$(50,50,0) ), "Expect bounding radius to be distance from center to corner of 100px box");
+	
+});
+
+test("BoundingVolumesIntersect", function(){
+	
+	var m = new CMesh();
+	
+	var offset = V3.$(100, 100, 0);
+	
+	m.SetVertices([ 
+		V3.add(V3.$(0,0,0), offset), V3.add(V3.$(100,0,0), offset), 
+		V3.add(V3.$(100,100,0), offset), V3.add(V3.$(0,100,0), offset) ], 4, true);
+	
+	var b1 = new CBody(1);
+	b1.AddParticle( new CParticle( V3.$(90,90,0), 10, 1) );
+	b1.UpdateBoundingVolume();
+	
+	//var ctx = document.getElementById("testCvs").getContext('2d');
+	//m.Render(ctx);
+	//b1.Render(ctx);
+	
+	equals(m.BoundingVolumesIntersect(b1), true, "Expect bounding volumes to intersect");
+	
+});
+
+test("CollideBody", function(){
+	
+	var m = new CMesh();
+	
+	var offset = V3.$(100, 100, 0);
+	
+	m.SetVertices([ 
+		V3.add(V3.$(0,0,0), offset), V3.add(V3.$(100,0,0), offset), 
+		V3.add(V3.$(100,100,0), offset), V3.add(V3.$(0,100,0), offset) ], 4, true);
+	
+	var b1 = new CBody(1);
+	b1.AddParticle( new CParticle( V3.$(90,90,0), 10, 1) );
+	b1.UpdateBoundingVolume();
+	
+	var b2 = new CBody(1);
+	b2.AddParticle( new CParticle( V3.$(190,100,0), 10, 1) );
+	b2.UpdateBoundingVolume();
+	
+	//var ctx = document.getElementById("testCvs").getContext('2d');
+	//m.Render(ctx);
+	//b1.Render(ctx);
+	//b2.Render(ctx);
+	
+	//equals(m.CollideBody(b1), false, "Expect CollideBody with b1 to return false");
+	//equals(m.CollideBody(b2), true, "Expect CollideBody with b2 to return true");
+	
+});
+
+test("CollideParticle", function(){
+	
+	var m = new CMesh();
+	
+	var offset = V3.$(100, 100, 0);
+	
+	m.SetVertices([ 
+		V3.add(V3.$(0,0,0), offset), V3.add(V3.$(100,0,0), offset), 
+		V3.add(V3.$(100,100,0), offset), V3.add(V3.$(0,100,0), offset) ], 4, true);
+	
+	var p1 = new CParticle( V3.$(90,90,0), 10, 1);	
+ 	var p2 = new CParticle( V3.$(190,100,0), 10, 1);
+	
+	//var ctx = document.getElementById("testCvs").getContext('2d');
+	//m.Render(ctx);
+	//var color = [ 0.7, 0.4, 0.9, 1 ];
+	//p1.Render(ctx, color);
+	//p2.Render(ctx, color);
+	
+	//equals(m.CollideParticle(p1), false, "Expect CollideParticle with p1 to return false");
+	//equals(m.CollideParticle(p2), true, "Expect CollideParticle with p2 to return true");
+	
+});
+
+test("CollideEdge", function(){
+	
+	var m = new CMesh();
+	
+	var offset = V3.$(100, 100, 0);
+	
+	m.SetVertices([ 
+		V3.add(V3.$(0,0,0), offset), V3.add(V3.$(100,0,0), offset), 
+		V3.add(V3.$(100,100,0), offset), V3.add(V3.$(0,100,0), offset) ], 4, true);
+	
+	var p1 = new CParticle( V3.$(90,90,0), 10, 1);	
+ 	var p2 = new CParticle( V3.$(199,100,0), 10, 1);
+	
+	//var ctx = document.getElementById("testCvs").getContext('2d');
+	//m.Render(ctx);
+	//var color = [ 0.7, 0.4, 0.9, 1 ];
+	//p1.Render(ctx, color);
+	//p2.Render(ctx, color);
+	
+	//equals(m.CollideEdge(p1, m.m_xVertices[3], m.m_xVertices[0]), false, "Expect CollideEdge with p1 to return false");
+	//equals(m.CollideEdge(p2, m.m_xVertices[2], m.m_xVertices[3]), true, "Expect CollideEdge with p2 to return true");
+	
+	// color the edge we're colliding with
+	//ctx.lineStyle = "#000000";
+	//ctx.beginPath();
+	//ctx.moveTo(m.m_xVertices[2].m_xPosition[0], m.m_xVertices[2].m_xPosition[1]);
+	//ctx.lineTo(m.m_xVertices[3].m_xPosition[0], m.m_xVertices[3].m_xPosition[1]);
+	//ctx.stroke();
+	
+	var p = new CParticle( V3.$(268.32434, 286.43402, 0), 18.234213, 1.9270149 );
+	
+	var m = new CMesh();
+	m.SetVertices([ 
+		V3.$(280.23071, 278.99316, 0), 
+		V3.$(331.08386, 195.40698, 0)
+	], 2, true);
+	
+	//var ctx = document.getElementById("testCvs").getContext('2d');
+	//m.Render(ctx);
+	//var color = [ 0.7, 0.4, 0.9, 1 ];
+	//p.Render(ctx, color);
+	
+	//equals(m.CollideEdge(p, m.m_xVertices[0], m.m_xVertices[1]), true, "Expect CollideEdge to return true");
+	
+	
+	var m = new CMesh();
+	var offset = V3.$(50, 50, 0);
+
+	m.SetVertices([ 
+		V3.add(V3.$(0,0,0), offset), V3.add(V3.$(400,0,0), offset), 
+		V3.add(V3.$(400,400,0), offset), V3.add(V3.$(0,400,0), offset) ], 4, true);
+		
+	var b = new CBox(V3.$(450, 200, 0), 20, 2, 2);
+	
+	equal(m.CollideBody(b), true, "Collision should occur");
+	
+	var ctx = document.getElementById("testCvs").getContext('2d');
+	m.Render(ctx);
+	var color = [ 0.7, 0.4, 0.9, 1 ];
+	b.Render(ctx);
+	
+});
+
+module("CMeshBlob.js");
+
+test("SetBlob", function(){
+
+	var m = new CMeshBlob(V3.$(240, 160, 0), 100, 24, 0.2, true);
+	var ctx = document.getElementById("testCvs").getContext('2d');
+	//m.Render(ctx);
+	
+	equal(m.m_iNumVertices, 24, "Expect 24 vertices");
+});
+
+  });
+  </script>
+  
+</head>
+<body>
+ <h1 id="qunit-header">Oli Verlet Physics</h1>
+ <h2 id="qunit-banner"></h2>
+ <h2 id="qunit-userAgent"></h2>
+ <ol id="qunit-tests"></ol>
+
+  <canvas id="testCvs" width="480" height="320" style="border: 1px solid #CCCCCC"></canvas>
+
+</body>
+</html>
