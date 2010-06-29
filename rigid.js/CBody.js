@@ -26,7 +26,7 @@ function CBody(iRigidity){
 CBody.prototype = {
 	// this should be used in place of the = operator
 	//-----------------------------------------------------------
-	// Copy a rigid body
+	// Copy a rigid body, NOTE: THIS IS THE ONLY JQUERY DEPENDENCY
 	//-----------------------------------------------------------
 	Copy: function(xBody){
 		this.m_iRigidity = (xBody.m_iRigidity <= 0) ? 1 : xBody.m_iRigidity;

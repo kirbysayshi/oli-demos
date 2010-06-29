@@ -132,7 +132,7 @@ function main() {
 	CANVASBUFFER.setAttribute("height", height + 100);
 	CTXBUFFER = CANVASBUFFER.getContext('2d'); // global
 	
-	window.title = "ping pong";
+	document.title = "ping pong";
 
 	// mouse just moving
 	//window.addEventListener("mousemove", PassiveMotion, false);
