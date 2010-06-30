@@ -10,7 +10,7 @@
 	</head>
 	<body id="index" onload="">
 		<div id="fpsMeter"></div>
-		<!--<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script type="text/javascript" charset="utf-8" src='./FPSMonitor.js'></script>
 		<script type="text/javascript" charset="utf-8" src='./mjs/mjs.js'></script>
 		<script type="text/javascript" src="./Inheritance.js"></script>
@@ -27,13 +27,13 @@
 		<script type="text/javascript" src="./CMesh.js"></script>
 		<script type="text/javascript" src="./CMeshBlob.js"></script>
 		<script type="text/javascript" src="./CBodyList.js"></script>
-		<script type="text/javascript" src="./CWorld.js"></script>-->
-		<script type="text/javascript" src="./OLIENGINE.js"></script>
+		<script type="text/javascript" src="./CWorld.js"></script>
+		<!--<script type="text/javascript" src="./OLIENGINE.js"></script>-->
 		
 		<script type="text/javascript">
 		window.onload = function(){
 			OLI = new CWorld( [640, 480, 0] );
-			OLI.InitBasicRenderer(640, 480, 100);
+			OLI.InitBasicRenderer(640, 480, 60, 1 / 30);
 			OLI.StartBasicRun();
 		};
 		</script>

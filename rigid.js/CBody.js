@@ -68,14 +68,11 @@ CBody.prototype = {
 	}
 	, RenderBoundingSphere: function(ctx) {		
 		// 0.8 * 255 = 204
-		
-		//if(this.m_xBoundingPos[0] > 0 && this.m_xBoundingPos[1] > 0
-		//&& this.m_xBoundingPos[0] < 640 && this.m_xBoundingPos[1] < 480){
-			ctx.strokeStyle = "rgba(204,204,204,0.3)";
-			ctx.beginPath();
-			ctx.arc( this.m_xBoundingPos[0], this.m_xBoundingPos[1], this.m_fBoundingRad, 0, Math.PI*2, false );
-			ctx.stroke();
-		//}
+
+		ctx.strokeStyle = "rgba(204,204,204,0.3)";
+		ctx.beginPath();
+		ctx.arc( this.m_xBoundingPos[0], this.m_xBoundingPos[1], this.m_fBoundingRad, 0, Math.PI*2, false );
+		ctx.stroke();
 	}
 	, Render: function(ctx){
 		this.RenderBoundingSphere(ctx);

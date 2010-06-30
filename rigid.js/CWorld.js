@@ -6,9 +6,11 @@ function CWorld(vWorldDimensions){
 }
 
 CWorld.prototype = {
-	
+	//---------------------------------------------------------------------
+	// Takes one step using some defaults and redraws the screen.
+	//---------------------------------------------------------------------
 	BasicRender: function(){
-		this.Update( 1 / 30 );
+		this.Update( this.deltaT );
 		this.ctx.clearRect(0, 0, this.viewport[0], this.viewport[1]);
 		this.bodies.Render(this.ctx);
 		this.fpsDiv.innerHTML = this.fpsMeter.check();
@@ -16,9 +18,13 @@ CWorld.prototype = {
 	, Update: function(dt){
 		this.bodies.Update(dt, false);
 	}
-	, InitBasicRenderer: function(width, height, targetFrameRate){
+	//---------------------------------------------------------------------
+	// creates a basic scene, including canvas and FPS meter
+	//---------------------------------------------------------------------
+	, InitBasicRenderer: function(width, height, targetFrameRate, deltaT){
 		this.viewport = V3.$(width, height, 0);
 		this.targetFrameRate = targetFrameRate;
+		this.deltaT = deltaT;
 		this.canvas = document.createElement("canvas");
 		this.canvas.setAttribute("width",  width);
 		this.canvas.setAttribute("height", height);
@@ -123,6 +129,9 @@ CWorld.prototype = {
 		if (e.keyCode == 32) 
 			this.InitBasicScene();
 	}
+	//---------------------------------------------------------------------
+	// Begin running the basic scene
+	//---------------------------------------------------------------------
 	, StartBasicRun: function(){
 		var interval = 1000 / this.targetFrameRate;
 		var self = this;

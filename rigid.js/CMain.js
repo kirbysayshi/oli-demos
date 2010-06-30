@@ -96,7 +96,7 @@ function Timer(t) {
 
 	Display(CTX, CTXBUFFER);
 	fps.innerHTML = FPSM.check();
-	INTERVALREFERENCE = setTimeout(Timer, 100 / 30);
+	INTERVALREFERENCE = setTimeout(Timer, 1000 / 30);
 }
 	
 function Reshape(w, h) {
@@ -166,7 +166,7 @@ function main() {
 	console.log("- press esc to shutdown");
 	
 	Init();
-	INTERVALREFERENCE = setTimeout(Timer, 100 / 30);
+	INTERVALREFERENCE = setTimeout(Timer, 1000 / 30);
 }
 
 main();
