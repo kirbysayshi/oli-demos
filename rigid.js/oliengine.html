@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>Oli Engine</title>
+		
+		<style type="text/css">
+		canvas { border: 1px solid #CCCCCC; background-color: #000000; }
+		</style>
+	</head>
+	<body id="index" onload="">
+		<div id="fpsMeter"></div>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script type="text/javascript" charset="utf-8" src='./FPSMonitor.js'></script>
+		<script type="text/javascript" charset="utf-8" src='./mjs/mjs.js'></script>
+		<script type="text/javascript" src="./Inheritance.js"></script>
+		
+		<script type="text/javascript" src="./VectorUtil.js"></script>
+		<script type="text/javascript" src="./CParticle.js"></script>
+		<script type="text/javascript" src="./CBody.js"></script>
+		<script type="text/javascript" src="./CLinConstraint.js"></script>
+		<script type="text/javascript" src="./CRigidBody.js"></script>
+		<script type="text/javascript" src="./CBox.js"></script>
+		<script type="text/javascript" src="./CSoftBody.js"></script>
+		<script type="text/javascript" src="./CChain.js"></script>
+		<script type="text/javascript" src="./CVertex.js"></script>
+		<script type="text/javascript" src="./CMesh.js"></script>
+		<script type="text/javascript" src="./CMeshBlob.js"></script>
+		<script type="text/javascript" src="./CBodyList.js"></script>
+		<script type="text/javascript" src="./CWorld.js"></script>
+		<!--<script type="text/javascript" src="./OLIENGINE.js"></script>-->
+		
+		<script type="text/javascript">
+		window.onload = function(){
+			OLI = new CWorld( [640, 480, 0] );
+			OLI.InitBasicRenderer(640, 480, 60, 1 / 30);
+			OLI.StartBasicRun();
+		};
+		</script>
+	</body>
+</html>

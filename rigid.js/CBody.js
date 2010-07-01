@@ -26,7 +26,7 @@ function CBody(iRigidity){
 CBody.prototype = {
 	// this should be used in place of the = operator
 	//-----------------------------------------------------------
-	// Copy a rigid body
+	// Copy a rigid body, NOTE: THIS IS THE ONLY JQUERY DEPENDENCY
 	//-----------------------------------------------------------
 	Copy: function(xBody){
 		this.m_iRigidity = (xBody.m_iRigidity <= 0) ? 1 : xBody.m_iRigidity;
@@ -68,14 +68,11 @@ CBody.prototype = {
 	}
 	, RenderBoundingSphere: function(ctx) {		
 		// 0.8 * 255 = 204
-		
-		//if(this.m_xBoundingPos[0] > 0 && this.m_xBoundingPos[1] > 0
-		//&& this.m_xBoundingPos[0] < 640 && this.m_xBoundingPos[1] < 480){
-			ctx.strokeStyle = "rgba(204,204,204,0.3)";
-			ctx.beginPath();
-			ctx.arc( this.m_xBoundingPos[0], this.m_xBoundingPos[1], this.m_fBoundingRad, 0, Math.PI*2, false );
-			ctx.stroke();
-		//}
+
+		ctx.strokeStyle = "rgba(204,204,204,0.3)";
+		ctx.beginPath();
+		ctx.arc( this.m_xBoundingPos[0], this.m_xBoundingPos[1], this.m_fBoundingRad, 0, Math.PI*2, false );
+		ctx.stroke();
 	}
 	, Render: function(ctx){
 		this.RenderBoundingSphere(ctx);

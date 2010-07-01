@@ -96,7 +96,7 @@ function Timer(t) {
 
 	Display(CTX, CTXBUFFER);
 	fps.innerHTML = FPSM.check();
-	INTERVALREFERENCE = setTimeout(Timer, 100 / 30);
+	INTERVALREFERENCE = setTimeout(Timer, 1000 / 30);
 }
 	
 function Reshape(w, h) {
@@ -132,7 +132,7 @@ function main() {
 	CANVASBUFFER.setAttribute("height", height + 100);
 	CTXBUFFER = CANVASBUFFER.getContext('2d'); // global
 	
-	window.title = "ping pong";
+	document.title = "ping pong";
 
 	// mouse just moving
 	//window.addEventListener("mousemove", PassiveMotion, false);
@@ -166,7 +166,7 @@ function main() {
 	console.log("- press esc to shutdown");
 	
 	Init();
-	INTERVALREFERENCE = setTimeout(Timer, 100 / 30);
+	INTERVALREFERENCE = setTimeout(Timer, 1000 / 30);
 }
 
 main();

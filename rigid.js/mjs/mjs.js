@@ -37,7 +37,7 @@
  * mjs version number aa.bb.cc, encoded as an integer of the form:
  * 0xaabbcc.
  */
-const MJS_VERSION = 0x000000;
+MJS_VERSION = 0x000000;
 
 /*
  * Constant: MJS_DO_ASSERT
@@ -47,18 +47,11 @@ const MJS_VERSION = 0x000000;
  * For potentially more performance, the assert methods can be
  * commented out in each place where they are called.
  */
-const MJS_DO_ASSERT = true;
+MJS_DO_ASSERT = true;
 
 // Some hacks for running in both the shell and browser,
 // and for supporting F32 and WebGLFloat arrays
-try { WebGLFloatArray; } catch (x) { 
-	try {
-		WebGLFloatArray = Float32Array; 
-	} catch(x){
-		WebGLFloatArray = Array;
-	}
-
-}
+if( typeof WebGLFloatArray === "undefined" ) WebGLFloatArray = Array;
 
 /*
  * Constant: MJS_FLOAT_ARRAY_TYPE
@@ -70,7 +63,7 @@ try { WebGLFloatArray; } catch (x) {
  * MJS_FLOAT_ARRAY_TYPE.  Also, the builtin constants such as (M4x4.I)
  * will be of this type.
  */
-const MJS_FLOAT_ARRAY_TYPE = WebGLFloatArray;
+MJS_FLOAT_ARRAY_TYPE = WebGLFloatArray;
 //const MJS_FLOAT_ARRAY_TYPE = Float32Array;
 //const MJS_FLOAT_ARRAY_TYPE = Float64Array;
 //const MJS_FLOAT_ARRAY_TYPE = Array;

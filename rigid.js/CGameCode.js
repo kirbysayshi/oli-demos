@@ -1,7 +1,7 @@
 function CGameCode(){
 	
 	this.dbg_UseAttractor = false;
-	this.dbg_world_size = 600;
+	this.dbg_world_size = 400;
 	this.dbg_Attractor = V3.$(0, 0, 0);
 	
 	//------------------------------------------------------------------
