@@ -1,5 +1,5 @@
-function CRigidBody(){
-	CBody.call(this);
+function CRigidBody(iRigidity, fFriction){
+	CBody.call(this, iRigidity, fFriction);
 }
 //CRigidBody.prototype = new CBody();
 //CRigidBody.prototype.constructor = CRigidBody;

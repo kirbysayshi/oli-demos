@@ -30,7 +30,7 @@ CChain.prototype.SetChain = function(P0, P1, iNumParticles, iRigidity, fParticle
 	{
 		this.AddParticle(new CParticle(P, fParticleRadius, (i != 0)? fParticleMass : 0.0));
 
-		P = V3.add(P, D); // must be  different position obj, not the same!
+		P = V3.add(P, D); // must be different position obj, not the same!
 	}
 
 	//------------------------------------------------------------------

@@ -1,10 +1,12 @@
-function CParticle(xPos, fRadius, Mass){
+function CParticle(xPos, fRadius, Mass, fFriction){
 	this.m_xP0 = xPos;						// Vector: Current positions
 	this.m_xP1 = xPos;						// Vector: Previous positions
 	this.m_xAcceleration = V3.$(0, 0, 0);	// Vector: Force accumulators
 	this.m_fMass;							// float: mass
 	this.m_fInvMass;							// float: inverse mass
 	this.m_fRadius = fRadius;				// float: radius of the particle
+	
+	this.m_fFriction = fFriction == undefined ? 0.5 : fFriction; // friction to use for collisions
 	
 	this.SetMass(Mass);
 }
@@ -160,7 +162,7 @@ CParticle.prototype = {
 		//-----------------------------------------------------------
 		// the amount of friction
 		//-----------------------------------------------------------
-		var friction = 0.5; // TODO: make this class-level, or even a global const
+		var friction = this.m_fFriction; // TODO: make this class-level, or even a global const
 
 		//-----------------------------------------------------------
 		// Move particle away from plane
@@ -190,7 +192,7 @@ CParticle.prototype = {
 		//-----------------------------------------------------------
 		// the amount of friction
 		//-----------------------------------------------------------
-		var friction = 0.5; // TODO: break this out into a class var or global
+		var friction = this.m_fFriction; // TODO: break this out into a class var or global
 
 		//-----------------------------------------------------------
 		// Move particle away from plane

@@ -16,7 +16,7 @@ CWorld.prototype = {
 		this.fpsDiv.innerHTML = this.fpsMeter.check();
 	}
 	, Update: function(dt){
-		this.bodies.Update(dt, false);
+		this.bodies.Update(dt);
 	}
 	//---------------------------------------------------------------------
 	// creates a basic scene, including canvas and FPS meter
@@ -37,10 +37,17 @@ CWorld.prototype = {
 		this.fpsDiv.id = "fpsMeter";
 		document.getElementsByTagName("body")[0].appendChild(this.fpsDiv);
 		
-		this.InitBasicScene();
+		// add listeners
+		var self = this;
+		window.addEventListener("keydown", function(e){ self.BasicKeyHandler(e) }, false);
+		this.canvas.addEventListener("click", function(e){ self.BasicMouseHandler(e) }, false);
+		
 	}	
 	, InitBasicScene: function(){
 		this.bodies.DeleteAll();
+		
+		this.bodies.worldForces = []; // blank out existing world forces
+		this.bodies.AddWorldForce(V3.$(0, 100, 0));
 		
 		//------------------------------------------------------------------
 		// Set the world outer limit
@@ -66,7 +73,7 @@ CWorld.prototype = {
 			var iRigidity = (Math.floor(Math.random() * 32767)) & 1 + 2;
 			var fMass = Math.random()*3.0 + 1.0;
 			this.bodies.NewBody(
-				new CSoftBody(P0, fBodyRadius, iNumParticles, fMass, iRigidity));
+				new CSoftBody(P0, fBodyRadius, iNumParticles, fMass, iRigidity, 0.5));
 		}
         
 		//------------------------------------------------------------------
@@ -82,7 +89,7 @@ CWorld.prototype = {
 				+ Math.min(this.worldD[0], this.worldD[1]) / 40.0;
 			var fMass = Math.random()*3.0  + 1.5;
 			var iRigidity = (Math.floor(Math.random() * 32767)) & 1 + 1;
-			this.bodies.NewBody(new CBox(Pos, fSize, fMass, iRigidity));
+			this.bodies.NewBody(new CBox(Pos, fSize, fMass, iRigidity, 0.1));
 		}
         
 		//------------------------------------------------------------------
@@ -119,8 +126,7 @@ CWorld.prototype = {
         
 			this.bodies.NewMesh(new CMeshBlob(P, fRadius, 8, 0.4, false));
 		}
-		var self = this;
-		window.addEventListener("keydown", function(e){ self.BasicKeyHandler(e) }, false);
+		
 	}
 	, BasicKeyHandler: function(e){
 		if (e.keyCode == 27)
@@ -128,6 +134,22 @@ CWorld.prototype = {
 
 		if (e.keyCode == 32) 
 			this.InitBasicScene();
+	}
+	, BasicMouseHandler: function(e){
+		
+		// find the body(s) closest to the cursor, and apply -10000x gravity
+		var mouseX = e.clientX - this.canvas.offsetLeft;
+		var mouseY = e.clientY - this.canvas.offsetTop;
+		
+		for(var i = 0; i < this.bodies.m_iNumBodies; i++){
+			var b = this.bodies.m_pxBodies[i];
+			var d = V3.length( V3.sub( b.m_xBoundingPos, V3.$(mouseX, mouseY, 0) ) );
+			if(d <= b.m_fBoundingRad){
+				b.AddForce( V3.$(0, -10000, 0) );
+				console.log(b);
+			}
+		}
+		
 	}
 	//---------------------------------------------------------------------
 	// Begin running the basic scene

@@ -1,4 +1,4 @@
-function CBody(iRigidity){
+function CBody(iRigidity, fFriction){
 	//--------------------------------------------
 	// particles and constraints on a body
 	//--------------------------------------------
@@ -9,6 +9,7 @@ function CBody(iRigidity){
 	this.m_iMaxParticles = 100;
 	this.m_iMaxConstraints = 100;
 	this.m_iRigidity = typeof(iRigidity) === "undefined" ? this.m_iRigidity = 1 : iRigidity;
+	this.m_fFriction = typeof(fFriction) === "undefined" ? this.m_fFriction = 0.5: fFriction;
 
 	//--------------------------------------------
 	// General bounding sphere around the body 
@@ -21,6 +22,8 @@ function CBody(iRigidity){
 	this.m_afColor[1] = 1.0; // G
 	this.m_afColor[2] = 0.0; // B
 	this.m_afColor[3] = 0.5; // A
+	
+	this.forces = []; // each step the forces here are applied and removed from the queue
 }
 
 CBody.prototype = {
@@ -30,6 +33,7 @@ CBody.prototype = {
 	//-----------------------------------------------------------
 	Copy: function(xBody){
 		this.m_iRigidity = (xBody.m_iRigidity <= 0) ? 1 : xBody.m_iRigidity;
+		this.m_fFriction = xBody.m_iRigidity;
 
 		//-----------------------------------------------------------
 		// Allocate memory space
@@ -91,26 +95,29 @@ CBody.prototype = {
 			this.m_xConstraints[i].Render(ctx);
 		}
 	}
-	, AttractParticles: function(pxAttractor){
+	, AddForce: function(force){
+		this.forces.push(force);
+	}
+	, ApplyForces: function(worldForces){
 		//-----------------------------------------------------------
-		// Add an attractor, for fun
+		// apply all forces acting on the body
 		//-----------------------------------------------------------
 		for(var i = 0; i < this.m_iNumParticles; i++)
 		{
-			if (pxAttractor)
-			{
-				var f = V3.sub(pxAttractor, this.m_xParticles[i].m_xP0);
-				f[0] /= 0.5;
-				f[1] /= 0.5;
-				f[2] /= 0.5;
-				this.m_xParticles[i].AddForce(f);
+			var p = this.m_xParticles[i];
+			var j = 0;
+			// apply world forces
+			for(j = 0; j < worldForces.length; j++){
+				p.AddForce( V3.scale( worldForces[j] , p.m_fMass) );
 			}
-			else
-			{
-				// +10 for gravity?
-				this.m_xParticles[i].AddForce( V3.scale(V3.$(0, 100, 0), this.m_xParticles[i].m_fMass) );
+			
+			// apply body forces
+			for(j = 0; j < this.forces.length; j++){
+				p.AddForce( V3.scale( this.forces[j] , p.m_fMass) );
 			}
 		}
+		
+		this.forces = []; // blank it out
 	}
 	//-----------------------------------------------------------
 	// Update particle's estimated position		

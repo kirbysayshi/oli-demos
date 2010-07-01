@@ -1,8 +1,8 @@
 //-----------------------------------------------------------
 // simple square box body	
 //-----------------------------------------------------------
-function CBox(xPos, fSize, fParticleMass, iRigidity){
-	CRigidBody.call(this);
+function CBox(xPos, fSize, fParticleMass, iRigidity, fFriction){
+	CRigidBody.call(this, iRigidity, fFriction);
 	this.SetColor(1.0, 0.3, 0.3, 0.5);
 	this.SetBox(xPos, fSize, fParticleMass, iRigidity);
 }

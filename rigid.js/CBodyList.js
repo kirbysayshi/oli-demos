@@ -4,6 +4,9 @@ function CBodyList(){
 
 	this.m_pxMeshes = []; // array of CMesh(s)
 	this.m_iNumMeshes = 0;
+	
+	this.worldForces = [];
+	this.worldFriction = 0.5;
 }
 
 CBodyList.prototype = {
@@ -21,12 +24,9 @@ CBodyList.prototype = {
 		for(var i = 0; i < this.m_iNumBodies; i++)
 		{
 			if (this.m_pxBodies[i] == pxBody)
-			{
-				this.m_pxBodies[i] = undefined; // "delete"
-				
+			{	
+				this.m_pxBodies.splice(i, 1);
 				this.m_iNumBodies--;
-				this.m_pxBodies[i] = this.m_pxBodies[this.m_iNumBodies];
-				this.m_pxBodies[this.m_iNumBodies] = undefined;
 				return;
 			}
 		}
@@ -47,11 +47,14 @@ CBodyList.prototype = {
 		{
 			if (this.m_pxMeshes[i] == pxMesh)
 			{
-				this.m_pxMeshes[i] = undefined; // "delete"
-
+				//this.m_pxMeshes[i] = undefined; // "delete"
+                //
+				//this.m_iNumMeshes--;
+				//this.m_pxMeshes[i] = this.m_pxMeshes[this.m_iNumMeshes];
+				//this.m_pxMeshes[this.m_iNumMeshes] = undefined;
+				
+				this.m_pxMeshes.splice(i, 1);
 				this.m_iNumMeshes--;
-				this.m_pxMeshes[i] = this.m_pxMeshes[this.m_iNumMeshes];
-				this.m_pxMeshes[this.m_iNumMeshes] = undefined;
 				return;
 			}
 		}
@@ -64,19 +67,22 @@ CBodyList.prototype = {
 
 		this.m_iNumMeshes++;
 	}
+	, AddWorldForce: function(force){
+		this.worldForces.push(force);
+	}
 	//-----------------------------------------------------------
 	// update all bodies. Move their particles, apply 
 	// collision constraints, then stiff cosntraints
 	//-----------------------------------------------------------
-	, Update: function(dt, pxAttractor) {
+	, Update: function(dt) {
 
 		//-----------------------------------------------------------
-		// either attract the bodies to a position, or use gravity
+		// apply world forces (like gravity) and queued forces
 		//-----------------------------------------------------------
 		for(var i = 0; i < this.m_iNumBodies; i++)
 		{
 			if (this.m_pxBodies[i])
-				this.m_pxBodies[i].AttractParticles(pxAttractor);
+				this.m_pxBodies[i].ApplyForces(this.worldForces);
 		}
 
 

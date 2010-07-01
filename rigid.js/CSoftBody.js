@@ -1,12 +1,12 @@
-function CSoftBody(xPos, fBodyRadius, iNumParticles, fParticleMass, iRigidity){
-	CBody.call(this);
+function CSoftBody(xPos, fBodyRadius, iNumParticles, fParticleMass, iRigidity, fFriction){
+	CBody.call(this, iRigidity, fFriction);
 	this.SetColor(0.6, 0.6, 1.0, 0.5);
-	this.SetSoftBody(xPos, fBodyRadius, iNumParticles, fParticleMass, iRigidity);
+	this.SetSoftBody(xPos, fBodyRadius, iNumParticles, fParticleMass, iRigidity, fFriction);
 }
 
 ChildInheritsParent(CSoftBody, CBody);
 
-CSoftBody.prototype.SetSoftBody = function(xPos, fBodyRadius, iNumParticles, fParticleMass, iRigidity) {
+CSoftBody.prototype.SetSoftBody = function(xPos, fBodyRadius, iNumParticles, fParticleMass, iRigidity, fFriction) {
 	//-----------------------------------------------------
 	// make sure we have sufficient number of particles
 	//-----------------------------------------------------
@@ -44,7 +44,7 @@ CSoftBody.prototype.SetSoftBody = function(xPos, fBodyRadius, iNumParticles, fPa
 
 		var Pos = V3.add(xPos, V3.scale(V3.$(Math.cos(angle), Math.sin(angle), 0), fDist));
 
-		this.AddParticle( new CParticle(Pos, fParticleRadius, fParticleMass) );
+		this.AddParticle( new CParticle(Pos, fParticleRadius, fParticleMass, fFriction) );
 	}
 
 	var iNumConstraints = 0;
