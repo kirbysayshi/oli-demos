@@ -29,7 +29,7 @@ var GI = new CGameCode();
 //--------------------------------------------------------------------------
 // FPS meter
 //--------------------------------------------------------------------------
-var FPSM = new FPSMonitor(100 / 30);
+var FPSM = new FPSMonitor(1000 / 30);
 var fps = document.getElementById('fpsMeter');
 
 //-----------------------------------------------------
@@ -100,9 +100,10 @@ function Timer(t) {
 }
 	
 function Reshape(w, h) {
+	// this does nothing right now
 	width  = w;
 	height = h;
-	glViewport(	0, 0, w, h);
+	//glViewport(	0, 0, w, h);
 }
 
 // k == char, x == int, y == int

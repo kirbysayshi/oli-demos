@@ -40,7 +40,8 @@ CWorld.prototype = {
 		// add listeners
 		var self = this;
 		window.addEventListener("keydown", function(e){ self.BasicKeyHandler(e) }, false);
-		this.canvas.addEventListener("click", function(e){ self.BasicMouseHandler(e) }, false);
+		this.canvas.addEventListener("click", function(e){ self.BasicMouseClickHandler(e) }, false);
+		this.canvas.addEventListener("mousemove", function(e){ self.BasicMouseMoveHandler(e) }, false);
 		
 	}	
 	, InitBasicScene: function(){
@@ -119,7 +120,7 @@ CWorld.prototype = {
 		{
 			var P = V3.$(
 				Math.random()*(Math.min(this.worldD[0], this.worldD[1]) * 1.2)
-				, Math.random()*(this.dbg_world_size * 1.2)
+				, Math.random()*(Math.min(this.worldD[0], this.worldD[1]) * 1.2)
 				, 0);
 			var fRadius = Math.random()*(Math.min(this.worldD[0], this.worldD[1]) * 0.1) 
 				+ Math.min(this.worldD[0], this.worldD[1]) * 0.05;
@@ -135,7 +136,7 @@ CWorld.prototype = {
 		if (e.keyCode == 32) 
 			this.InitBasicScene();
 	}
-	, BasicMouseHandler: function(e){
+	, BasicMouseClickHandler: function(e){
 		
 		// find the body(s) closest to the cursor, and apply -10000x gravity
 		var mouseX = e.clientX - this.canvas.offsetLeft;
@@ -150,6 +151,18 @@ CWorld.prototype = {
 			}
 		}
 		
+	}
+	, BasicMouseMoveHandler: function(e){
+		if (e.shiftKey == true){
+			var mouseX = e.clientX - this.canvas.offsetLeft;
+			var mouseY = e.clientY - this.canvas.offsetTop;
+			
+			for(var i = 0; i < this.bodies.m_iNumBodies; i++){
+				var b = this.bodies.m_pxBodies[i];
+				
+				b.AddForce( V3.$( (mouseX - b.m_xBoundingPos[0]) * 3, (mouseY - b.m_xBoundingPos[1]) * 3, 0) );
+			}
+		}
 	}
 	//---------------------------------------------------------------------
 	// Begin running the basic scene
