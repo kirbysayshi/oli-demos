@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<title>Oli Engine</title>
+		<title>Stomach</title>
 		
 		<style type="text/css">
 		canvas { border: 1px solid #CCCCCC; background-color: #000000; }
@@ -27,15 +27,15 @@
 		<script type="text/javascript" src="../CMesh.js"></script>
 		<script type="text/javascript" src="../CMeshBlob.js"></script>
 		<script type="text/javascript" src="../CBodyList.js"></script>
+		<script type="text/javascript" src="../CBasic.js"></script>
+		
 		<script type="text/javascript" src="./stomach.js"></script>
-		<!--<script type="text/javascript" src="./OLIENGINE.js"></script>-->
 		
 		<script type="text/javascript">
 		window.onload = function(){
-			OLI = new CWorld( [640, 480, 0] );
-			OLI.InitBasicRenderer(640, 480, 60, 1 / 30);
-			OLI.InitBasicScene();
-			OLI.StartBasicRun();
+
+			S = new Stomach( [640, 480, 0] );
+
 		};
 		</script>
 	</body>
