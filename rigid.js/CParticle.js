@@ -86,33 +86,6 @@ CParticle.prototype = {
 		this.m_fMass  = fMass;
 		this.m_fInvMass = 1.0 / this.m_fMass; 
 	}
-	//-----------------------------------------------------------
-	// Render particle, and bounding sphere
-	//-----------------------------------------------------------
-	, Render: function(ctx, color) {
-		//if(this.m_xP0[0] > 0 && this.m_xP0[1] > 0
-		//&& this.m_xP0[0] < 640 && this.m_xP0[1] < 480){
-			// bounding sphere
-			ctx.fillStyle = "rgba(" 
-				+ Math.round(color[0]*255) + "," 
-				+ Math.round(color[1]*255) + "," 
-				+ Math.round(color[2]*255) + "," 
-				+ color[3] + ")";
-			ctx.beginPath();
-			ctx.arc( this.m_xP0[0], this.m_xP0[1], this.m_fRadius, 0, Math.PI*2, false );
-			ctx.fill();
-			
-			// position point
-			ctx.fillStyle = "rgba(" 
-				+ Math.round(color[0]*255) + "," 
-				+ Math.round(color[1]*255) + "," 
-				+ Math.round(color[2]*255) + "," 
-				+ color[3] + ")";
-			ctx.beginPath();
-			ctx.arc( this.m_xP0[0], this.m_xP0[1], 2, 0, Math.PI*2, false );
-			ctx.fill();
-		//}
-	}
 	, Update: function(dt) {
 		//----------------------------------------------------------
 		// Stop particle if inmovable

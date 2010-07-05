@@ -57,13 +57,4 @@ CLinConstraint.prototype = {
 		V3.add(x1, V3.scale(delta, invmass1), x1);
 		V3.sub(x2, V3.scale(delta, invmass2), x2);
 	}
-	, Render: function(ctx){
-		if (!this.m_pxPA || !this.m_pxPB)
-			return;
-		ctx.strokeStyle = "#999999";	
-		ctx.beginPath();
-		ctx.moveTo(this.m_pxPA.m_xP1[0], this.m_pxPA.m_xP1[1]);
-		ctx.lineTo(this.m_pxPB.m_xP1[0], this.m_pxPB.m_xP1[1]);
-		ctx.stroke();
-	}
 };

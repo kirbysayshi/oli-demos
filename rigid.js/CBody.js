@@ -70,31 +70,6 @@ CBody.prototype = {
 
 		return this;
 	}
-	, RenderBoundingSphere: function(ctx) {		
-		// 0.8 * 255 = 204
-
-		ctx.strokeStyle = "rgba(204,204,204,0.3)";
-		ctx.beginPath();
-		ctx.arc( this.m_xBoundingPos[0], this.m_xBoundingPos[1], this.m_fBoundingRad, 0, Math.PI*2, false );
-		ctx.stroke();
-	}
-	, Render: function(ctx){
-		this.RenderBoundingSphere(ctx);
-		
-		//---------------------------------------------------------------
-		// Render particles
-		//---------------------------------------------------------------
-		for(var i = 0; i < this.m_iNumParticles; i++){ 
-			this.m_xParticles[i].Render(ctx, this.m_afColor);
-		}
-		
-		//---------------------------------------------------------------
-		// Render constraints
-		//---------------------------------------------------------------
-		for(var i = 0; i < this.m_iNumConstraints; i++){ 
-			this.m_xConstraints[i].Render(ctx);
-		}
-	}
 	, AddForce: function(force){
 		this.forces.push(force);
 	}

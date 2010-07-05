@@ -150,18 +150,7 @@ CBodyList.prototype = {
 			}
 		}
 	}
-	, Render: function(ctx) {
-		for(var i = 0; i < this.m_iNumBodies; i ++)
-		{
-			if (this.m_pxBodies[i])
-				this.m_pxBodies[i].Render(ctx);
-		}
-		for(var i = 0; i < this.m_iNumMeshes; i ++)
-		{
-			if (this.m_pxMeshes[i])
-				this.m_pxMeshes[i].Render(ctx);
-		}
-	}
+	
 };
 
 // these are technically supposed to be enums

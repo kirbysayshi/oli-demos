@@ -1,0 +1,3 @@
+[submodule "rigid.js/ID.js"]
+	path = rigid.js/ID.js
+	url = git://github.com/kirbysayshi/ID.js.git

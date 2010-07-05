@@ -24,11 +24,8 @@ CBasic.prototype = {
 		this.fpsDiv.innerHTML = this.fpsMeter.check();
 	}
 	
-	//---------------------------------------------------------------------
-	// creates a basic scene, including canvas and FPS meter
-	//---------------------------------------------------------------------
 	/**
-	 * undocumented function
+	 * creates a basic scene, including canvas and FPS meter
 	 *
 	 * @param  string width  desc
 	 * @param  string  height  desc
