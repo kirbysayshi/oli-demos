@@ -7,7 +7,7 @@ function Scroller(){
 	
 	this.ID = new ID(false);
 	
-	this.InitBasicRenderer(320, 240, 60, 1 / 30);
+	this.InitBasicRenderer(640, 480, 60, 1 / 30);
 	this.InitBodies();
 	this.StartBasicRun(this);
 }
@@ -17,6 +17,7 @@ ChildInheritsParent(Scroller, CBasic);
 Scroller.prototype.BasicRender = function(){
 	
 	this.CheckInput(this.deltaT);
+	this.scrollFocus.CheckJumpFall();
 	
 	CBasic.prototype.BasicRender.call(this);
 }
@@ -83,17 +84,20 @@ Scroller.prototype.InitBodies = function(){
 	//this.bodies.NewBody(b4);
 	
 	// create rigid sphere
-	var r = 10;
-	var s = V3.$(100,20,0);
-	var b = new CRigidBody(2, 2);
-	for(var i = 0; i < 8; i++){
-		var t = (Math.PI * 2.0) * (i / 8);
-		var xPos = V3.add(s, V3.scale(V3.$(Math.cos(t), Math.sin(t), 0), r));
-		b.AddParticle( new CParticle( xPos, r, 3.5, 2 ) );
-	}
+	//var r = 10;
+	//var s = V3.$(100,20,0);
+	//var b = new CRigidBody(2, 2);
+	//for(var i = 0; i < 8; i++){
+	//	var t = (Math.PI * 2.0) * (i / 8);
+	//	var xPos = V3.add(s, V3.scale(V3.$(Math.cos(t), Math.sin(t), 0), r));
+	//	b.AddParticle( new CParticle( xPos, r, 3.5, 2 ) );
+	//}
 	//var b = new CBox(V3.$(800, 20, 0), 15, 1, 2, 1);
-	b.SetColor(1.0, 0.3, 0.3, 0.5);
-	b.SetRigidBodyConstraints();
+	//b.SetRigidBodyConstraints();
+	//var b = new CSoftBody(V3.$(100, 20, 0), 20, 8, 3.5, 2, 1);
+	//b.SetColor(1.0, 0.3, 0.3, 0.5);
+	var b = new Hero( V3.$(100, 20, 0) );
+	
 	this.bodies.NewBody(b);
 	
 	this.SetScrollFocus(b);
@@ -136,15 +140,30 @@ Scroller.prototype.SetScrollFocus = function(body){
 	this.scrollFocus = body;
 }
 
+Scroller.prototype.BasicMouseClickHandler = function(e){
+	var mouseX = e.clientX - this.canvas.offsetLeft;
+	var mouseY = e.clientY - this.canvas.offsetTop;
+	var pos = this.scrollFocus.GetBoundingPos();
+	var dir = V3.neg(V3.direction(pos, [mouseX, mouseY, 0]));
+	
+	var p = new CRigidBody(2, 0.5);
+	p.AddParticle( new CParticle( V3.add(pos, V3.scale(dir, this.scrollFocus.GetBoundingRad())), 3, 10, 0.5 ) );
+	p.SetColor(1.0, 0.3, 0.3, 0.5);
+	p.SetRigidBodyConstraints();
+	this.bodies.NewBody(p);
+	p.AddForce( V3.scale(dir, 10000) );
+}
 
 Scroller.prototype.BasicKeyHandler = function(e){
-	CBasic.prototype.BasicKeyHandler.call(this, e);
+	if (e.keyCode == ID.ESCAPE)
+		clearInterval(this.INTERVALREFERENCE);
 }
 
 Scroller.prototype.CheckInput = function(dt){
 	this.ID.Update(dt);
 	
-	this.scrollFocus.AddForce(V3.$( Math.max( Math.min(this.ID.TimePressedMs(ID.D), 800) , 500) , 0, 0));
-	this.scrollFocus.AddForce(V3.$( -Math.max( Math.min(this.ID.TimePressedMs(ID.A), 800), 500) , 0, 0));
-	this.scrollFocus.AddForce(V3.$( 0, -(this.ID.IsNewKeyPress(ID.SPACE) ? 2500 : 0), 0));
+	this.scrollFocus.AddForce(V3.$( this.ID.IsKeyDown(ID.D) ? 150 : 0, 0, 0));
+	this.scrollFocus.AddForce(V3.$( this.ID.IsKeyDown(ID.A) ? -150 : 0, 0, 0));
+	//if( this.ID.IsNewKeyPress(ID.SPACE) ) this.scrollFocus.Jump();
+	if (this.ID.IsKeyDown(ID.SPACE)) this.scrollFocus.Thrust( this.ID.TimePressed(ID.SPACE) );
 }

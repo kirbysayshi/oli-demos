@@ -201,4 +201,7 @@ CParticle.prototype = {
 
 		return true;
 	}
+	, GetVelocity: function(){
+		return V3.sub(this.m_xP1, this.m_xP0);
+	}
 };

@@ -239,4 +239,11 @@ CBody.prototype = {
 		this.m_afColor[2] = b; 
 		this.m_afColor[3] = a;
 	}
+	, GetVelocity: function(){
+		var v = V3.$(0, 0, 0);
+		for(var i = 0; i < this.m_iNumParticles; i++){
+			V3.add(this.m_xParticles[i].GetVelocity(), v, v);
+		}
+		return V3.scale(v, 1/this.m_iNumParticles);
+	}
 };
