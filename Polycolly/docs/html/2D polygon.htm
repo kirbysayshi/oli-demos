@@ -1,0 +1,1764 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:w="urn:schemas-microsoft-com:office:word"
+ xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=windows-1252">
+  <meta name="ProgId" content="Word.Document">
+  <meta name="Generator" content="Microsoft Word 9">
+  <meta name="Originator" content="Microsoft Word 9">
+  <link rel="File-List" href="./2D%20polygon_files/filelist.xml">
+  <link rel="Edit-Time-Data" href="./2D%20polygon_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+  <title>2D polygon-based collision detection and response</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>oliii</o:Author>
+  <o:LastAuthor>oliii</o:LastAuthor>
+  <o:Revision>40</o:Revision>
+  <o:TotalTime>762</o:TotalTime>
+  <o:Created>2004-06-12T22:09:00Z</o:Created>
+  <o:LastSaved>2004-07-02T09:05:00Z</o:LastSaved>
+  <o:Pages>166</o:Pages>
+  <o:Words>3610</o:Words>
+  <o:Characters>20577</o:Characters>
+  <o:Company>depraved</o:Company>
+  <o:Lines>171</o:Lines>
+  <o:Paragraphs>41</o:Paragraphs>
+  <o:CharactersWithSpaces>25270</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:DrawingGridHorizontalSpacing>2.85 pt</w:DrawingGridHorizontalSpacing>
+  <w:DrawingGridVerticalSpacing>2.85 pt</w:DrawingGridVerticalSpacing>
+ </w:WordDocument>
+</xml><![endif]-->
+  <style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-font-kerning:0pt;
+	font-style:italic;}
+h2
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:14.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:Tahoma;
+	font-style:italic;}
+h3
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:Tahoma;}
+h4
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+h5
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:5;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	font-style:italic;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoBodyTextIndent, li.MsoBodyTextIndent, div.MsoBodyTextIndent
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-indent:36.0pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoBodyTextIndent2, li.MsoBodyTextIndent2, div.MsoBodyTextIndent2
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:72.0pt;
+	margin-bottom:.0001pt;
+	text-indent:36.0pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:282350743;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1822941808 -2112092164 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l0:level1
+	{mso-level-start-at:0;
+	mso-level-number-format:bullet;
+	mso-level-text:-;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+  </style><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1280"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+  <o:rules v:ext="edit">
+   <o:r id="V:Rule1" type="arc" idref="#_x0000_s1122"/>
+   <o:r id="V:Rule2" type="arc" idref="#_x0000_s1138"/>
+   <o:r id="V:Rule3" type="arc" idref="#_x0000_s1139"/>
+  </o:rules>
+  <o:regrouptable v:ext="edit">
+   <o:entry new="1" old="0"/>
+   <o:entry new="2" old="0"/>
+   <o:entry new="3" old="0"/>
+   <o:entry new="4" old="0"/>
+   <o:entry new="5" old="0"/>
+   <o:entry new="6" old="0"/>
+   <o:entry new="7" old="0"/>
+   <o:entry new="8" old="0"/>
+   <o:entry new="9" old="0"/>
+  </o:regrouptable>
+ </o:shapelayout></xml><![endif]-->
+</head>
+<body style="" lang="EN-GB" link="blue" vlink="purple">
+<div style="font-family: tahoma;" class="Section1"><big><big><span
+ style="font-style: italic; font-weight: bold;">2D polygon-based
+collision detection and response</span></big></big><br
+ style="text-decoration: underline;">
+<br>
+<br>
+<span style="font-weight: bold;">Introduction</span><br>
+<br>
+This is a tutorial demonstrating how to perform collision detection in
+2D action games (Mario, space invaders, etc…), both efficiently, and
+accurately. The collision detection is polygon-based, not sprite based.
+There is a difference in design in both approaches.<br>
+<br>
+Sprite based detection performs check on pixels of a overlapping pixels
+of sprites, and detects collisions that way. Polygons use vector maths
+to accurately calculate the point, time and direction of impact. While
+the polygon is only an approximation of the sprite itself, it has
+advantages over sprite systems.<br>
+<ul>
+  <li>Allows to perform good looking physics simply and accurately,
+like bouncing, friction, deals with slopes in an automated fashion.</li>
+  <li>The collision detection is more accurate for high-speed sprites.
+In a sprite-based system, the objects can potentially jump past each
+other in a time frame if they move too fast.</li>
+  <li>It is based on vector maths, so can be extended to 3D, while a
+sprite collision system is strictly limited to 2D.</li>
+</ul>
+<br>
+<span style="font-weight: bold;">Features</span><br>
+<br>
+Due to the algorithm in use, the system can only handle convex
+polygons, such as triangles, quads, hexagons, circular shapes. For
+non-convex polygons, you can de-compose the polygons into convex parts,
+like triangles.<br>
+<br>
+It will work equally with fast moving, or slow moving polygons. No
+matter how fast an object travels, the collision will not be missed. It
+also deals with overlaps, and pushes intersecting objects apart.<br>
+<br>
+The demo also supports segment-polygon intersections. This is useful
+for modeling bullets.<br>
+<br>
+It also provides a simple physics system, modeling elasticity, some
+basic friction, and static friction. It is useful for keeping
+characters up a slope.<br>
+<br>
+an example of a rigid body system is also there, implementing Chrsi
+Hecker's physics tutorials. <br>
+<br>
+There is also support for segment-polygon intersection calculations, to
+model things like bullets and laser beams. <br>
+<br>
+<span style="font-weight: bold;">Limits</span><br>
+<br>
+Sorting collisions. By that I mean, it might not process collisions in
+order. This can be a problem for very fast objects. Once a collision is
+detected, it is processed straight away. Ideally, you’d look for the
+first collision, process it, and then look for some more. But for a 2D
+action game, this is usually overkill.<br>
+<br>
+<span style="font-weight: bold;">Requirements</span><br>
+<br>
+The usual stuff, a compiler, the demo is based on a GLUT (GL Utility
+Toolkit) framework, so download the small GLUT SDK if you haven’t got
+it, and an opengl compatible video card.<br>
+<br>
+You also need at least a basic understanding of vector maths. The
+tutorial
+doesn’t really stretch beyond a dot product, but it helps if you are
+already comfortable with basic vector operations.<br>
+<br>
+A basic understanding of physics is required. As long as you understand
+the concept of velocity and simple position updates and time-based
+movement, you’ll be fine.<br>
+<br>
+for rigid bodies, you'll have to read carefully Chris Hecker's
+tutorials. It requires a lot more work, but it's well worth it, and not
+that hard after all :)<br>
+<br>
+<span style="font-weight: bold;">table of content<br>
+<br>
+</span><a href="#tut1"><span style="font-weight: bold;">Tutorial 1 -
+The method of separation
+axis</span></a><br>
+<span style="font-weight: bold;"><a href="#tut2">Tutorial 2 - Extending
+the method of
+separating axis for collision response</a><br>
+</span><a href="#tut3"><span style="font-weight: bold;">Tutorial 3 -
+Extending further for
+fast moving objects</span></a><br>
+<span style="font-weight: bold;"><a href="#tut4">Tutorial 4 – Basic
+Arcade Collision
+response</a><br>
+</span><a href="#tut5"><span style="font-weight: bold;">Tutorial 5 –
+Dealing with rotations</span></a><br>
+<a href="#tut6"><span style="font-weight: bold;">
+Tutorial 6 – Calculating contact points</span></a><br>
+<a href="#tut7"><span style="font-weight: bold;">Tutorial 7 – Rigid
+Body Dynamics</span></a><br>
+<br>
+<br>
+<span style="font-weight: bold;"><a name="tut1"></a>Tutorial 1 - The
+method of separation
+axis</span><br>
+<br>
+That is the core of the collision detection. The principle is very
+easy, and very simple to implement. It’s also fast, and solid, since no
+divisions are involved in the calculations.<br>
+<br>
+I’ll take the simple example of two boxes tested for collisions.<br>
+<br>
+<div style="text-align: center;"><img
+ alt="[image 1a] : A Separation Axis"
+ title="[image 1a] : A Separation Axis"
+ src="2D%20polygon_files/image001a.gif"
+ style="width: 471px; height: 351px;"><br>
+</div>
+<span style="font-weight: bold; background-color: rgb(255, 0, 0);"></span><br>
+The algorithm tries to determine is it is possible to fit a plane
+between two object. If such a plane exists, then the object are
+separated, and cannot intersect.<br>
+<br>
+To determine if the objects are separated, it is simply a matter of
+projecting the objects onto the normal of the plane, and comparing the
+intervals and see if they overlap.<br>
+<br>
+So, there is obviously an infinite number of planes that can fit
+between two separated objects. But it has been proved you only have to
+test a handful of planes. For boxes, from the picture above, you can
+see the plane normal is the major axis of Box B.<br>
+<br>
+It can be shown that for boxes, the separation planes to be tested are
+the planes with normal equal to the axes of both boxes. So for 2 boxes,
+you only need to test 4 separation planes in total. Out of the 4
+planes, once you found a separation plane that separates the boxes,
+then you know the box cannot intersect, and you return a no collision
+flag.<br>
+<br>
+If the 4 planes cannot separate the boxes, then the box must be
+intersection, and there you have a collision.<br>
+<br>
+To extend this to generic polygons, the algorithm remains the same.
+Only the number of planes to be tested changes. And the separation
+planes have normal in the direction perpendicular to the edges of each
+polygon. On the diagram below, you can see two separation planes being
+tested. on the red separation plane test, you can see the two intervals
+overlapping. However, on the blue test, the intervals do not overlap.
+So the blue plane is a separation plane, and the objects do not
+intersect.<br>
+<br>
+<br>
+<div style="text-align: center;"><img
+ alt="[image 1b] : Two Separation Axes"
+ title="[image 1b] : Two Separation Axes"
+ src="2D%20polygon_files/image001b.gif"
+ style="width: 504px; height: 392px;" align="top"><br>
+</div>
+<span style="background-color: rgb(255, 0, 0);"></span><br>
+So, we have now an algorithm to detect if yes or no, the polygons are
+disjoint or intersecting.<br>
+The code can be split into 3 parts.<br>
+<ol>
+  <li>The generation of the separation axis that needs to be tested,</li>
+  <li>The calculation of the intervals of each polygons along an axis
+(the separation plane normal),</li>
+  <li> And the test determining of the intervals overlap or not.</li>
+</ol>
+<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; background-color: rgb(204, 204, 255); text-align: left; font-family: monospace; width: 500px; height: 268px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">bool
+Intersect(Polygon A,
+Polygon B)</span><br>
+{<br>
+&nbsp;&nbsp;&nbsp; for(I = 0; I &lt; A.num_edges; I ++)<br>
+&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Vector N =
+Vector(-A.EdgeDir[I].y, A.EdgeDir[I].x);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (AxisSeparatePolygons(N, A,
+B))<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return false;<br>
+&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; for(I = 0; I &lt; B.num_edges; I ++) <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Vector N =
+Vector(-B.EdgeDir[i].y, B.EdgeDir[I].x); <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (AxisSeparatePolygons (N,
+A, B)) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return false; <br>
+&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; return true; <br>
+} </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 573px; height: 236px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-weight: bold; font-family: monospace;">void
+CalculateInterval(Vector Axis, Polygon P, float&amp; min, float&amp;
+max) </span><br style="font-weight: bold; font-family: monospace;">
+      <span style="font-family: monospace;">{ </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; float d
+= Axis dot P.vertex[0]; </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; min =
+max = d; </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; for(I =
+0; I &lt; P.num_vertices; I ++) </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; { </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; float d = P.vertex[I] dot Axis; </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; if (d &lt; min) </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; min = d; </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; else </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; if(d &gt; max) </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; max = d; </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; } </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">}</span><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<div style="margin-left: 40px;">
+<div style="margin-left: 40px;">
+<div style="margin-left: 40px;"></div>
+</div>
+</div>
+<span style="font-weight: bold;"></span>That's it. an algorithm to
+detect collisions between 2D polygons, which is fast, and solid. The
+Edge directions do not have to be normalised. So you can avoid storing
+edge directions all together, and building the edge directions from
+vertices of the polygons directly.<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 496px; height: 145px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-family: monospace;">for(J = A.num_vertices-1, I = 0; I
+&lt; A.num_vertices; J = I, I ++) </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">{ </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Vector E
+= A.vertex[I] – A.vertex[J]; </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Vector N
+= Vector(-E.y, E.x); </span><br style="font-family: monospace;">
+      <br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; if
+(AxisSeparatePolygons(N, A, B)) </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; return false; </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">}</span><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<span style="font-weight: bold;"><a name="tut2"></a>Tutorial 2 -
+Extending the method of
+separating axis for collision response</span><br>
+<br>
+Detecting if polygon intersects is useful, but we’d like to be able to
+do more. What if when polygons intersect, I’d like to move the polygons
+away from each other so they stop intersecting?<br>
+<br>
+The method of separating axis can be used as well, with a little bit of
+extra work. It can return the depth of penetration, and the direction
+required to push polygons away so they stop intersecting. A combination
+of both the depth and direction of intersection is also called the MTD,
+or minimum translation distance. That’s the minimum vector required to
+push objects apart to stop them intersecting.<br>
+<br>
+To calculate the MTD, we can use the separation axis to our advantage.<br>
+<br>
+When objects are intersecting, we know the interval calculated on each
+separation axis for both objects intersect. The amount of intersection
+of the two intervals along that axis provides a push vector, that you
+need to apply to either object so that the object’s projection stop
+intersecting along that axis<br>
+<br>
+<div style="text-align: center;"><img alt="[image 2a] : The push vector"
+ title="[image 2a] : The push vector"
+ src="2D%20polygon_files/image002a.gif"
+ style="width: 470px; height: 390px;"><br>
+</div>
+<br>
+<span style="font-weight: bold; color: rgb(255, 0, 0);"></span>“Push
+Vector” is the vector you need to apply to push A so it stops
+intersecting with B so A and B stop intersecting.<br>
+<br>
+Obviously, you can’t just push the objects along a random axis. The
+candidate axis for the push is the axis where the amount of overlap
+between the two intervals is minimum. And that push vector provides the
+minimum translation distance.<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; font-family: monospace; width: 588px; height: 540px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-weight: bold;">bool Intersect(Polygon A, Polygon B,
+Vector&amp; MTD) </span><br>
+{ <br>
+&nbsp;&nbsp;&nbsp; // potential separation axes. they get converted
+into push <br>
+&nbsp;&nbsp;&nbsp; vectors Vector Axis[32]; <br>
+&nbsp;&nbsp;&nbsp; // max of 16 vertices per polygon <br>
+&nbsp;&nbsp;&nbsp; int iNumAxis = 0; <br>
+&nbsp;&nbsp;&nbsp; for(J = A.num_vertices–1, I = 0; I &lt; A.
+num_vertices; J = I, I ++) <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Vector E = A.vertex[I] –
+A.vertex[J]; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Axis[iNumAxis++] = Vector(-E.y,
+E.x); <br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; if (AxisSeparatePolygons(N, A, B)) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return false; <br>
+&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; for(J = B. num_vertices–1, I = 0; I &lt;
+B.num_vertices; J = I, I ++) <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Vector E = B.vertex[I] –
+B.vertex[J]; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Axis[iNumAxis++] = Vector(-E.y,
+E.x); <br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (AxisSeparatePolygons (N, A,
+B)) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return false; <br>
+&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; // find the MTD among all the separation vectors <br>
+&nbsp;&nbsp;&nbsp; MTD = FindMTD(Axis, iNumAxis); <br>
+      <br>
+&nbsp;&nbsp;&nbsp; // makes sure the push vector is pushing A away from
+B <br>
+&nbsp;&nbsp;&nbsp; Vector D = A.Position – B.Position; <br>
+&nbsp;&nbsp;&nbsp; if (D dot MTD &lt; 0.0f) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; MTD = -MTD; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; return true; <br>
+}</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; font-family: monospace; width: 553px; height: 380px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-weight: bold;">bool AxisSeparatePolygons(Vector&amp; Axis,
+Polygon A, Polygon B) </span><br>
+{ <br>
+&nbsp;&nbsp;&nbsp; float mina, maxa; <br>
+&nbsp;&nbsp;&nbsp; float minb, maxb; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; CalculateInterval(Axis, A, mina, maxa); <br>
+&nbsp;&nbsp;&nbsp; CalculateInterval(Axis, B, minb, maxb); <br>
+      <br>
+&nbsp;&nbsp;&nbsp; if (mina &gt; maxb || minb &gt; maxa) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return true; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; // find the interval overlap <br>
+&nbsp;&nbsp;&nbsp; float d0 = maxa - minb; <br>
+&nbsp;&nbsp;&nbsp; float d1 = maxb - mina; <br>
+&nbsp;&nbsp;&nbsp; float depth = (d0 &lt; d1)? d0 : d1; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; // convert the separation axis into a push vector
+(re-normalise <br>
+&nbsp;&nbsp;&nbsp; // the axis and multiply by interval overlap) <br>
+&nbsp;&nbsp;&nbsp; float axis_length_squared = Axis dot Axis; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; Axis *= depth / axis_length_squared; <br>
+&nbsp;&nbsp;&nbsp; return false; <br>
+}</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 624px; height: 300px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-weight: bold; font-family: monospace;">Vector
+FindMTD(Vector* PushVectors, int iNumVectors) </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">{ </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Vector
+MTD = PushVector[0]; </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; float
+mind2 = PushVector[0] dot PushVector[0]; </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; for(int
+I = 1; I &lt; iNumVectors; I ++) </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; { </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; float d2 = PushVector[I] * PushVector[I]; </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; if (d2 &lt; mind2) </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; { </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mind2 = d2; </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; MTD = PushVector[I]; </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; } </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; } </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; return
+MTD; </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">}</span></td>
+    </tr>
+  </tbody>
+</table>
+<span style="font-weight: bold; font-family: monospace;"></span><span
+ style="font-family: monospace;"></span><br>
+Once you found the MTD vector when objects intersect, to separate them,
+it’s simply<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; font-family: monospace; width: 259px; height: 52px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;">A.Postion
++= MTD * 0.5f;<br>
+B.Position -= MTD * 0.5f;</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Obviously, if object A is static, like part of the environment, the B
+will be pushed by the full MTD (B.Position -= MTD), while A will not be
+pushed.<br>
+<br>
+<span style="font-weight: bold;"><a name="tut3"></a>Tutorial 3 -
+Extending further for
+fast moving objects<br>
+<br>
+</span>The method above works well with slow objects. But when objects
+travel fast, the collision system will loose accuracy, missing
+collisions, or even allow objects to teleport past each other, which is
+a really bad idea.<br>
+<br>
+Here again, we can use the method of the separation axes, extend it
+further, and use the algorithm for detecting both collisions forward in
+time, and overlaps.<br>
+<br>
+The principle remains the same, and is better explain with a picture :)<br>
+<br>
+<div style="text-align: center;"><img
+ alt="[image 3a] : Dynamic Separation Axis"
+ title="[image 3a] : Dynamic Separation Axis"
+ src="2D%20polygon_files/image003a.gif"
+ style="width: 410px; height: 279px;"><br>
+</div>
+<span style="font-weight: bold; background-color: rgb(255, 0, 0);"></span><br>
+Again, it’s just projection maths. if intervals are disjoint, project
+the velocity along the separation axis, and calculate the time for the
+two intervals to touch.<br>
+<br>
+Compared to the ‘static’ separation axis algorithm, there is one extra
+axis we have to test. this is obviously an axis related to the
+displacement (or velocity) vector.<br>
+<br>
+So, for each separation axes, there are 3 choices.<br>
+<ol>
+  <li>The intervals overlap.</li>
+  <li>The intervals are disjoint, but will collide forward in time.</li>
+  <li>The intervals are disjoint, but will not collide forward in time,
+or will collide too late.<br>
+  </li>
+</ol>
+<br>
+The third option means that the objects won’t collide this frame, and
+that the separation axis does indeed separate the objects. So there is
+no collision between objects for that frame.<br>
+<br>
+The <big><span style="font-weight: bold; font-family: monospace;">AxisSeparatePolygons()</span></big>
+function will reflect that, and return either the amount of overlap, or
+the calculated time of collision. To differenciate the two, when an
+overlap is detected, a negative number will be returned. If a collision
+forward in time is detected, a positive number is returned. the
+function will look like that<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; font-family: monospace; width: 900px; height: 30px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-weight: bold;">bool AxisSeparatePolygons(Vector Axis,
+Polygon A, Polygon B, Vector Offset, Vector Vel, float&amp; t, float
+tmax);</span></td>
+    </tr>
+  </tbody>
+</table>
+<span style="font-weight: bold;"></span><br>
+Where Offset is the relative position of polygon A to polygon B, and
+Vel is the relative velocity of polygon A to polygon B.<br>
+<br>
+When it comes to finding the plane of collision, the algorithm is very
+similar to the MTD search. Only this time, the collisions forward in
+time take priority over the overlaps. If collisions forward in time are
+found, the latest one is selected.<br>
+<br>
+If none are found and we detected overlaps only, then as before, the
+smallest overlap is used.<br>
+<br>
+The collision detection function then returns the normal of collision,
+and either the depth of collision (a negative number), or the time of
+collision (a positive number).<br>
+<br>
+The final pseudo code looks like this…<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 842px; height: 940px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-family: monospace;"><span style="font-weight: bold;">bool
+Collide(&nbsp;&nbsp; const Vector* A, int Anum, </span><br
+ style="font-weight: bold;">
+      <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; const Vector*
+B, int Bnum, </span><br style="font-weight: bold;">
+      <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; const
+Vector&amp; xOffset, const Vector&amp; xVel, </span><br
+ style="font-weight: bold;">
+      <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Vector&amp; N,
+float&amp; t) </span><br>
+      </span><span style="font-family: monospace;">{ <br>
+&nbsp;&nbsp;&nbsp; if (!A || !B) return false; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; // All the separation axes <br>
+&nbsp;&nbsp;&nbsp; </span><span style="font-family: monospace;">//
+note : a maximum of 32 vertices per poly is supported <br>
+&nbsp;&nbsp;&nbsp; </span><span style="font-family: monospace;">Vector
+xAxis[64]; <br>
+&nbsp;&nbsp;&nbsp; float taxis[64]; <br>
+&nbsp;&nbsp;&nbsp; int iNumAxes=0; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; xAxis[iNumAxes] = Vector(-xVel.y, xVel.x); <br>
+&nbsp;&nbsp;&nbsp; float fVel2 = xVel * xVel; <br>
+&nbsp;&nbsp;&nbsp; if (fVel2 &gt; 0.00001f) <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (!IntervalIntersect( A, Anum,
+B, Bnum, xAxis[iNumAxes], xOffset, xVel, taxis[iNumAxes], t)) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
+false; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; iNumAxes++; <br>
+&nbsp;&nbsp;&nbsp; } <br>
+      <br>
+&nbsp;&nbsp;&nbsp; // test separation axes of A <br>
+&nbsp;&nbsp;&nbsp; for(int j = Anum-1, i = 0; i &lt; Anum; j = i, i ++)
+      <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Vector E0 = A[j]; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Vector E1 = A[i]; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Vector E = E1 - E0; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; xAxis[iNumAxes] = Vector(-E.y,
+E.x); <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (!IntervalIntersect( A, Anum,
+B, Bnum, xAxis[iNumAxes], xOffset, xVel, taxis[iNumAxes], t)) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return false;<br>
+      <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; iNumAxes++; <br>
+&nbsp;&nbsp;&nbsp; } <br>
+      <br>
+&nbsp;&nbsp;&nbsp; // test separation axes of B <br>
+&nbsp;&nbsp;&nbsp; for(int j = Bnum-1, i = 0; i &lt; Bnum; j = i, i ++)
+      <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Vector E0 = B[j]; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Vector E1 = B[i]; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Vector E = E1 - E0; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; xAxis[iNumAxes] = Vector(-E.y,
+E.x); <br>
+      <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (!IntervalIntersect( A, Anum,
+B, Bnum, xAxis[iNumAxes], xOffset, xVel, taxis[iNumAxes], t)) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return false;<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; iNumAxes++;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; if (!FindMTD(xAxis, taxis, iNumAxes, N, t)) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return false; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; // make sure the polygons gets pushed away from each
+other. <br>
+&nbsp;&nbsp;&nbsp; if (N * xOffset &lt; 0.0f) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; N = -N; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; return true; <br>
+}</span></td>
+    </tr>
+  </tbody>
+</table>
+<span style="font-family: monospace;"><span style="font-weight: bold;"></span></span><span
+ style="font-family: monospace;"><br>
+</span><span style="font-family: monospace;"></span>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 881px; height: 812px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-family: monospace;"><span style="font-weight: bold;">bool
+AxisSeparatePolygons ( Vector N, Polygon A, Polygon B, Vector Offset,
+Vector Vel, float &amp;t, float tmax) </span><br>
+{ <br>
+&nbsp;&nbsp;&nbsp; float min0, max0; <br>
+&nbsp;&nbsp;&nbsp; float min1, max1; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; CalculateInterval(N, A, min0, max0); <br>
+&nbsp;&nbsp;&nbsp; CalculateInterval(N, B, min1, max1); <br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; float h = Offset dot N; <br>
+&nbsp;&nbsp;&nbsp; min0 += h; <br>
+&nbsp;&nbsp;&nbsp; max0 += h; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; float d0 = min0 - max1; // if overlapped, do &lt; 0 <br>
+&nbsp;&nbsp;&nbsp; float d1 = min1 - max0; // if overlapped, d1 &gt; 0 <br>
+      <br>
+&nbsp;&nbsp;&nbsp; // separated, test dynamic intervals <br>
+&nbsp;&nbsp;&nbsp; if (d0 &gt; 0.0f || d1 &gt; 0.0f) <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; float v = Vel dot N; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // small velocity, so only the
+overlap test will be relevant. <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (fabs(v) &lt; 0.0000001f) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return false; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; float t0 =-d0 / v; // time of
+impact to d0 reaches 0 <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; float t1 = d1 / v; // time of
+impact to d0 reaches 1 <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // sort the times. <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (t0 &gt; t1) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; float temp =
+t0; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; t0 = t1; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; t1 = temp; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // take the minimum positive <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; taxis = (t0 &gt; 0.0f)? t0 : t1; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // intersection time too late or
+back in time, no collision <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (taxis &lt; 0.0f || taxis &gt;
+tmax) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return true; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return false; <br>
+&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; else <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // overlap. get the interval, as
+a the smallest of |d0| and |d1| <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // return negative number to mark
+it as an overlap <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; taxis = (d0 &gt; d1)? d0 : d1; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return false; <br>
+&nbsp;&nbsp;&nbsp; } <br>
+}<br>
+      </span></td>
+    </tr>
+  </tbody>
+</table>
+<span style="font-family: monospace;"></span><span
+ style="font-family: monospace;"><br>
+<br>
+<br>
+</span>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 780px; height: 684px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-family: monospace;"><span style="font-weight: bold;">bool
+FindCollisionPlane (Vector* Axis, float* taxis, int iNumAxes,
+Vector&amp; Ncoll, float&amp; tcoll) </span><br
+ style="font-weight: bold;">
+{ <br>
+&nbsp;&nbsp;&nbsp; // find collision first <br>
+&nbsp;&nbsp;&nbsp; int mini = -1; <br>
+&nbsp;&nbsp;&nbsp; tcoll = 0.0f; <br>
+&nbsp;&nbsp;&nbsp; for(int i = 0; i &lt; iNumAxes; i ++) <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (taxis[i] &gt; 0.0f) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (taxis[i]
+&gt; tcoll) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; mini = i; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; tcoll = taxis[i]; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; Ncoll = Axis[i]; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; Ncoll.Normalise(); // normalise axis <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+      <br>
+&nbsp;&nbsp;&nbsp; // found a collision <br>
+&nbsp;&nbsp;&nbsp; if (mini != -1) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return true; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; // nope, find overlaps <br>
+&nbsp;&nbsp;&nbsp; mini = -1; <br>
+&nbsp;&nbsp;&nbsp; for(int i = 0; i &lt; iNumAxes; i ++) <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; float n = Axis[i].Normalise(); //
+axis length <br>
+      <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; taxis[i] /= n; // normalise
+interval overlap too <br>
+      <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // remember, those numbers are
+negative, so take the closest to 0 <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (mini == -1 || taxis[i] &gt;
+tcoll) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mini = i; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; tcoll =
+taxis[i]; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Ncoll =
+Axis[i]; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; return (mini != -1); <br>
+}</span><br style="font-family: monospace;">
+      </td>
+    </tr>
+  </tbody>
+</table>
+<span style="font-family: monospace;"><br>
+</span><br>
+So there you have it, a system that detects polygon collisions either
+forward in time, or when overlapped, and return the collision plane,
+and depth/time of collision.<br>
+<br>
+<span style="font-weight: bold;"><a name="tut4"></a>Tutorial 4 – Basic
+Arcade Collision
+response</span><br>
+<br>
+So, what to do next? Well, you can make the two objects bounce off each
+other by a given amount, add a bit of friction in the mix, and also add
+some basic static friction as well, to stop player sliding down slopes.<br>
+<br>
+That part uses the simple velocity reflection algorithm. Also, to make
+the collision response more interesting, objects are set to have mass
+(rather, inverse masses).<br>
+<br>
+Inverse masses are more useful, as having an inverse mass of 0 means,
+the object as an infinite mass, and is therefore unmovable. Also, it is
+more physically accurate to use inverse masses in the velocity response.<br>
+<br>
+Ok,so we know that polygon A, at position PA and velocity VA, collided
+with polygon B, at position PB and with velocity VB. Ncoll and tcoll
+defined the collision plane.<br>
+<br>
+If the collision was an overlap, we first separate the two objects,
+like explained below.<br>
+<br style="font-family: monospace;">
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 319px; height: 204px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-family: monospace;">if (tcoll &lt; 0) </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">{ </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; if
+(A.InvMass == 0) </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; PB += Ncoll * tcoll; </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; else if
+(B.InvMass == 0) </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; PA -= Ncoll * tcoll; </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; else </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; { </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; PA -= Ncoll * (tcoll * 0.5f); </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; PB += Ncoll * (tcoll * 0.5f); </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; } </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">}</span><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Then, we can call the collision response code.<br>
+<br>
+To simplify, we can consider a particle hitting a plane.<br>
+<br>
+<div style="text-align: center;"><img
+ alt="[Image 4a] : Reflective collision response"
+ title="[Image 4a] : Reflective collision response"
+ src="2D%20polygon_files/image004a.gif"
+ style="width: 521px; height: 257px;"><br>
+</div>
+<br>
+V, being the incoming velocity of the particle, V’ the resulting
+velocity of the particle bouncing on the plane with normal N.<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; font-family: monospace; font-weight: bold; width: 300px; height: 44px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;">V’
+= V – (2 * (V . N)) * N</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+that’s for a perfect reflection. the particle will bounce with the same
+energy.<br>
+<br>
+this is quite boring, but it’s easy to see that we can make the
+particle bounce less by adding an elasticity factor.<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; font-family: monospace; font-weight: bold; width: 384px; height: 44px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;">V’
+= V – ((1 + elasticity) * (V . N)) * N</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Elasticity is in the range [0, 1]. and elasticity of 0 means, the
+particle will just slide on the plane. Elasticity of one, the particle
+will bounce with no energy lost.<br>
+<br>
+Similarly, we can had some fake friction, more like drag. if we
+decompose the velocity along the normal of the collision, and the
+collision plane, we can do both elasticity and friction at the same
+time, very cheaply.<br>
+<br>
+<div style="text-align: center;"><img
+ alt="[image 4b] : Reflective Collision Response with Drag friction"
+ title="[image 4b] : Reflective Collision Response with Drag friction"
+ src="2D%20polygon_files/image004b.gif"
+ style="width: 456px; height: 257px;"><br>
+</div>
+<br>
+here, the velocity is decomposed along the normal of the plane, and the
+plane of collision. The elasticity will affect the response along the
+normal of the plane (Vn), while the friction will affect the tangential
+component of the velocity (Vt).<br>
+<br>
+again, the coefficient of friction is a number in the range [0, 1]. 0
+means no friction, 1 means the particle will stop dead on.<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; font-family: monospace; width: 395px; height: 60px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;">Vn
+= (V . N) * N;<br>
+Vt = V – Vn;<br>
+V’ = Vt * (1 – friction) + Vn&nbsp; * -(elasticity);</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Simple as that.<br>
+<br>
+for static friction, simply detect when the length of vector Vt is
+below a given value. If so, set Vt to (0, 0), or set the coefficient of
+friction to be slightly above 1 (1.001f).<br>
+<br>
+now, to compute a response for two objects colliding. The principle is
+the same. However, the calculations are based on the relative velocity
+of the objects, which gets reflected like above. Then a part of the
+response gets added to each objects.<br>
+<br>
+The coefficients are slightly changed, since now we work in relative
+terms. <br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; font-family: monospace; width: 400px; height: 188px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;">Vector
+V = Va – Vb; // relative velocity<br>
+Vn = (V . N) * N;<br>
+Vt = V – Vn;<br>
+      <br>
+if (Vt.Length() &lt; 0.01f) friction = 1.01f;<br>
+      <br>
+// response<br>
+V’ = Vt * -(friction) + Vn&nbsp; * -(1 + elasticity);<br>
+      <br>
+Va += V’ * 0.5f;<br>
+Vb -= V’ * 0.5f;</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+this will apply a response equally to objects A and B.<br>
+<br>
+to make it more interesting, A and B can have different masses.
+Obviously, you can expect the lighter object to get most of the
+response, while the heavier one will be less perturbed by the
+collision. So, we can use the masses to linearly scale the response on
+both objects. an heavy object, with a very small inverse mass, will
+move less, even not at all if is mass is infinite (i.e. his inverse
+mass is 0).<br>
+<br style="font-family: monospace;">
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 460px; height: 65px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-family: monospace;">Va += V’ * (InvMassA) / (InvMassA +
+InvMassB);</span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">Vb -= V’ * (InvMassB) /
+(InvMassA + InvMassB);</span><br>
+      <br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<br>
+<span style="font-weight: bold;"><a name="tut5"></a>Tutorial 5 –
+Dealing with rotations</span><br>
+<br>
+Rotating objects are often found in arcade games, obviously. Colliding
+with them adds a little more complication. The standard way of rotating
+a sprite is through a single angle scalar, usually in the range [0, 2 *
+PI]. However, matrices can be used to store away expensive
+trigonometric calculations, and an angle can therefore be converted to
+a 2x2 matrix using a combination of trigs (sines and cosines).<br>
+<br>
+A simple way of handling collisions of rotating objects is to keep a
+copy of the original polygon, but transform to the current object’s
+position and orientation. This is too easy J , so I decided to expand a
+bit, and produce an algorithm that is more on par with a general
+collision detection system, that can also (and should) apply in 3D.<br>
+<br>
+If you are unsure about matrix maths, and their relations to vectors,
+linear algebra, and trigonometry, you can have a look at this brief
+article. <a
+ href="http://www.gamedev.net/reference/articles/article1832.asp">http://www.gamedev.net/reference/articles/article1832.asp</a><br>
+<br>
+To keep things short, the usual way of colliding two rotating and
+translating objects is to convert one object into the other object’s
+space, therefore limiting the transformations required to only one
+object during the collision detection phase. Converting to model space
+can be quite confusing, but if you stick to the basic algebra, it
+becomes simple.<br>
+<br>
+So far, the collision detection was already converting one object into
+the other object’s space, by calculating the relative position and
+velocity of one object to another. Adding orientation does complicate
+things slightly.<br>
+<br>
+Consider two objects A and B, with position PA and PB, orientation OA
+and OB, and displacement DA and DB. To transform Object A into it’s own
+model space, where PA = Origin, OA = IdentityMatrix, and VA = Vector(0,
+0), we need to aply transformations to objectA.<br>
+<br>
+consider the forward transforms, doing exactly the reverse, and
+transforming a point from local space into world space.<br>
+<br>
+P<sub>world </sub>= P<sub>local </sub>* OA + PA<br>
+(P<sub>world</sub> – PA) = P<sub>local</sub> * OA<br>
+(P<sub>world</sub> – PA) * OA<sup>T</sup> = P<sub>local</sub> * OA * OA<sup>T</sup><br>
+so,<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; font-family: monospace; width: 315px; height: 44px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top; text-align: center;">P<sub>local</sub>
+= (P<sub>world</sub> – PA) * OA<sup>T</sup></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+similarly, to transform a directional vector using a forward transform,<br>
+<br>
+D<sub>world</sub> = D<sub>local</sub> * OA<br>
+D<sub>world</sub> * OA<sup>T</sup> = D<sub>local</sub> * OA * OA<sup>T</sup><br>
+so<br>
+<table
+ style="width: 190px; height: 31px; font-family: monospace; text-align: left; margin-left: auto; margin-right: auto;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="text-align: center; background-color: rgb(204, 204, 255); vertical-align: top;">D<sub>local</sub>
+= D<sub>world</sub> * OA<sup>T</sup></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+and again, to convert an orientation using a forward transform<br>
+<br>
+O<sub>world</sub> = O<sub>local</sub> * OA<br>
+O<sub>world</sub> * OA<sup>T</sup>= O<sub>local</sub> * OA * OA<sup>T</sup><br>
+so<br>
+<br>
+<table
+ style="font-family: monospace; width: 211px; height: 28px; text-align: left; margin-left: auto; margin-right: auto;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="text-align: center; background-color: rgb(204, 204, 255); vertical-align: top;">O<sub>local</sub>
+= O<sub>world</sub> * OA<sup>T</sup></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+so here we go, to convert the position of object B into A’s local space,<br>
+<br>
+<table
+ style="width: 235px; height: 81px; text-align: left; margin-left: auto; margin-right: auto;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="text-align: center; background-color: rgb(204, 204, 255); vertical-align: top;">PB’
+= (PB – PA) * OA<sup>T</sup> <br>
+DB’ = (DB – DA) *
+OA<sup>T</sup> <br>
+OB’ = (OB) * OA<sup>T</sup></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+Similarly, when we are testing separation axes, we have to remember
+that we are still in local space, and need to transform the separation
+axes from local space of B into local space of A.<br>
+<br>
+and again, to calculate the intervals of object B locally, using an
+axis transformed into the local space of A, we have to inverse the axis
+back into the local space of B.<br>
+<br>
+I’m sure this can cause a lot of confusions J As I said earlier,
+Another solution is basically not bother about local space, and
+transform beforehand the polygons of A and B into world space, and do
+the intersection test all in world space. The downside is, you have to
+keep a copy of the base collision polygon in each objects, since each
+of these will need to be calculated into world space individually. The
+advantage is, you do not have to re-compute the transformations every
+time you process a collision. This is fine for 2D games, but when it
+comes to 3D, then you don’t really want to transform objects every
+frame just for the purpose of collision detection, especially if the
+objects are stored into trees and have complex shapes.<br>
+<br>
+<span style="font-weight: bold;"><a name="tut6"></a>Tutorial 6 –
+Calculating contact points</span><br>
+<br>
+To move on to rigid body dynamics, we need a way to calculate the exact
+contact points between two colliding polygons. this is not very
+difficult in 2D, but can get quite complicated in 3D. For the 2D case,
+we can consider two cases for contact points. a point-edge contact, or
+an edge-edge contact.<br>
+<br>
+This process is hardly worth a tutorial, but it’s well suited for a
+nice visualisation demo :)<br>
+<br>
+<br>
+<table style="text-align: left; width: 365px; height: 222px;" border="0"
+ cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><img
+ alt="[image 6a] : point-edge contact"
+ title="[image 6a] : point-edge contact"
+ src="2D%20polygon_files/image006a.gif"
+ style="width: 344px; height: 183px;"><br>
+      </td>
+      <td style="vertical-align: top;"><img
+ alt="[image 6b] : edge-edge contact"
+ title="[image 6b] : edge-edge contact"
+ src="2D%20polygon_files/image006b.gif"
+ style="width: 370px; height: 204px;"></td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: top;"><span
+ style="font-weight: bold; font-style: italic; text-decoration: underline; font-family: monospace;">Point-Edge
+contact</span><br>
+      </td>
+      <td style="text-align: center; vertical-align: top;"><span
+ style="font-weight: bold; text-decoration: underline; font-style: italic; font-family: monospace;">Edge-Edge
+contact</span><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+Here, I’m only considering the overlap case, but for the collision
+case, it would be the same principle.<br>
+<br>
+So, Given a collision normal direction, in the Point-edge contact, how
+to find the contact points?<br>
+<br>
+For contact A, it is rather straight forward. We need a so-called
+support mapping function, which returns the point on the polygon the
+lowest along a given direction. Very much like the CalculateInterval()
+function in the first tutorial.<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 616px; height: 588px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-family: monospace;"><span style="font-weight: bold;">int
+FindSupportPoints(const Vector&amp; N, float t, <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; const Vector* A, int
+Anum, <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; const Vector&amp; PA,
+const Vector&amp; VA, <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const Matrix&amp; OA,
+Vector* S)</span><br>
+      </span><span style="font-family: monospace;"><span
+ style="font-weight: bold;"></span>{ <br>
+&nbsp;&nbsp;&nbsp; Vector Norm = N ^ OA; <br>
+&nbsp;&nbsp;&nbsp; float d[32]; <br>
+&nbsp;&nbsp;&nbsp; float dmin; <br>
+&nbsp;&nbsp;&nbsp; dmin = d[0]
+= A[0] * Norm; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; for(int i = 1; i &lt; Anum; i ++) <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; d[i] = A[i] * Norm;
+      <br>
+      <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (d[i] &lt; dmin) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; dmin = d[i]; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; } <br>
+      <br>
+&nbsp;&nbsp;&nbsp; int Snum = 0; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; const float
+threshold = 1.0E-3f; <br>
+      <br>
+&nbsp;&nbsp;&nbsp; for(int i = 0; i &lt; Anum; i ++) <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (d[i] &lt;
+dmin + threshold) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; S[Snum++] =
+Transform(A[i], PA, VA, OA, t); <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if
+(Snum == 2) <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; return Snum; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; return Snum; <br>
+}</span><br style="font-family: monospace;">
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<span style="font-family: monospace;"></span>Here, the first part of
+the function finds the minimal of the polygon.
+The second part simply finds all the points very close to that minimal,
+so if the normal of collision is perpendicular to an edge, two points
+will be returned. The points are stored in world space, the function
+Transform makes sure the contact points found for that polygon are
+converted to world space, and if it is a collision forward in time, the
+point will be translated to the moment of collision.<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 860px; height: 172px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-weight: bold; font-family: monospace;">Vector
+Transform(const Vector&amp; Vertex,
+const Vector&amp; P, const Vector&amp; V, const Matrix&amp; xOrient,
+float t) </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">{ </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; //
+convert point into world space </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Vector T
+= P + (Vertex *
+xOrient); </span><br style="font-family: monospace;">
+      <br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; //
+collision forwatd in time, need to translate to moment of
+collision </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; if(t
+&gt; 0.0f) </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; T += V * t; </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; return
+T; </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">}</span></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+For points on B, you simply need to find the support points in the
+opposite direction.<br>
+<br>
+The physics will later on require pairs of contact points on both
+objects to work out the collision impulses which will make the object
+tumble. You can see on the diagrams what pairs of contacts you need to
+generate depending on the type of collision.<br>
+<br>
+So, with calls to FindSupportPoint() you end up with either one or two
+contact points on each object. In case of a one-to-one contact, you
+don’t need to do anything. At the moment, one-to-one contacts are not
+supported, but can be easily extended into the separation axis
+algorithm.<br>
+<br>
+In case of a one-to-two contact, it’s simply a point-versus-edge
+collision like in the first diagram above.<br>
+<br>
+In case of a two-to-one contact, the same thing applies, except objects
+are swapped around.<br>
+<br>
+In the case of a two-to-two contacts, it’s an edge-edge collision, and
+you need to find the intersection space between the edge, which will
+provide <br>
+<br>
+First, the point-edge collision. In that case, the pairing contact
+point is simply the projection of the contact point on A onto the edge
+on B, or in more meaningful terms, the point on edge B the closest to
+the contact point on A.<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 711px; height: 284px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(204, 204, 255); vertical-align: top;"><span
+ style="font-weight: bold; font-family: monospace;">Vector
+FindClosestPoint(const Vector&amp; V, const Vector&amp; A, const
+Vector&amp; B, float* pt) </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">{ </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Vector
+AV = V - A; </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Vector
+AB = B - A; </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; </span><br
+ style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; float
+t = (AV * AB) / (AB * AB); </span><br style="font-family: monospace;">
+      <br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; if (t
+&lt; 0.0f) </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; t = 0.0f; </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; else if
+(t &gt;
+1.0f) </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; t = 1.0f; </span><br style="font-family: monospace;">
+      <br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; if (pt)
+*pt = t; </span><br style="font-family: monospace;">
+      <br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Vector P
+= A + t * AB; </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; return
+P; </span><br style="font-family: monospace;">
+      <span style="font-family: monospace;">}</span></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<span style="font-weight: bold; font-family: monospace;"></span>In the
+case of edge-edge, the process is quite similar. Only, you need
+to sort the points direction perpendicular to the normal of collision,
+and take the two middle points. Then, you project those points onto the
+other segment to get the pairing contact point.<br>
+<br>
+<div style="text-align: center;"><img
+ alt="[image 06c] : Converting support poitns to contacts"
+ title="[image 06c] : Converting support poitns to contacts"
+ src="2D%20polygon_files/image006c.gif"
+ style="width: 497px; height: 224px;"><br>
+</div>
+<br>
+<br>
+With those contact points, then you are ready to write a basic rigid
+body system, where objects will collide and respond to collisions a lot
+more realistically than before.<br>
+<br>
+<br>
+<span style="font-weight: bold;"><a name="tut7"></a>Tutorial 7 – Rigid
+Body Dynamics</span><br>
+<br>
+Instead of wasting a lot of energy trying to demonstrate rigid body
+dynamics, I’ll point to the best resource around.<br>
+<br>
+<a href="http://www.d6.com/users/checker/dynamics.htm#articles">http://www.d6.com/users/checker/dynamics.htm#articles</a><br>
+<br>
+Here, all is revealed about how to implement realistic physics in 2D
+games.<br>
+<br>
+I will talk about the extensions I made, though. First of all,
+calculating the inertia for a given convex polygon can be tricky. Just
+to remind you, inertia is for angular dynamics what mass is for linear
+dynamics. A high inertia is equivalent to a high mass, in the sense
+that the object will rotate with difficulty. A low inertia, on the
+contrary, make the object very susceptible to changes in angular
+velocities.<br>
+<br>
+Mass and inertia are intricately linked, since they all depend on the
+size, and density, and ‘balance’ of the object. To talk through it
+quickly, as I’m no physics expert, I’ll just point to the equations,
+and where I got them from.<br>
+<br>
+<a
+ href="http://www.physicsforums.com/showthread.php?s=e251fddad79b926d003e2d4154799c14&amp;t=25293&amp;page=2&amp;pp=15">http://www.physicsforums.com/showthread.php?s=e251fddad79b926d003e2d4154799c14&amp;t=25293&amp;page=2&amp;pp=15</a><br>
+<br>
+in short, the equation for calculating the inertia is :<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 381px; height: 62px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><img
+ alt="[image 07a] : Inertia of a convex polygon"
+ title="[image 07a] : Inertia of a convex polygon"
+ src="2D%20polygon_files/image028.png"
+ style="width: 354px; height: 50px;"></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+where :<br>
+<ul>
+  <li>m is the mass</li>
+  <li>N is the number of
+vertices</li>
+  <li>Pn is a Vertex[n] of
+the polygon</li>
+  <li>||…|| means, the
+‘norm’. In 2D, a cross product returns a float, so it will be
+equivalent to finding the absolute value.<br>
+  </li>
+</ul>
+<br>
+<br>
+calculating the inertia from the density of the material constituting
+the polygon you have the equation<br>
+<br>
+<table
+ style="margin-left: auto; margin-right: auto; text-align: left; width: 365px; height: 63px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><img
+ alt="[image 07b] : Inertia of a polygon from density"
+ title="[image 07b] : Inertia of a polygon from density"
+ src="2D%20polygon_files/image007b.gif"
+ style="width: 336px; height: 51px;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Where :<br>
+<ul>
+  <li>p is the density</li>
+  <li>N is the number of
+vertices</li>
+  <li>Pn is a Vertex[n] of
+the polygon</li>
+  <li>||…|| means, the
+‘norm’. In 2D, a cross product returns a float, so it will be
+equivalent to finding the absolute value.<br>
+  </li>
+</ul>
+<br>
+Then from those two equations, you can deduce the equation to calculate
+the mass.<br>
+<br>
+Another addition made to the system, is dealing with overlaps. This is
+simply to stop objects sinking into each other, since the impulse
+calculation used is very inaccurate at low velocities. To solve an
+overlap, it’s simply a matter of pushing the objects away from each
+others along the normal of collision, by the collision depth amount.
+That of course, applies only if an overlap is detected.<br>
+<br>
+To make things slightly more accurate, the objects are displaced
+depending on the ratio of their masses, so the lighter objects will
+move be displaced more, while the heavier objects won’t be displaced as
+much. Of course, objects will infinite mass won’t be displaced at all.<br>
+<br>
+As for the friction, the basic dynamic friction model is a Coulomb
+friction force, that adds an impulse to the objects with direction
+perpendicular to the tangential velocity, and with magnitude equal to
+||u.Jn|| , where u is the coefficient of dynamic friction, and Jn the
+vertical collision impulse.<br>
+<br>
+Static friction is always hard to model simply. I choose the solution
+of modelling static friction as if the object was colliding with an
+invisible step on the collision plane. Basically, a collision impulse,
+very similar to the collision impulse calculated for normal impacts, is
+computed. The collision impulse direction is going in the opposite
+direction of the velocity, while the magnitude is so that the contact
+velocity gets cancelled out (basically, the coefficient of restitution
+is slightly &gt; 1).<br>
+<br>
+<div style="text-align: center;"><img
+ alt="[image 07c] : Modelling static friciton"
+ title="[image 07c] : Modelling static friciton"
+ src="2D%20polygon_files/image007c.gif"
+ style="width: 477px; height: 229px;"><br>
+</div>
+<br>
+And that’s it! The rest pretty much follows Chris Hecker’s
+instructions. The bodies tumble, collide, do all sorts of crazy things,
+in a relatively realistic manner.<br>
+<br>
+<br>
+<span style="font-weight: bold;">Conclusion</span><br>
+&nbsp;
+<br>
+You have the demo + code to play around with (mouse
+buttons to attract stuff, ‘p’ for pause and help, ect…). The demo also
+contains a function to do segment/polygon intersection test, that can
+be useful for modelling fast projectiles. It clips the segment to the
+polygon, returns the normals at the clip points…&nbsp;<br>
+<br>
+So, that should cover some of your collision and basic physics needs
+for
+your 2D action game. If I get good feedback, I might be inclined to
+improve the features, and ad more support, and discuss other aspects of
+physics for 2D games (tiles, BSP trees, an object oriented design for
+the whole thing, ...).<br>
+&nbsp;
+<br>
+any problems, comments, suggestions, mail me at
+<a href="mailto:olivierrenault@hotmail.com">olivierrenault@hotmail.com</a><br>
+<br>
+Enjoy!<br>
+</div>
+</body>
+</html>

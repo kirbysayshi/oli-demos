@@ -1,0 +1,3093 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List
+href="./segment%20-%20polygon%20intersection_files/filelist.xml">
+<link rel=Edit-Time-Data
+href="./segment%20-%20polygon%20intersection_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Segment – 2D convex polygon intersection</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>oliii</o:Author>
+  <o:LastAuthor>oliii</o:LastAuthor>
+  <o:Revision>8</o:Revision>
+  <o:TotalTime>187</o:TotalTime>
+  <o:Created>2004-06-20T13:10:00Z</o:Created>
+  <o:LastSaved>2004-06-20T21:41:00Z</o:LastSaved>
+  <o:Pages>21</o:Pages>
+  <o:Words>1410</o:Words>
+  <o:Characters>8038</o:Characters>
+  <o:Company>depraved</o:Company>
+  <o:Lines>66</o:Lines>
+  <o:Paragraphs>16</o:Paragraphs>
+  <o:CharactersWithSpaces>9871</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:DrawingGridHorizontalSpacing>4.55 pt</w:DrawingGridHorizontalSpacing>
+  <w:DrawingGridVerticalSpacing>4.55 pt</w:DrawingGridVerticalSpacing>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-font-kerning:0pt;}
+h2
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:8.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";}
+h3
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:16.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoBodyTextIndent, li.MsoBodyTextIndent, div.MsoBodyTextIndent
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	text-indent:36.0pt;
+	mso-pagination:widow-orphan;
+	font-size:8.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1247"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+  <o:regrouptable v:ext="edit">
+   <o:entry new="1" old="0"/>
+   <o:entry new="2" old="0"/>
+   <o:entry new="3" old="0"/>
+   <o:entry new="4" old="0"/>
+   <o:entry new="5" old="0"/>
+   <o:entry new="6" old="0"/>
+   <o:entry new="7" old="0"/>
+   <o:entry new="8" old="0"/>
+   <o:entry new="9" old="0"/>
+   <o:entry new="10" old="0"/>
+   <o:entry new="11" old="0"/>
+   <o:entry new="12" old="0"/>
+   <o:entry new="13" old="0"/>
+  </o:regrouptable>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-GB style='tab-interval:36.0pt'>
+
+<div class=Section1>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<h3 style='border:none;mso-border-bottom-alt:solid windowtext .5pt;padding:
+0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><span style='font-size:12.0pt;
+font-family:Tahoma'>Segment – 2D convex polygon intersection<o:p></o:p></span></h3>
+
+</div>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span style='font-family:Tahoma'>Introduction<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>this algorithm has many
+uses, but I’ll focus one collision detection of fast moving particles, such as
+bullets, and special effects point sprites. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>first of, imagine you want to
+model a bullet fired from a gun. the logical way to do it would be<o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shapetype id="_x0000_t202"
+ coordsize="21600,21600" o:spt="202" path="m0,0l0,21600,21600,21600,21600,0xe">
+ <v:stroke joinstyle="miter"/>
+ <v:path gradientshapeok="t" o:connecttype="rect"/>
+</v:shapetype><v:shape id="_x0000_s1202" type="#_x0000_t202" style='position:absolute;
+ margin-left:100.1pt;margin-top:7.55pt;width:213.85pt;height:100.1pt;z-index:20;
+ mso-position-horizontal:absolute;mso-position-vertical:absolute' fillcolor="#cfc">
+ <v:fill opacity=".5"/>
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal><span style='font-size:8.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>class CBullet<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:8.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>{<o:p></o:p></span></p>
+    <p class=MsoNormal style='text-indent:36.0pt'><span style='font-size:8.0pt;
+    mso-bidi-font-size:12.0pt;font-family:"Courier New"'>Vector Position;<o:p></o:p></span></p>
+    <p class=MsoNormal style='text-indent:36.0pt'><span style='font-size:8.0pt;
+    mso-bidi-font-size:12.0pt;font-family:"Courier New"'>Vector Velocity;<o:p></o:p></span></p>
+    <p class=MsoNormal style='text-indent:36.0pt'><span style='font-size:8.0pt;
+    mso-bidi-font-size:12.0pt;font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    <p class=MsoNormal style='text-indent:36.0pt'><span style='font-size:8.0pt;
+    mso-bidi-font-size:12.0pt;font-family:"Courier New"'>void <b>Update</b>(float
+    dt)<o:p></o:p></span></p>
+    <p class=MsoNormal style='margin-left:36.0pt'><span style='font-size:8.0pt;
+    mso-bidi-font-size:12.0pt;font-family:"Courier New"'>{<o:p></o:p></span></p>
+    <p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+    style='font-size:8.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New"'>Position
+    += Velocity * dt;<br>
+    }<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:8.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>};<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:8.0pt;mso-bidi-font-size:12.0pt'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=133 height=10></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=289 height=137
+  src="./segment%20-%20polygon%20intersection_files/image001.gif"
+  alt="Text Box: class CBullet&#13;&#10;{&#13;&#10;Vector Position;&#13;&#10;Vector Velocity;&#13;&#10;&#13;&#10;void Update(float dt)&#13;&#10;{&#13;&#10;Position += Velocity * dt;&#13;&#10;}&#13;&#10;};&#13;&#10;&#13;&#10;"
+  v:shapes="_x0000_s1202"></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>so the bullet will travel along
+a straight line at a constant velocity. The most basic way of checking is a
+bullet hit an object (box, polygon, triangle, …), is to check if the bullet is
+inside the object. For a box, it is straight forward.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shape id="_x0000_s1203" type="#_x0000_t202"
+ style='position:absolute;margin-left:18.8pt;margin-top:5.3pt;width:418.6pt;
+ height:68.25pt;z-index:21;mso-position-horizontal:absolute;
+ mso-position-vertical:absolute' fillcolor="#cfc">
+ <v:fill opacity=".5"/>
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal><span style='font-size:8.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>bool <b>Intersect</b>(const Vector
+    &amp;Position, const Vector&amp; BoxMin, const Vector&amp; BoxMax)<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:8.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>{<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:8.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:1'>       </span>if
+    (Position.x &lt; BoxMin.x || Position.x &gt; BoxMax.x) return false;<br>
+    <span style="mso-spacerun: yes"> </span><span style='mso-tab-count:1'>      </span>if
+    (Position.y &lt; BoxMin.y || Position.y &gt; BoxMax.y) return false;<br>
+    <span style='mso-tab-count:1'>       </span>return true;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:8.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>}<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:8.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=25 height=7></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=561 height=94
+  src="./segment%20-%20polygon%20intersection_files/image002.gif"
+  alt="Text Box: bool Intersect(const Vector &amp;Position, const Vector&amp; BoxMin, const Vector&amp; BoxMax)&#13;&#10;{&#13;&#10;&#9;if (Position.x &lt; BoxMin.x || Position.x &gt; BoxMax.x) return false;&#13;&#10; &#9;if (Position.y &lt; BoxMin.y || Position.y &gt; BoxMax.y) return false;&#13;&#10;&#9;return true;&#13;&#10;}&#13;&#10;&#13;&#10;"
+  v:shapes="_x0000_s1203"></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>I assumed the box is
+defined by two vectors, which are the two points at a diagonal of the box. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>ok, so far so good. But for
+fast bullets, it’s very possible a collision will be miss, as the bullet will
+‘leapfrog’ the box. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>a solution is to consider
+the bullet as a segment or ray, defined by the bullet’s current position, and
+the bullet’s prediceted position, as if there were no collisions, and check if
+anything is intersected in between. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>This also works for
+projectiles under the influence of gravity or external forces (such as heat
+seeking missiles for example). The path of a bullet in a frame is approximated
+to a segment. This still not 100% accurate (for that, you’d have to consider
+the curved trajectory of the bullet within the frame), but it’s a lot better
+than checking a single point, and not difficult to implement. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>I will explain the general
+method of intersecting a segment with a polygon. The case of a box and a ray is
+kind of a special case, but also interesting. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>The algorithm considered is
+the standard clipping algorithm, where a ray is ‘cut’ with the edges of the
+polygon. It has the advantage of giving us both the normal and the points of
+collision, which is always useful. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span style='font-family:Tahoma'>Segments<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>Segments are described by
+two points, A and B. A point P is on the infinite line passing through A and B if
+<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>P = A + (B – A).t, <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>where t is a scalr. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>now, the point P is on
+segment A and B if it verifies a similar equation<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>P = A + (B – A).t, t = [0,
+1] (t in range [0, 1]).<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>you can see that if t = 0,
+P = A, and if t = 1, P = B. In between , t = 0.5, then P will be at the middle
+of segment [AB], and so on….</span><!--[if gte vml 1]><v:group id="_x0000_s1228"
+ style='position:absolute;margin-left:41.55pt;margin-top:68.6pt;width:468.65pt;
+ height:182pt;z-index:23;mso-position-horizontal-relative:text;
+ mso-position-vertical-relative:text' coordorigin="708,8538" coordsize="9373,3640">
+ <v:line id="_x0000_s1206" style='position:absolute;flip:y;
+  mso-position-horizontal:absolute' from="2707,9539" to="7712,11177"
+  strokeweight="2pt">
+  <v:stroke endarrow="block"/>
+ </v:line><v:oval id="_x0000_s1212" style='position:absolute;left:7715;top:9448;
+  width:182;height:182;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="12" fillcolor="black" stroked="f"/>
+ <v:oval id="_x0000_s1213" style='position:absolute;left:2619;top:11086;
+  width:182;height:182;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="12" fillcolor="black" stroked="f"/>
+ <v:shape id="_x0000_s1214" type="#_x0000_t202" style='position:absolute;
+  left:7806;top:8993;width:455;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="12" filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1214'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>B</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1215" type="#_x0000_t202" style='position:absolute;
+  left:2528;top:10722;width:455;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="12" filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1215'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>A</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:line id="_x0000_s1216" style='position:absolute;flip:y;
+  mso-position-horizontal:absolute;mso-position-vertical:absolute' from="708,8811"
+  to="9990,11814" o:regroupid="12">
+  <v:stroke dashstyle="dash"/>
+ </v:line><v:oval id="_x0000_s1217" style='position:absolute;left:6532;top:9812;
+  width:182;height:182;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="12" fillcolor="black" stroked="f"/>
+ <v:shape id="_x0000_s1218" type="#_x0000_t202" style='position:absolute;
+  left:5986;top:9175;width:910;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="12" filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1218'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>t = 0.80</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:oval id="_x0000_s1219" style='position:absolute;left:1163;top:11541;
+  width:182;height:182;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' fillcolor="black" stroked="f"/>
+ <v:shape id="_x0000_s1220" type="#_x0000_t202" style='position:absolute;
+  left:7806;top:9630;width:819;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1220'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>t = 1</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1221" type="#_x0000_t202" style='position:absolute;
+  left:799;top:11177;width:910;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1221'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>t = -0.5</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1222" type="#_x0000_t202" style='position:absolute;
+  left:2528;top:11268;width:910;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1222'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>t = 0</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1223" type="#_x0000_t202" style='position:absolute;
+  left:6441;top:9994;width:728;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1223'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>P<sub>0.8</sub></span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:oval id="_x0000_s1224" style='position:absolute;left:9444;top:8902;
+  width:182;height:182;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' fillcolor="black" stroked="f"/>
+ <v:shape id="_x0000_s1225" type="#_x0000_t202" style='position:absolute;
+  left:9171;top:8538;width:910;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1225'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>t = 1.5</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1226" type="#_x0000_t202" style='position:absolute;
+  left:9353;top:9175;width:728;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1226'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>P<sub>1.5</sub></span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1227" type="#_x0000_t202" style='position:absolute;
+  left:799;top:11814;width:728;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1227'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>P<sub>-0.5</sub></span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape></v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout;
+position:absolute;z-index:2;margin-left:54px;margin-top:91px;width:628px;
+height:245px'><img width=628 height=245
+src="./segment%20-%20polygon%20intersection_files/image003.gif" v:shapes="_x0000_s1228 _x0000_s1206 _x0000_s1212 _x0000_s1213 _x0000_s1214 _x0000_s1215 _x0000_s1216 _x0000_s1217 _x0000_s1218 _x0000_s1219 _x0000_s1220 _x0000_s1221 _x0000_s1222 _x0000_s1223 _x0000_s1224 _x0000_s1225 _x0000_s1226 _x0000_s1227"></span><![endif]><span
+style='font-family:Tahoma'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span style='font-family:Tahoma'>Polygons<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>Polygons are a list of connected
+points, that forms an enclosed area. They come in several forms, but for the
+principle of collision detection, the most interesting of the bunch are convex
+polygons. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>Convex polygons are
+polygons where every angles between two consecutive edges is less than 180
+degrees. When an angle ‘cave-in’, forming an angle &gt; 180 degrees, the
+polygon is not convex. They are concave. <o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:group id="_x0000_s1237" style='position:absolute;
+ margin-left:46.1pt;margin-top:17.15pt;width:90pt;height:81.6pt;z-index:1'
+ coordorigin="981,2623" coordsize="1800,1632">
+ <v:shape id="_x0000_s1043" style='position:absolute;left:1072;top:2623;
+  width:1456;height:910;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="1456,910" path="m364,819l0,455,364,,1092,91,1456,546,1274,910,364,819xe"
+  fillcolor="#36f">
+  <v:path arrowok="t"/>
+ </v:shape><v:shape id="_x0000_s1045" type="#_x0000_t202" style='position:absolute;
+  left:981;top:3715;width:1800;height:540;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' filled="f" stroked="f">
+  <v:textbox>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>convex polygon</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape></v:group><v:group id="_x0000_s1238" style='position:absolute;
+ margin-left:159.85pt;margin-top:12.6pt;width:90pt;height:87.95pt;z-index:2'
+ coordorigin="3244,2558" coordsize="1800,1759">
+ <v:shape id="_x0000_s1044" style='position:absolute;left:3244;top:2558;
+  width:1729;height:1092' coordsize="1729,1092" path="m273,91l819,273,1365,,1729,455,1547,910,819,1092,273,819,,455,273,91xe"
+  fillcolor="#fc0">
+  <v:path arrowok="t"/>
+ </v:shape><v:shape id="_x0000_s1046" type="#_x0000_t202" style='position:absolute;
+  left:3244;top:3777;width:1800;height:540' filled="f" stroked="f">
+  <v:textbox>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>concave polygon</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape></v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=61 height=16></td>
+  <td width=122></td>
+  <td width=29></td>
+  <td width=123></td>
+ </tr>
+ <tr>
+  <td height=6></td>
+  <td colspan=2></td>
+  <td rowspan=3 align=left valign=top><img width=123 height=120
+  src="./segment%20-%20polygon%20intersection_files/image004.gif" v:shapes="_x0000_s1238 _x0000_s1044 _x0000_s1046"></td>
+ </tr>
+ <tr>
+  <td height=112></td>
+  <td align=left valign=top><img width=122 height=112
+  src="./segment%20-%20polygon%20intersection_files/image005.gif" v:shapes="_x0000_s1237 _x0000_s1043 _x0000_s1045"></td>
+ </tr>
+ <tr>
+  <td height=2></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>you can see the angle at
+the top-centre of the yellow polygon forming an angle &gt; 180 degrees.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>So, why do we need to
+classify concave polygons to convex polygons? <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>the convexity of the
+polygons brings some interesting properties. For example, imagine a ray
+crossing a convex polygon. you can see that you will only ever get two intersection
+point. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:group id="_x0000_s1233" style='position:absolute;
+ margin-left:68.25pt;margin-top:3.5pt;width:248.2pt;height:54.35pt;z-index:3'
+ coordorigin="1515,2065" coordsize="4964,1087">
+ <v:shape id="_x0000_s1047" style='position:absolute;left:2334;top:2065;
+  width:1456;height:910;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="1456,910" path="m364,819l0,455,364,,1092,91,1456,546,1274,910,364,819xe"
+  fillcolor="#36f">
+  <v:path arrowok="t"/>
+ </v:shape><v:line id="_x0000_s1048" style='position:absolute' from="1515,2156"
+  to="5519,2156">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1049" style='position:absolute' from="1755,2405"
+  to="5759,2405">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1050" style='position:absolute' from="1995,2654"
+  to="5999,2654">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1051" style='position:absolute' from="2235,2903"
+  to="6239,2903">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1052" style='position:absolute' from="2475,3152"
+  to="6479,3152">
+  <v:stroke endarrow="block"/>
+ </v:line></v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=90 height=4></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=334 height=81
+  src="./segment%20-%20polygon%20intersection_files/image006.gif" v:shapes="_x0000_s1233 _x0000_s1047 _x0000_s1048 _x0000_s1049 _x0000_s1050 _x0000_s1051 _x0000_s1052"></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>if the ray started inside
+the polygon, you can see that you will only ever get one intersection point.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><o:wrapblock pagebreak="t">
+ <v:group id="_x0000_s1234" style='position:absolute;margin-left:100.1pt;
+  margin-top:1.7pt;width:136.5pt;height:78.75pt;z-index:4' coordorigin="2152,1744"
+  coordsize="2730,1575">
+  <v:shape id="_x0000_s1054" style='position:absolute;left:2698;top:2132;
+   width:1456;height:910;mso-position-horizontal:absolute;
+   mso-position-vertical:absolute' coordsize="1456,910" path="m364,819l0,455,364,,1092,91,1456,546,1274,910,364,819xe"
+   fillcolor="#36f">
+   <v:path arrowok="t"/>
+  </v:shape><v:line id="_x0000_s1055" style='position:absolute;flip:y' from="3426,1744"
+   to="4882,2290">
+   <v:stroke endarrow="block"/>
+  </v:line><v:line id="_x0000_s1056" style='position:absolute' from="3517,2682"
+   to="4882,3319">
+   <v:stroke endarrow="block"/>
+  </v:line><v:line id="_x0000_s1057" style='position:absolute;flip:x y' from="2152,1835"
+   to="3153,2563">
+   <v:stroke endarrow="block"/>
+  </v:line></v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+ <table cellpadding=0 cellspacing=0 align=left>
+  <tr>
+   <td width=132 height=1></td>
+  </tr>
+  <tr>
+   <td></td>
+   <td><img width=186 height=109
+   src="./segment%20-%20polygon%20intersection_files/image007.gif" v:shapes="_x0000_s1234 _x0000_s1054 _x0000_s1055 _x0000_s1056 _x0000_s1057"></td>
+  </tr>
+ </table>
+ </span><![endif]><!--[if gte vml 1]></o:wrapblock><![endif]--><span
+style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<span style='font-size:12.0pt;font-family:Tahoma;mso-fareast-font-family:"Times New Roman";
+mso-ansi-language:EN-GB;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br
+clear=all style='mso-special-character:line-break;page-break-before:always'>
+</span>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+style='font-family:Tahoma'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>however, with a concave
+polygon, the same principle does not quite hold. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:group id="_x0000_s1235" style='position:absolute;
+ margin-left:122.85pt;margin-top:.55pt;width:172.9pt;height:54.6pt;z-index:5'
+ coordorigin="2607,1151" coordsize="3458,1092">
+ <v:shape id="_x0000_s1058" style='position:absolute;left:3153;top:1151;
+  width:1729;height:1092;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="1729,1092" path="m273,91l819,273,1365,,1729,455,1547,910,819,1092,273,819,,455,273,91xe"
+  fillcolor="#fc0">
+  <v:path arrowok="t"/>
+ </v:shape><v:line id="_x0000_s1059" style='position:absolute' from="2880,1327"
+  to="5610,1327">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1060" style='position:absolute' from="2607,1709"
+  to="5883,1709">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1061" style='position:absolute' from="2789,2082"
+  to="6065,2082">
+  <v:stroke endarrow="block"/>
+ </v:line></v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=163 height=0></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=233 height=76
+  src="./segment%20-%20polygon%20intersection_files/image008.gif" v:shapes="_x0000_s1235 _x0000_s1058 _x0000_s1059 _x0000_s1060 _x0000_s1061"></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:group id="_x0000_s1236" style='position:absolute;
+ margin-left:122.85pt;margin-top:13.3pt;width:163.8pt;height:54.6pt;z-index:6'
+ coordorigin="2607,266" coordsize="3276,1092">
+ <v:shape id="_x0000_s1062" style='position:absolute;left:3335;top:266;width:1729;
+  height:1092;mso-position-horizontal:absolute;mso-position-vertical:absolute'
+  coordsize="1729,1092" path="m273,91l819,273,1365,,1729,455,1547,910,819,1092,273,819,,455,273,91xe"
+  fillcolor="#fc0">
+  <v:path arrowok="t"/>
+ </v:shape><v:line id="_x0000_s1063" style='position:absolute;flip:x' from="2880,457"
+  to="4609,457">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1064" style='position:absolute' from="4063,830"
+  to="5883,1103">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1065" style='position:absolute;flip:x' from="2607,830"
+  to="3699,1194">
+  <v:stroke endarrow="block"/>
+ </v:line></v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=163 height=17></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=221 height=76
+  src="./segment%20-%20polygon%20intersection_files/image009.gif" v:shapes="_x0000_s1236 _x0000_s1062 _x0000_s1063 _x0000_s1064 _x0000_s1065"></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>but you can also see that
+the number of intersections is odd if the start of the ray is inside the
+polygon, odd if it is outside. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>this, for example, is used
+in some algorithm to detect if a point is inside a polygon or not. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span style='font-family:Tahoma'>Half-space. what’s that?<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>Convexity has more useful
+features, and we can use a method called ‘clipping’ very efficiently, since we
+can reduce clipping against segments to clipping against the infinite line
+going through the segment. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>the line going through the
+segment splits the space in two, called half-space. one called ‘positive’, and
+one ‘negative’.<span style="mso-spacerun: yes">  </span>therefore, the line is
+kind of ‘signed’, the direction in which the line is pointing is important. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:group id="_x0000_s1239" style='position:absolute;
+ margin-left:31.85pt;margin-top:8.35pt;width:318.65pt;height:215.4pt;z-index:7'
+ coordorigin="787,2732" coordsize="6373,4308">
+ <v:line id="_x0000_s1066" style='position:absolute;flip:x' from="2698,3669"
+  to="5246,6763" o:regroupid="2" strokeweight="2pt">
+  <v:stroke endarrow="block"/>
+ </v:line><v:shape id="_x0000_s1070" style='position:absolute;left:3065;top:4128;
+  width:4095;height:2912;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="4095,2912" o:regroupid="2" path="m1820,0l3822,,4095,2093,1183,2912,,2275,91,2093,1820,0xe"
+  fillcolor="#fc9" stroked="f">
+  <v:path arrowok="t"/>
+ </v:shape><v:shape id="_x0000_s1071" style='position:absolute;left:787;top:2732;
+  width:4186;height:3549;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="4186,3549" o:regroupid="2" path="m4186,1274l3094,,1092,182,,2275,1456,3458,2275,3549,4095,1274,4186,1274xe"
+  fillcolor="#9cf" stroked="f">
+  <v:path arrowok="t"/>
+ </v:shape><v:line id="_x0000_s1072" style='position:absolute;flip:x y' from="3426,4927"
+  to="3881,5291" o:regroupid="2" strokeweight="1.75pt">
+  <v:stroke endarrow="block"/>
+ </v:line><v:shape id="_x0000_s1073" type="#_x0000_t202" style='position:absolute;
+  left:2152;top:3387;width:2366;height:455' o:regroupid="2" filled="f"
+  stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1073'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b>positive half-space<o:p></o:p></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1074" type="#_x0000_t202" style='position:absolute;
+  left:4518;top:5104;width:2366;height:455' o:regroupid="2" filled="f"
+  stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1074'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b>negative half-space<o:p></o:p></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1075" type="#_x0000_t202" style='position:absolute;
+  left:2061;top:5018;width:2366;height:455' o:regroupid="2" filled="f"
+  stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1075'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b>normal of line<o:p></o:p></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape></v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=42 height=11></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=426 height=288
+  src="./segment%20-%20polygon%20intersection_files/image010.gif" v:shapes="_x0000_s1239 _x0000_s1066 _x0000_s1070 _x0000_s1071 _x0000_s1072 _x0000_s1073 _x0000_s1074 _x0000_s1075"></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span style='font-family:Tahoma;mso-ansi-language:EN-US'><span
+style="mso-spacerun: yes"> </span><span lang=EN-US><o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:group id="_x0000_s1083" style='position:absolute;
+ margin-left:4.55pt;margin-top:.9pt;width:318.65pt;height:213.7pt;z-index:8'
+ coordorigin="1891,8541" coordsize="6373,4274">
+ <v:line id="_x0000_s1076" style='position:absolute;rotation:180;flip:x'
+  from="3802,9448" to="6350,12542" strokeweight="2pt">
+  <v:stroke endarrow="block"/>
+ </v:line><v:shape id="_x0000_s1077" style='position:absolute;left:4169;top:9903;
+  width:4095;height:2912;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="4095,2912" path="m1820,0l3822,,4095,2093,1183,2912,,2275,91,2093,1820,0xe"
+  fillcolor="#9cf" stroked="f">
+  <v:path arrowok="t"/>
+ </v:shape><v:shape id="_x0000_s1078" style='position:absolute;left:1891;top:8541;
+  width:4186;height:3549;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="4186,3549" path="m4186,1274l3094,,1092,182,,2275,1456,3458,2275,3549,4095,1274,4186,1274xe"
+  fillcolor="#fc9" stroked="f">
+  <v:path arrowok="t"/>
+ </v:shape><v:line id="_x0000_s1079" style='position:absolute;rotation:-180;
+  flip:x y' from="4985,11086" to="5440,11450" strokeweight="1.75pt">
+  <v:stroke endarrow="block"/>
+ </v:line><v:shape id="_x0000_s1080" type="#_x0000_t202" style='position:absolute;
+  left:3256;top:9175;width:2366;height:455' filled="f" stroked="f">
+  <v:textbox>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b>negative half-space<o:p></o:p></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1081" type="#_x0000_t202" style='position:absolute;
+  left:5622;top:10904;width:2366;height:455' filled="f" stroked="f">
+  <v:textbox>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b>positive half-space<o:p></o:p></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1082" type="#_x0000_t202" style='position:absolute;
+  left:4530;top:11541;width:2366;height:455' filled="f" stroked="f">
+  <v:textbox>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b>normal of line<o:p></o:p></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape></v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout;
+position:absolute;z-index:56;margin-left:6px;margin-top:1px;width:426px;
+height:286px'><img width=426 height=286
+src="./segment%20-%20polygon%20intersection_files/image011.gif" v:shapes="_x0000_s1083 _x0000_s1076 _x0000_s1077 _x0000_s1078 _x0000_s1079 _x0000_s1080 _x0000_s1081 _x0000_s1082"></span><![endif]><span
+style='font-family:Tahoma;mso-ansi-language:EN-US'><span style="mso-spacerun:
+yes"> </span><span lang=EN-US><o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>In the first picture, the line is pointing down. the positive half space
+is the portion of the space on the left of the line, while the negative portion
+is on the right. When the line is pointing up, the spaces are swapped around. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>the ‘normal’ of the line is a vector that is perpendicular to the line
+direction, and obeying the right-hand rule. point the thumb of your right hand
+towards the line direction, and the index will point towards the direction of
+the normal, towards the positive half space. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>this rule is more a coordinate system convention, and it’s quite
+important to stick to it. for example, following the right-hand rule, all
+convex polygons should have their vertices listed anti-clckwise, so the space
+enclosed in the polygon is the intersection of all the negative half-space of
+the lines passing through the edges of the polygons. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>take for example a triangle, with it’s vertices listed anti-clockwise. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:group id="_x0000_s1232" style='position:absolute;
+ margin-left:82.5pt;margin-top:3.75pt;width:436.8pt;height:238.45pt;z-index:11'
+ coordorigin="1800,4170" coordsize="8736,4769">
+ <v:shape id="_x0000_s1085" style='position:absolute;left:5167;top:5778;
+  width:1820;height:1547;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="1820,1547" o:regroupid="1" path="m819,0l0,1456,1820,1547,819,0xe"
+  fillcolor="#f60">
+  <v:path arrowok="t"/>
+ </v:shape><v:shape id="_x0000_s1089" style='position:absolute;left:3344;top:7028;
+  width:6188;height:1911;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="6188,1911" o:regroupid="1" path="m0,0l6188,364,3094,1911,1092,1729,,0xe"
+  fillcolor="#9cf" stroked="f">
+  <v:path arrowok="t"/>
+ </v:shape><v:shape id="_x0000_s1087" style='position:absolute;left:5349;top:4443;
+  width:5187;height:3913;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="5187,3913" o:regroupid="1" path="m0,546l2275,3913,4095,3731,5187,1729,2912,,182,182,,546xe"
+  fillcolor="#0cf" stroked="f">
+  <v:path arrowok="t"/>
+ </v:shape><v:shape id="_x0000_s1086" style='position:absolute;left:1800;top:4170;
+  width:4914;height:4095;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="4914,4095" o:regroupid="1" path="m4914,455l2821,4095,1001,3913,,1365,2730,,4914,455xe"
+  fillcolor="#36f" stroked="f">
+  <v:path arrowok="t"/>
+ </v:shape><v:line id="_x0000_s1090" style='position:absolute;
+  mso-position-horizontal:absolute;mso-position-vertical:absolute' from="5167,4711"
+  to="7715,8533" o:regroupid="1"/>
+ <v:line id="_x0000_s1091" style='position:absolute;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' from="4166,7028" to="9808,7483" o:regroupid="1"/>
+ <v:line id="_x0000_s1092" style='position:absolute;flip:x;
+  mso-position-horizontal:absolute;mso-position-vertical:absolute' from="4894,4443"
+  to="6805,7810" o:regroupid="1"/>
+ <v:shape id="_x0000_s1093" type="#_x0000_t202" style='position:absolute;
+  left:5622;top:5333;width:728;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="1" filled="f" stroked="f">
+  <v:textbox>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b>V0<o:p></o:p></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1094" type="#_x0000_t202" style='position:absolute;
+  left:4348;top:7114;width:728;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="1" filled="f" stroked="f">
+  <v:textbox>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b>V1<o:p></o:p></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1095" type="#_x0000_t202" style='position:absolute;
+  left:6987;top:7205;width:728;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="1" filled="f" stroked="f">
+  <v:textbox>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <h1>V2</h1>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:line id="_x0000_s1096" style='position:absolute;flip:x y;
+  mso-position-horizontal:absolute;mso-position-vertical:absolute' from="5258,6314"
+  to="5622,6496" o:regroupid="1">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1097" style='position:absolute;flip:x;
+  mso-position-horizontal:absolute;mso-position-vertical:absolute' from="6077,7205"
+  to="6168,7842" o:regroupid="1">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1098" style='position:absolute;flip:y;
+  mso-position-horizontal:absolute;mso-position-vertical:absolute' from="6441,6400"
+  to="6805,6582" o:regroupid="1">
+  <v:stroke endarrow="block"/>
+ </v:line></v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout;
+position:absolute;z-index:64;margin-left:110px;margin-top:5px;width:583px;
+height:319px'><img width=583 height=319
+src="./segment%20-%20polygon%20intersection_files/image012.gif" v:shapes="_x0000_s1232 _x0000_s1085 _x0000_s1089 _x0000_s1087 _x0000_s1086 _x0000_s1090 _x0000_s1091 _x0000_s1092 _x0000_s1093 _x0000_s1094 _x0000_s1095 _x0000_s1096 _x0000_s1097 _x0000_s1098"></span><![endif]><span
+style='font-family:Tahoma;mso-ansi-language:EN-US'><span style="mso-spacerun:
+yes"> </span><span lang=EN-US><o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>The inside of the triangle is the intersection of the negative half-space
+of the line passing through the line [V0, V1], and the negative half-space of
+the line passing through the line [V1, V2], and finally the negative half-space
+of the line passing through the line [V2, V0].<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>now, to detect is a point is in the red area, it’s simply a matter of
+detecting if the point is inside one of the blue areas instead. And if it is,
+then the point cannot be in the red area. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>to detect on which side of the line the point lies, you check the sign
+of the normal of the line dot the segment starting from a point on the line,
+and going twards the point of interest. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shape id="_x0000_s1105" style='position:absolute;
+ margin-left:269.05pt;margin-top:60.55pt;width:286.65pt;height:218.4pt;
+ z-index:9;mso-position-horizontal:absolute;mso-position-vertical:absolute'
+ coordsize="5733,4368" path="m2002,546l4823,,5733,1820,4641,3822,1638,4095,455,4368,,2639,2002,546xe"
+ fillcolor="#fc9" stroked="f">
+ <v:path arrowok="t"/>
+</v:shape><v:shape id="_x0000_s1106" style='position:absolute;margin-left:109.8pt;
+ margin-top:1.35pt;width:259.35pt;height:213.85pt;z-index:10;
+ mso-position-horizontal:absolute;mso-position-vertical:absolute' coordsize="5187,4277"
+ path="m5187,1729l4186,,637,546,,2639,1911,3094,1729,4277,3185,3822,5187,1729xe"
+ fillcolor="#9cf" stroked="f">
+ <v:path arrowok="t"/>
+</v:shape><v:group id="_x0000_s1231" style='position:absolute;margin-left:178.05pt;
+ margin-top:37.75pt;width:300.3pt;height:191.95pt;z-index:12' coordorigin="1060,1871"
+ coordsize="6006,3839">
+ <v:line id="_x0000_s1103" style='position:absolute;flip:x y' from="2880,3372"
+  to="3699,4100">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1104" style='position:absolute;flip:x y' from="2789,2808"
+  to="4882,2899">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1102" style='position:absolute;flip:x' from="2607,2908"
+  to="4882,5274" strokeweight="2pt"/>
+ <v:shape id="_x0000_s1107" type="#_x0000_t202" style='position:absolute;
+  left:2425;top:2526;width:728;height:364' filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1107'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <h1>P0</h1>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1108" type="#_x0000_t202" style='position:absolute;
+  left:4791;top:2435;width:728;height:364' filled="f" stroked="f">
+  <v:textbox>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <h1>V0</h1>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1109" type="#_x0000_t202" style='position:absolute;
+  left:5792;top:3654;width:728;height:364' filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1109'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <h1>P1</h1>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:line id="_x0000_s1110" style='position:absolute' from="4882,2908"
+  to="5883,3727">
+  <v:stroke endarrow="block"/>
+ </v:line><v:shape id="_x0000_s1111" type="#_x0000_t202" style='position:absolute;
+  left:1060;top:1871;width:2366;height:455' filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1111'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b>positive half-space<o:p></o:p></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1112" type="#_x0000_t202" style='position:absolute;
+  left:4700;top:5255;width:2366;height:455' filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1112'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b>negative half-space<o:p></o:p></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1113" type="#_x0000_t202" style='position:absolute;
+  left:1879;top:3654;width:2366;height:455' filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1113'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b>normal of line<o:p></o:p></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape></v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=146 height=2></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=596 height=371
+  src="./segment%20-%20polygon%20intersection_files/image013.gif" v:shapes="_x0000_s1105 _x0000_s1106 _x0000_s1231 _x0000_s1103 _x0000_s1104 _x0000_s1102 _x0000_s1107 _x0000_s1108 _x0000_s1109 _x0000_s1110 _x0000_s1111 _x0000_s1112 _x0000_s1113"></td>
+ </tr>
+</table>
+
+</span><![endif]><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>here, P0 is in the blue area, and if you dot product vector (P0 – V0)
+and the normal, the product will be positive. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>P1 is in the negative area, since (P1 – V0) dot Normal will be negative.
+<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>so, as soon as you find the point in a blue area, you know it cannot be
+in the polygon area, which is the intersecion of all half-spaces for every
+edges. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:EN-US'>What’s
+does it have to do with convex polygons?<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>you can see that the algorithm will brake is the polygons where concave.
+<o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:group id="_x0000_s1240" style='position:absolute;
+ margin-left:40.8pt;margin-top:12.7pt;width:318.65pt;height:191.55pt;z-index:13'
+ coordorigin="966,1679" coordsize="6373,3831">
+ <v:shape id="_x0000_s1133" style='position:absolute;left:4245;top:2780;
+  width:2730;height:910' coordsize="2730,910" path="m0,910l819,,2730,546,2093,819,,910xe"
+  fillcolor="red" stroked="f">
+  <v:path arrowok="t"/>
+ </v:shape><v:shape id="_x0000_s1128" style='position:absolute;left:2152;top:3690;
+  width:2093;height:1183;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="2093,1183" path="m2093,0l364,91,273,91,,1183,1001,1183,2093,0xe"
+  fillcolor="red" stroked="f">
+  <v:path arrowok="t"/>
+ </v:shape><v:line id="_x0000_s1114" style='position:absolute;flip:y' from="2425,3690"
+  to="4245,3781" o:regroupid="5" strokeweight="2pt"/>
+ <v:line id="_x0000_s1115" style='position:absolute;flip:y' from="4245,2780"
+  to="5064,3690" o:regroupid="5" strokeweight="2pt"/>
+ <v:line id="_x0000_s1116" style='position:absolute;flip:x' from="3153,1679"
+  to="6065,4864" o:regroupid="5">
+  <v:stroke dashstyle="dash"/>
+ </v:line><v:line id="_x0000_s1117" style='position:absolute;flip:y' from="966,3599"
+  to="6335,3872" o:regroupid="5" strokeweight="1pt">
+  <v:stroke dashstyle="dash"/>
+ </v:line><v:line id="_x0000_s1118" style='position:absolute' from="5064,2780"
+  to="7339,3417" o:regroupid="5" strokeweight="2pt"/>
+ <v:line id="_x0000_s1119" style='position:absolute;flip:x' from="1970,3781"
+  to="2425,5510" o:regroupid="5" strokeweight="2pt"/>
+</v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=53 height=16></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=429 height=259
+  src="./segment%20-%20polygon%20intersection_files/image014.gif" v:shapes="_x0000_s1240 _x0000_s1133 _x0000_s1128 _x0000_s1114 _x0000_s1115 _x0000_s1116 _x0000_s1117 _x0000_s1118 _x0000_s1119"></td>
+ </tr>
+</table>
+
+</span><![endif]><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>the red areas shows parts of the polygon where the points will be
+wrongfully detected as not being in the polygon. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:EN-US'>Point
+in convex polygon code<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>here is how the code would look like to detect if a point is inside a
+convex polygon with its vertices listed in a anti-clockwise order.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shape id="_x0000_s1204" type="#_x0000_t202"
+ style='position:absolute;margin-left:36.6pt;margin-top:4.05pt;width:459.55pt;
+ height:154.7pt;z-index:22;mso-position-horizontal:absolute;
+ mso-position-vertical:absolute' fillcolor="#cfc">
+ <v:fill opacity=".5"/>
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal><span lang=EN-US style='font-size:8.0pt;mso-bidi-font-size:
+    12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    <p class=MsoNormal><span lang=EN-US style='font-size:8.0pt;mso-bidi-font-size:
+    12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'>bool <b>PointInsidePolygon</b>(Vector
+    Point, Vector* Vertices, int VertNum)<br>
+    {<o:p></o:p></span></p>
+    <p class=MsoNormal style='margin-left:36.0pt'><span lang=EN-US
+    style='font-size:8.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+    mso-ansi-language:EN-US'>for(int j = 2, I = 0; I &lt; VertNum; j = I, I++)<br>
+    {<o:p></o:p></span></p>
+    <p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+    lang=EN-US style='font-size:8.0pt;mso-bidi-font-size:12.0pt;font-family:
+    "Courier New";mso-ansi-language:EN-US'>Vector Dir = Vertices[I] –
+    Vertices[j];<o:p></o:p></span></p>
+    <p class=MsoBodyTextIndent><span lang=EN-US>Vector Normal(-Dir.y, Dir.x);
+    // normal of edge, obeying the right hand rule</span></p>
+    <p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+    lang=EN-US style='font-size:8.0pt;mso-bidi-font-size:12.0pt;font-family:
+    "Courier New";mso-ansi-language:EN-US'>Vector D = Point – Vertices[j];<o:p></o:p></span></p>
+    <p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+    lang=EN-US style='font-size:8.0pt;mso-bidi-font-size:12.0pt;font-family:
+    "Courier New";mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    <p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+    lang=EN-US style='font-size:8.0pt;mso-bidi-font-size:12.0pt;font-family:
+    "Courier New";mso-ansi-language:EN-US'>float sign = D.Dot(Normal); // dot
+    product<o:p></o:p></span></p>
+    <p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+    lang=EN-US style='font-size:8.0pt;mso-bidi-font-size:12.0pt;font-family:
+    "Courier New";mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    <p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+    lang=EN-US style='font-size:8.0pt;mso-bidi-font-size:12.0pt;font-family:
+    "Courier New";mso-ansi-language:EN-US'>if (sign &gt; 0.0f) // for
+    counter-clockwise polygons. else, test if negative<o:p></o:p></span></p>
+    <p class=MsoNormal style='margin-left:72.0pt;text-indent:36.0pt'><span
+    lang=EN-US style='font-size:8.0pt;mso-bidi-font-size:12.0pt;font-family:
+    "Courier New";mso-ansi-language:EN-US'>return false;<o:p></o:p></span></p>
+    <p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+    style='font-size:8.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+    mso-ansi-language:EN-US'>}<o:p></o:p></span></p>
+    <p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+    style='font-size:8.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+    mso-ansi-language:EN-US'>return true;<o:p></o:p></span></p>
+    <p class=MsoNormal><span lang=EN-US style='font-size:8.0pt;mso-bidi-font-size:
+    12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'>}<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:8.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=49 height=5></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=616 height=210
+  src="./segment%20-%20polygon%20intersection_files/image015.gif"
+  alt="Text Box: bool PointInsidePolygon(Vector Point, Vector* Vertices, int VertNum)&#13;&#10;{&#13;&#10;for(int j = 2, I = 0; I &lt; VertNum; j = I, I++)&#13;&#10;{&#13;&#10;Vector Dir = Vertices[I] – Vertices[j];&#13;&#10;Vector Normal(-Dir.y, Dir.x); // normal of edge, obeying the right hand rule&#13;&#10;Vector D = Point – Vertices[j];&#13;&#10;&#13;&#10;float sign = D.Dot(Normal); // dot product&#13;&#10;&#13;&#10;if (sign &gt; 0.0f) // for counter-clockwise polygons. else, test if negative&#13;&#10;return false;&#13;&#10;}&#13;&#10;return true;&#13;&#10;}&#13;&#10;&#13;&#10;"
+  v:shapes="_x0000_s1204"></td>
+ </tr>
+</table>
+
+</span><![endif]><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></h1>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<h1><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:EN-US'>How does
+it works for our segment – polygon intersection test?<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>For a segment cut by a convex polygon, you know you will get two
+intersection point, a near point and a far point. the near point being the
+point the closest to the segment origin, the far point the point the closest to
+the segment’s end. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>if the segment starts outside, then the intersection point lies in one
+of the positive half space of the polygon. and the near point will be a point
+that is the intersection of the segment and a line where the origin lies on the
+positive half space.<o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:group id="_x0000_s1241" style='position:absolute;
+ margin-left:40.95pt;margin-top:12.15pt;width:382.2pt;height:184.25pt;
+ z-index:16' coordorigin="969,2523" coordsize="7644,3685">
+ <v:shape id="_x0000_s1168" style='position:absolute;left:1333;top:3933;
+  width:7280;height:2275;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="7280,2275" path="m0,1092l2548,182,6734,,7280,1092,6461,2275,364,2184,,1092xe"
+  fillcolor="#fc9" stroked="f">
+  <v:fill opacity=".5"/>
+  <v:path arrowok="t"/>
+ </v:shape><v:group id="_x0000_s1149" style='position:absolute;left:969;top:2523;
+  width:7098;height:2912' coordorigin="2346,10995" coordsize="7098,2912">
+  <v:line id="_x0000_s1136" style='position:absolute;flip:y' from="4075,12542"
+   to="5349,12997" strokeweight="2pt"/>
+  <v:line id="_x0000_s1137" style='position:absolute;flip:y' from="5349,12451"
+   to="7533,12542" strokeweight="2pt"/>
+  <v:line id="_x0000_s1138" style='position:absolute;flip:y' from="2804,11723"
+   to="7718,13452">
+   <v:stroke dashstyle="dash"/>
+  </v:line><v:line id="_x0000_s1139" style='position:absolute;flip:y' from="2346,12360"
+   to="9444,12724">
+   <v:stroke dashstyle="dash"/>
+  </v:line><v:line id="_x0000_s1140" style='position:absolute' from="4803,11450"
+   to="8443,13907">
+   <v:stroke endarrow="block"/>
+  </v:line><v:line id="_x0000_s1141" style='position:absolute;flip:y' from="7351,11996"
+   to="7351,12451">
+   <v:stroke endarrow="block"/>
+  </v:line><v:line id="_x0000_s1142" style='position:absolute;flip:x y' from="4348,12451"
+   to="4530,12815">
+   <v:stroke endarrow="block"/>
+  </v:line><v:oval id="_x0000_s1143" style='position:absolute;left:6259;top:12451;
+   width:182;height:182' fillcolor="black" stroked="f"/>
+  <v:oval id="_x0000_s1144" style='position:absolute;left:5986;top:12178;
+   width:182;height:182' fillcolor="black" stroked="f"/>
+  <v:shape id="_x0000_s1145" type="#_x0000_t202" style='position:absolute;
+   left:5895;top:12633;width:1092;height:455' filled="f" stroked="f">
+   <v:textbox>
+    <![if !mso]>
+    <table cellpadding=0 cellspacing=0 width="100%">
+     <tr>
+      <td><![endif]>
+      <div>
+      <p class=MsoNormal><b><span style='font-size:8.0pt;mso-bidi-font-size:
+      12.0pt'>Pnear1</span><o:p></o:p></b></p>
+      </div>
+      <![if !mso]></td>
+     </tr>
+    </table>
+    <![endif]></v:textbox>
+  </v:shape><v:shape id="_x0000_s1146" type="#_x0000_t202" style='position:absolute;
+   left:5804;top:11632;width:1092;height:455' filled="f" stroked="f">
+   <v:textbox>
+    <![if !mso]>
+    <table cellpadding=0 cellspacing=0 width="100%">
+     <tr>
+      <td><![endif]>
+      <div>
+      <h2>Pnear0</h2>
+      </div>
+      <![if !mso]></td>
+     </tr>
+    </table>
+    <![endif]></v:textbox>
+  </v:shape><v:oval id="_x0000_s1147" style='position:absolute;left:4712;top:11359;
+   width:182;height:182' fillcolor="black" stroked="f"/>
+  <v:shape id="_x0000_s1148" type="#_x0000_t202" style='position:absolute;
+   left:4166;top:10995;width:819;height:364' filled="f" stroked="f">
+   <v:textbox>
+    <![if !mso]>
+    <table cellpadding=0 cellspacing=0 width="100%">
+     <tr>
+      <td><![endif]>
+      <div>
+      <p class=MsoNormal><b>start<o:p></o:p></b></p>
+      </div>
+      <![if !mso]></td>
+     </tr>
+    </table>
+    <![endif]></v:textbox>
+  </v:shape></v:group></v:group><![endif]--><![if !vml]><span style='mso-ignore:
+vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=54 height=16></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=511 height=247
+  src="./segment%20-%20polygon%20intersection_files/image016.gif" v:shapes="_x0000_s1241 _x0000_s1168 _x0000_s1149 _x0000_s1136 _x0000_s1137 _x0000_s1138 _x0000_s1139 _x0000_s1140 _x0000_s1141 _x0000_s1142 _x0000_s1143 _x0000_s1144 _x0000_s1145 _x0000_s1146 _x0000_s1147 _x0000_s1148"></td>
+ </tr>
+</table>
+
+</span><![endif]><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>Pnear0 and Pnear1 are two candidates for the near point. The right point
+is the point which is the <b>furthest</b> away from the start position of the
+ray. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>for the far point, it is the same principle. the far point will be a
+point that is the intersection of the segment and a line where the start point
+lies on the negative half space.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:group id="_x0000_s1242" style='position:absolute;
+ margin-left:55.2pt;margin-top:2.55pt;width:368.4pt;height:164.25pt;z-index:14'
+ coordorigin="514,561" coordsize="7368,3285">
+ <v:shape id="_x0000_s1170" style='position:absolute;left:966;top:561;width:6916;
+  height:2093;mso-position-horizontal:absolute' coordsize="6916,2093" path="m91,2093l4641,1820,6916,273,4186,,546,455,,1911,91,2093xe"
+  fillcolor="#fc9" stroked="f">
+  <v:fill opacity=".5"/>
+  <v:path arrowok="t"/>
+ </v:shape><v:group id="_x0000_s1164" style='position:absolute;left:514;top:934;
+  width:7098;height:2912' coordorigin="1982,2441" coordsize="7098,2912">
+  <v:line id="_x0000_s1151" style='position:absolute;flip:y' from="7078,3351"
+   to="7897,3897" o:regroupid="6" strokeweight="2pt"/>
+  <v:line id="_x0000_s1152" style='position:absolute;flip:y' from="4894,3897"
+   to="7078,3988" o:regroupid="6" strokeweight="2pt"/>
+  <v:line id="_x0000_s1153" style='position:absolute;flip:y' from="5258,2532"
+   to="9080,5171" o:regroupid="6">
+   <v:stroke dashstyle="dash"/>
+  </v:line><v:line id="_x0000_s1154" style='position:absolute;flip:y' from="1982,3806"
+   to="9080,4170" o:regroupid="6">
+   <v:stroke dashstyle="dash"/>
+  </v:line><v:line id="_x0000_s1155" style='position:absolute' from="4348,2896"
+   to="7988,5353" o:regroupid="6">
+   <v:stroke endarrow="block"/>
+  </v:line><v:line id="_x0000_s1156" style='position:absolute;rotation:-180;
+   flip:y' from="5076,3988" to="5076,4443" o:regroupid="6">
+   <v:stroke endarrow="block"/>
+  </v:line><v:line id="_x0000_s1157" style='position:absolute;rotation:180;
+   flip:x y' from="7715,3442" to="8079,3715" o:regroupid="6">
+   <v:stroke endarrow="block"/>
+  </v:line><v:oval id="_x0000_s1158" style='position:absolute;left:5804;top:3897;
+   width:182;height:182' o:regroupid="6" fillcolor="black" stroked="f"/>
+  <v:oval id="_x0000_s1159" style='position:absolute;left:6441;top:4261;
+   width:182;height:182' o:regroupid="6" fillcolor="black" stroked="f"/>
+  <v:shape id="_x0000_s1160" type="#_x0000_t202" style='position:absolute;
+   left:5440;top:4079;width:1092;height:455' o:regroupid="6" filled="f"
+   stroked="f">
+   <v:textbox>
+    <![if !mso]>
+    <table cellpadding=0 cellspacing=0 width="100%">
+     <tr>
+      <td><![endif]>
+      <div>
+      <p class=MsoNormal><b><span style='font-size:8.0pt;mso-bidi-font-size:
+      12.0pt'>Pfar0</span><o:p></o:p></b></p>
+      </div>
+      <![if !mso]></td>
+     </tr>
+    </table>
+    <![endif]></v:textbox>
+  </v:shape><v:shape id="_x0000_s1161" type="#_x0000_t202" style='position:absolute;
+   left:6623;top:4170;width:1092;height:455' o:regroupid="6" filled="f"
+   stroked="f">
+   <v:textbox>
+    <![if !mso]>
+    <table cellpadding=0 cellspacing=0 width="100%">
+     <tr>
+      <td><![endif]>
+      <div>
+      <h2>Pfar1</h2>
+      </div>
+      <![if !mso]></td>
+     </tr>
+    </table>
+    <![endif]></v:textbox>
+  </v:shape><v:oval id="_x0000_s1162" style='position:absolute;left:4257;top:2805;
+   width:182;height:182' o:regroupid="6" fillcolor="black" stroked="f"/>
+  <v:shape id="_x0000_s1163" type="#_x0000_t202" style='position:absolute;
+   left:3711;top:2441;width:819;height:364' o:regroupid="6" filled="f"
+   stroked="f">
+   <v:textbox>
+    <![if !mso]>
+    <table cellpadding=0 cellspacing=0 width="100%">
+     <tr>
+      <td><![endif]>
+      <div>
+      <p class=MsoNormal><b>start<o:p></o:p></b></p>
+      </div>
+      <![if !mso]></td>
+     </tr>
+    </table>
+    <![endif]></v:textbox>
+  </v:shape></v:group></v:group><![endif]--><![if !vml]><span style='mso-ignore:
+vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=73 height=3></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=493 height=222
+  src="./segment%20-%20polygon%20intersection_files/image017.gif" v:shapes="_x0000_s1242 _x0000_s1170 _x0000_s1164 _x0000_s1151 _x0000_s1152 _x0000_s1153 _x0000_s1154 _x0000_s1155 _x0000_s1156 _x0000_s1157 _x0000_s1158 _x0000_s1159 _x0000_s1160 _x0000_s1161 _x0000_s1162 _x0000_s1163"></td>
+ </tr>
+</table>
+
+</span><![endif]><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>pfar0 is the point you are looking for, which is this time the point the
+<b>closest</b> of all the far point candidates. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>how to calculate the intersection of a segment and a line?<o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>to calculate the intersection of a segment and a line, we refer to the
+equation of a segment. P = A + (B – A).t.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>the point of intersection Q will be a point on that line, so Q = A + (B
+– A).t<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>and the point of intersection Q is such that (Q – V).N = 0, where V is a
+vertex of the edge we are trying to intersect, and N is the normal of that
+edge. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>so, we have a system of two equations <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>(1) <span style='mso-tab-count:1'>    </span>Q = A + (B – A).t<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>(2)<span style='mso-tab-count:1'>     </span>(Q – V).N = 0<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>now, we can calculate t, the unkown, by substituting Q from equation 1
+into equation (2). the result will be .<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>t = (V – A).N / (B-A).N<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>and you find Q, the point of intersection, by plugging t back into the
+first equation<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>Q = A + (B – A).t<o:p></o:p></span></p>
+
+<span lang=EN-US style='font-size:12.0pt;font-family:Tahoma;mso-fareast-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>Putting it all together<o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>so, now, we have a method to calculate the points of intersection Pnear and
+Pfar, which are the intersection of the segment and two of the lines passing
+through edges of the polygon. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>the points Pnear and Pfar, have two tnear and tfar scalar values, as
+calculated by the system of equations above. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>Pnear = A + (B – A).tnear<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>Pfar = A + (B – A).tfar<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Tahoma;mso-ansi-language:
+EN-US'>to detect if the ray misses the polygon, it’s simply a matter of finding
+if pfar is smaller than pnear, as demonstrated below.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:group id="_x0000_s1230" style='position:absolute;
+ margin-left:82.5pt;margin-top:10.8pt;width:344.6pt;height:250.25pt;z-index:17'
+ coordorigin="1709,3351" coordsize="6892,5005">
+ <v:line id="_x0000_s1026" style='position:absolute;flip:y' from="2795,6116"
+  to="4055,7196" o:regroupid="13"/>
+ <v:line id="_x0000_s1027" style='position:absolute' from="4055,6116" to="4235,7556"
+  o:regroupid="13"/>
+ <v:line id="_x0000_s1029" style='position:absolute' from="2892,5135" to="6312,6035"
+  o:regroupid="13">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1030" style='position:absolute;flip:y' from="4055,3915"
+  to="6532,6043" o:regroupid="13">
+  <v:stroke dashstyle="dash"/>
+ </v:line><v:line id="_x0000_s1031" style='position:absolute;flip:x y' from="3711,3542"
+  to="4055,6034" o:regroupid="13">
+  <v:stroke dashstyle="dash"/>
+ </v:line><v:line id="_x0000_s1032" style='position:absolute;flip:x y' from="3438,5981"
+  to="3798,6341" o:regroupid="13">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1033" style='position:absolute;flip:y' from="4075,6263"
+  to="4795,6443" o:regroupid="13">
+  <v:stroke endarrow="block"/>
+ </v:line><v:shape id="_x0000_s1034" type="#_x0000_t202" style='position:absolute;
+  left:6441;top:3542;width:2160;height:540' o:regroupid="13" filled="f"
+  stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1034'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>near clipping plane</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1035" type="#_x0000_t202" style='position:absolute;
+  left:2619;top:3351;width:1800;height:540' o:regroupid="13" filled="f"
+  stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1035'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>far clipping plane</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:oval id="_x0000_s1036" style='position:absolute;left:3893;top:5329;
+  width:182;height:182' o:regroupid="13" fillcolor="black" stroked="f"/>
+ <v:oval id="_x0000_s1037" style='position:absolute;left:4621;top:5517;width:182;
+  height:182' o:regroupid="13" fillcolor="black" stroked="f"/>
+ <v:shape id="_x0000_s1038" type="#_x0000_t202" style='position:absolute;
+  left:3256;top:4953;width:761;height:306' o:regroupid="13" filled="f"
+  stroked="f">
+  <v:textbox>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>tfar</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1039" type="#_x0000_t202" style='position:absolute;
+  left:5076;top:5326;width:1001;height:364' o:regroupid="13" filled="f"
+  stroked="f">
+  <v:textbox>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>tnear</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:oval id="_x0000_s1040" style='position:absolute;left:2801;top:5044;
+  width:182;height:182' o:regroupid="13" fillcolor="black" stroked="f"/>
+ <v:oval id="_x0000_s1041" style='position:absolute;left:6259;top:5981;width:182;
+  height:182' o:regroupid="13" fillcolor="black" stroked="f"/>
+ <v:shape id="_x0000_s1166" type="#_x0000_t202" style='position:absolute;
+  left:2255;top:4664;width:455;height:364' o:regroupid="13" filled="f"
+  stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1166'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>A</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1167" type="#_x0000_t202" style='position:absolute;
+  left:6441;top:5883;width:455;height:364' o:regroupid="13" filled="f"
+  stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1167'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>B</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1171" style='position:absolute;left:1709;top:6081;
+  width:2639;height:2275;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="2639,2275" path="m0,1911l2366,,2639,2184,910,2275,,1911xe"
+  fillcolor="#fc9" stroked="f">
+  <v:fill opacity=".5"/>
+  <v:path arrowok="t"/>
+ </v:shape></v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=110 height=14></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=461 height=335
+  src="./segment%20-%20polygon%20intersection_files/image018.gif" v:shapes="_x0000_s1230 _x0000_s1026 _x0000_s1027 _x0000_s1029 _x0000_s1030 _x0000_s1031 _x0000_s1032 _x0000_s1033 _x0000_s1034 _x0000_s1035 _x0000_s1036 _x0000_s1037 _x0000_s1038 _x0000_s1039 _x0000_s1040 _x0000_s1041 _x0000_s1166 _x0000_s1167 _x0000_s1171"></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><span style="mso-spacerun:
+yes"> </span>also, tfar has to be &gt; 0, and tnear has to be &lt; 1, as shown
+below<o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:group id="_x0000_s1200" style='position:absolute;
+ margin-left:18.8pt;margin-top:20.75pt;width:232.05pt;height:127.4pt;z-index:15'
+ coordorigin="617,12269" coordsize="4641,2548">
+ <v:shape id="_x0000_s1183" style='position:absolute;left:1345;top:12269;
+  width:3913;height:2548;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="3913,2548" o:regroupid="9" path="m0,2366l2184,,3822,546,3913,1638,2366,2366,,2548,,2366xe"
+  fillcolor="#fc9" stroked="f">
+  <v:fill opacity=".5"/>
+  <v:path arrowok="t"/>
+ </v:shape><v:line id="_x0000_s1173" style='position:absolute;flip:y;
+  mso-position-horizontal:absolute;mso-position-vertical:absolute' from="1618,12906"
+  to="2983,14362" o:regroupid="11" strokeweight="2pt"/>
+ <v:line id="_x0000_s1174" style='position:absolute;flip:y' from="799,13088"
+  to="2073,13091" o:regroupid="11">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1175" style='position:absolute;flip:x y;
+  mso-position-horizontal:absolute;mso-position-vertical:absolute' from="1709,13452"
+  to="2073,13816" o:regroupid="11">
+  <v:stroke endarrow="block"/>
+ </v:line><v:oval id="_x0000_s1176" style='position:absolute;left:1982;top:12997;
+  width:182;height:182;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="11" fillcolor="black" stroked="f"/>
+ <v:oval id="_x0000_s1177" style='position:absolute;left:708;top:13000;width:182;
+  height:182;mso-position-horizontal:absolute;mso-position-vertical:absolute'
+  o:regroupid="11" fillcolor="black" stroked="f"/>
+ <v:shape id="_x0000_s1178" type="#_x0000_t202" style='position:absolute;
+  left:2073;top:12542;width:455;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="11" filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1178'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>B</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1179" type="#_x0000_t202" style='position:absolute;
+  left:617;top:12636;width:455;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="11" filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1179'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>A</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:line id="_x0000_s1180" style='position:absolute;
+  mso-position-horizontal:absolute' from="1985,13088" to="4351,13088"
+  o:regroupid="11">
+  <v:stroke dashstyle="dash"/>
+ </v:line><v:oval id="_x0000_s1181" style='position:absolute;left:2710;top:12997;
+  width:182;height:182;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="11" fillcolor="black" stroked="f"/>
+ <v:shape id="_x0000_s1182" type="#_x0000_t202" style='position:absolute;
+  left:3074;top:12724;width:1365;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="11" filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1182'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>tnear &gt; 1</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape></v:group><v:group id="_x0000_s1199" style='position:absolute;
+ margin-left:332.75pt;margin-top:7.1pt;width:232.05pt;height:127.4pt;z-index:18'
+ coordorigin="5895,12360" coordsize="4641,2548">
+ <v:shape id="_x0000_s1188" style='position:absolute;left:6623;top:12360;
+  width:3913;height:2548;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' coordsize="3913,2548" o:regroupid="8" path="m0,2366l2184,,3822,546,3913,1638,2366,2366,,2548,,2366xe"
+  fillcolor="#fc9" stroked="f">
+  <v:fill opacity=".5"/>
+  <v:path arrowok="t"/>
+ </v:shape><v:line id="_x0000_s1186" style='position:absolute;flip:y;
+  mso-position-horizontal:absolute;mso-position-vertical:absolute' from="6896,12994"
+  to="8261,14450" o:regroupid="10" strokeweight="2pt"/>
+ <v:line id="_x0000_s1187" style='position:absolute;rotation:-180;flip:y'
+  from="6077,13176" to="7351,13179" o:regroupid="10">
+  <v:stroke endarrow="block"/>
+ </v:line><v:line id="_x0000_s1189" style='position:absolute;flip:x y;
+  mso-position-horizontal:absolute;mso-position-vertical:absolute' from="6987,13540"
+  to="7351,13904" o:regroupid="10">
+  <v:stroke endarrow="block"/>
+ </v:line><v:oval id="_x0000_s1190" style='position:absolute;left:7260;top:13085;
+  width:182;height:182;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="10" fillcolor="black" stroked="f"/>
+ <v:oval id="_x0000_s1191" style='position:absolute;left:5986;top:13088;
+  width:182;height:182;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="10" fillcolor="black" stroked="f"/>
+ <v:shape id="_x0000_s1192" type="#_x0000_t202" style='position:absolute;
+  left:5895;top:12724;width:455;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="10" filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1192'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>B</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:shape id="_x0000_s1193" type="#_x0000_t202" style='position:absolute;
+  left:7169;top:12633;width:455;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="10" filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1193'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>A</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape><v:line id="_x0000_s1194" style='position:absolute;
+  mso-position-horizontal:absolute' from="7263,13176" to="9629,13176"
+  o:regroupid="10">
+  <v:stroke dashstyle="dash"/>
+ </v:line><v:oval id="_x0000_s1195" style='position:absolute;left:7988;top:13085;
+  width:182;height:182;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="10" fillcolor="black" stroked="f"/>
+ <v:shape id="_x0000_s1196" type="#_x0000_t202" style='position:absolute;
+  left:8352;top:12815;width:1365;height:364;mso-position-horizontal:absolute;
+  mso-position-vertical:absolute' o:regroupid="10" filled="f" stroked="f">
+  <v:textbox style='mso-next-textbox:#_x0000_s1196'>
+   <![if !mso]>
+   <table cellpadding=0 cellspacing=0 width="100%">
+    <tr>
+     <td><![endif]>
+     <div>
+     <p class=MsoNormal><b><i><span style='font-size:10.0pt;mso-bidi-font-size:
+     12.0pt'>tfar &lt; 0</span><o:p></o:p></i></b></p>
+     </div>
+     <![if !mso]></td>
+    </tr>
+   </table>
+   <![endif]></v:textbox>
+ </v:shape></v:group><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=25 height=9></td>
+  <td width=310></td>
+  <td width=109></td>
+  <td width=310></td>
+ </tr>
+ <tr>
+  <td height=19></td>
+  <td colspan=2></td>
+  <td rowspan=2 align=left valign=top><img width=310 height=171
+  src="./segment%20-%20polygon%20intersection_files/image019.gif" v:shapes="_x0000_s1199 _x0000_s1188 _x0000_s1186 _x0000_s1187 _x0000_s1189 _x0000_s1190 _x0000_s1191 _x0000_s1192 _x0000_s1193 _x0000_s1194 _x0000_s1195 _x0000_s1196"></td>
+ </tr>
+ <tr>
+  <td height=152></td>
+  <td rowspan=2 align=left valign=top><img width=310 height=171
+  src="./segment%20-%20polygon%20intersection_files/image020.gif" v:shapes="_x0000_s1200 _x0000_s1183 _x0000_s1173 _x0000_s1174 _x0000_s1175 _x0000_s1176 _x0000_s1177 _x0000_s1178 _x0000_s1179 _x0000_s1180 _x0000_s1181 _x0000_s1182"></td>
+ </tr>
+ <tr>
+  <td height=19></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoNormal>if one of those conditions fail, then there are no
+intersection possible. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h1>Segment – Polygon intersection code</h1>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shape id="_x0000_s1201" type="#_x0000_t202"
+ style='position:absolute;margin-left:77.7pt;margin-top:8.55pt;width:527.8pt;
+ height:839.1pt;z-index:19;mso-position-horizontal:absolute;
+ mso-position-vertical:absolute' fillcolor="#cfc">
+ <v:fill opacity=".5"/>
+ <v:textbox style='mso-next-textbox:#_x0000_s1201'>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>// clip a ray to a polygon<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>// A : vertices of the polygon<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>// Anum : number of vertices<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>// xStart : start point of the segment<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>// xEnd : end point of the segment.<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>// tnear : near intersection<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>// tfar : far intersection<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>// Nnear : normal at near intersection (if tnear
+    &gt; 0.0f)<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>// tfar : normal at far intersection (it tfar
+    &lt; 1.0f).<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>bool <b>ClipSegment</b>(const Vector* A, int
+    Anum, const Vector&amp; xStart, const Vector&amp; xEnd, float&amp; tnear,
+    float&amp; tfar, Vector&amp; Nnear, Vector&amp; Nfar)<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>{<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:1'>      </span>if
+    (!A) return false;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:1'>      </span>Vector
+    xDir = xEnd - xStart;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:1'>      </span>//
+    test separation axes of A<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:1'>      </span>for(int
+    j = Anum-1, i = 0; i &lt; Anum; j = i, i ++)<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:1'>      </span>{<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>Vector
+    E0 = A[j];<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>Vector
+    E1 = A[i];<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>Vector
+    E<span style="mso-spacerun: yes">  </span>= E1 - E0;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>Vector
+    En(E.y, -E.x);<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>Vector
+    D = E0 – xStart;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>float
+    denom = D * En;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>float
+    numer = xDir * En;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>//
+    ray parallel to plane<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>if
+    (fabs(numer) &lt; 1.0E-8f)<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>{<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:3'>                  </span>//
+    origin outside the plane, no intersection<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:3'>                  </span>if
+    (denom &lt; 0.0f)<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:4'>                        </span>return
+    false;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>}<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>else<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>{<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:3'>                  </span>float
+    tclip = denom / numer;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:3'>                  </span>//
+    near intersection<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:3'>                  </span>if
+    (numer &lt; 0.0f)<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:3'>                  </span>{<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:4'>                        </span>if
+    (tclip &gt; tfar)<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:5'>                              </span>return
+    false;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:4'>                        </span>if
+    (tclip &gt; tnear)<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:4'>                        </span>{<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:5'>                              </span>tnear
+    = tclip;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:5'>                              </span>Nnear
+    = En;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:5'>                              </span>Nnear.Normalise();<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:4'>                        </span>}<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:3'>                  </span>}<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:3'>                  </span>//
+    far intersection<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:3'>                  </span>else<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:3'>                  </span>{<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:4'>                        </span>if
+    (tclip &lt; tnear)<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:5'>                              </span>return
+    false;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:4'>                        </span>if
+    (tclip &lt; tfar)<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:4'>                        </span>{<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:5'>                              </span>tfar
+    = tclip;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:5'>                              </span>Nfar
+    = En;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:5'>                              </span>Nfar.Normalise();<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:4'>                        </span>}<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:3'>                  </span>}<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:2'>            </span>}<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:1'>      </span>}<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'><span style='mso-tab-count:1'>      </span>return
+    true;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+    font-family:"Courier New"'>}<o:p></o:p></span></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=104 height=11></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=706 height=1122
+  src="./segment%20-%20polygon%20intersection_files/image021.gif"
+  alt="Text Box: // clip a ray to a polygon&#13;&#10;// A : vertices of the polygon&#13;&#10;// Anum : number of vertices&#13;&#10;// xStart : start point of the segment&#13;&#10;// xEnd : end point of the segment.&#13;&#10;// tnear : near intersection&#13;&#10;// tfar : far intersection&#13;&#10;// Nnear : normal at near intersection (if tnear &gt; 0.0f)&#13;&#10;// tfar : normal at far intersection (it tfar &lt; 1.0f).&#13;&#10;bool ClipSegment(const Vector* A, int Anum, const Vector&amp; xStart, const Vector&amp; xEnd, float&amp; tnear, float&amp; tfar, Vector&amp; Nnear, Vector&amp; Nfar)&#13;&#10;{&#13;&#10;&#9;if (!A) return false;&#13;&#10;&#9;Vector xDir = xEnd - xStart;&#13;&#10;&#13;&#10;&#9;// test separation axes of A&#13;&#10;&#9;for(int j = Anum-1, i = 0; i &lt; Anum; j = i, i ++)&#13;&#10;&#9;{&#13;&#10;&#9;&#9;Vector E0 = A[j];&#13;&#10;&#9;&#9;Vector E1 = A[i];&#13;&#10;&#9;&#9;Vector E  = E1 - E0;&#13;&#10;&#9;&#9;Vector En(E.y, -E.x);&#13;&#10;&#9;&#9;Vector D = E0 – xStart;&#13;&#10;&#9;&#9;float denom = D * En;&#13;&#10;&#9;&#9;float numer = xDir * En;&#13;&#10;&#13;&#10;&#9;&#9;// ray parallel to plane&#13;&#10;&#9;&#9;if (fabs(numer) &lt; 1.0E-8f)&#13;&#10;&#9;&#9;{&#13;&#10;&#9;&#9;&#9;// origin outside the plane, no intersection&#13;&#10;&#9;&#9;&#9;if (denom &lt; 0.0f)&#13;&#10;&#9;&#9;&#9;&#9;return false;&#13;&#10;&#9;&#9;}&#13;&#10;&#9;&#9;else&#13;&#10;&#9;&#9;{&#13;&#10;&#9;&#9;&#9;float tclip = denom / numer;&#13;&#10;&#13;&#10;&#9;&#9;&#9;// near intersection&#13;&#10;&#9;&#9;&#9;if (numer &lt; 0.0f)&#13;&#10;&#9;&#9;&#9;{&#13;&#10;&#9;&#9;&#9;&#9;if (tclip &gt; tfar)&#13;&#10;&#9;&#9;&#9;&#9;&#9;return false;&#13;&#10;&#13;&#10;&#9;&#9;&#9;&#9;if (tclip &gt; tnear)&#13;&#10;&#9;&#9;&#9;&#9;{&#13;&#10;&#9;&#9;&#9;&#9;&#9;tnear = tclip;&#13;&#10;&#9;&#9;&#9;&#9;&#9;Nnear = En;&#13;&#10;&#9;&#9;&#9;&#9;&#9;Nnear.Normalise();&#13;&#10;&#9;&#9;&#9;&#9;}&#13;&#10;&#9;&#9;&#9;}&#13;&#10;&#9;&#9;&#9;// far intersection&#13;&#10;&#9;&#9;&#9;else&#13;&#10;&#9;&#9;&#9;{&#13;&#10;&#9;&#9;&#9;&#9;if (tclip &lt; tnear)&#13;&#10;&#9;&#9;&#9;&#9;&#9;return false;&#13;&#10;&#13;&#10;&#9;&#9;&#9;&#9;if (tclip &lt; tfar)&#13;&#10;&#9;&#9;&#9;&#9;{&#13;&#10;&#9;&#9;&#9;&#9;&#9;tfar = tclip;&#13;&#10;&#9;&#9;&#9;&#9;&#9;Nfar = En;&#13;&#10;&#9;&#9;&#9;&#9;&#9;Nfar.Normalise();&#13;&#10;&#9;&#9;&#9;&#9;}&#13;&#10;&#9;&#9;&#9;}&#13;&#10;&#9;&#9;}&#13;&#10;&#9;}&#13;&#10;&#13;&#10;&#9;return true;&#13;&#10;}&#13;&#10;"
+  v:shapes="_x0000_s1201"></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<h1><span style='font-family:Tahoma'>So there you have it<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>an algo that detects if a segment
+intersects a convex polygon. Note that the code above returns the normal of the
+intersection at both points. That is if the ray actually intersects at the near
+and far plane. the ray origin might laredy be in the polygon, in that case,
+tnear will be 0.0f, but the normal Nnear will be undefined. Similarly for tfar
+= 1.0f, that is if the end point is inside the polygon, the normal Nfar will be
+undefined. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Tahoma'>also, before calling the
+algorithm, tnear and tfar have to be initialised to respectively 0.0f and 1.0f.
+This algorithm can be used therefore as a mean to find the very first point of
+intersection and the very last point of intersection, when testing a ray
+against multiple polygons. <o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+</html>

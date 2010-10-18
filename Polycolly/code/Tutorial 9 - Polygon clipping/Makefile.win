@@ -1,0 +1,38 @@
+# Project: starfield
+# Makefile created by Dev-C++ 4.9.9.1
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = 
+OBJ  = source/GameCode.o source/main.o source/PolyClip.o source/Vector.o $(RES)
+LINKOBJ  = source/GameCode.o source/main.o source/PolyClip.o source/Vector.o $(RES)
+LIBS =  -L"C:/Program Files/Dev-Cpp/lib" -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -ldinput8 -ldxguid -ldinput -lglut32 -lgdi32 -lopengl32 -lglu32 -lwinmm  
+INCS =  -I"C:/Program Files/Dev-Cpp/include" 
+CXXINCS =  -I"C:/Program Files/Dev-Cpp/include/c++"  -I"C:/Program Files/Dev-Cpp/include/c++/mingw32"  -I"C:/Program Files/Dev-Cpp/include/c++/backward"  -I"C:/Program Files/Dev-Cpp/include" 
+BIN  = starfield.exe
+CXXFLAGS = $(CXXINCS) -D__GNUWIN32__ -W -DWIN32 -DNDEBUG -D_CONSOLE -D_MBCS   -fexpensive-optimizations
+CFLAGS = $(INCS) -D__GNUWIN32__ -W -DWIN32 -DNDEBUG -D_CONSOLE -D_MBCS   -fexpensive-optimizations
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before starfield.exe all-after
+
+
+clean: clean-custom
+	rm -f $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "starfield.exe" $(LIBS)
+
+source/GameCode.o: source/GameCode.cpp
+	$(CPP) -c source/GameCode.cpp -o source/GameCode.o $(CXXFLAGS)
+
+source/main.o: source/main.cpp
+	$(CPP) -c source/main.cpp -o source/main.o $(CXXFLAGS)
+
+source/PolyClip.o: source/PolyClip.cpp
+	$(CPP) -c source/PolyClip.cpp -o source/PolyClip.o $(CXXFLAGS)
+
+source/Vector.o: source/Vector.cpp
+	$(CPP) -c source/Vector.cpp -o source/Vector.o $(CXXFLAGS)
